@@ -1,0 +1,8 @@
+
+.DS_Store
+/Library
+/Logs
+/Temp
+/UserSettings
+*.sln
+.vsconfig
