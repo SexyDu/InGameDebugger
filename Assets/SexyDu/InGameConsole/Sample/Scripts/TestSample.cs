@@ -30,11 +30,12 @@ namespace SexyDu.InGameConsole
         }
 
         [SerializeField] private string sampleLog;
+        [SerializeField] private Canvas testCanvas;
         private void OnGUI()
         {
             if (GUI.Button(new Rect(0f, 0f, 100f, 100f), "Log"))
             {
-                Debug.Log(sampleLog);
+                Debug.LogFormat("{0}", sampleLog);
             }
 
             if (GUI.Button(new Rect(100f, 0f, 100f, 100f), "LogAssertion"))
@@ -55,6 +56,21 @@ namespace SexyDu.InGameConsole
             if (GUI.Button(new Rect(400f, 0f, 100f, 100f), "LogException"))
             {
                 throw new System.Exception("Exception");
+            }
+
+            if (GUI.Button(new Rect(0f, 100f, 100f, 100f), ""))
+            {
+                Debug.LogFormat("renderingDisplaySize : [{0}, {1}], scaleFactor : {2}",
+                    testCanvas.renderingDisplaySize.x, testCanvas.renderingDisplaySize.y,
+                    testCanvas.scaleFactor);
+                Debug.LogFormat("ScreenSize : [{0}, {1}]", Screen.width, Screen.height);
+                Debug.LogFormat("SafeArea Size : [{0}, {1}], Position : [{2}, {3}]",
+                    Screen.safeArea.size.x, Screen.safeArea.size.y,
+                    Screen.safeArea.position.x, Screen.safeArea.position.y);
+                // renderingDisplaySize와 ScreenSize은 동일
+                // Screen.safeArea.position는 바닥기준 표지션인것으로 확인됨
+                //  - landscape일 경우 확인 고려 필요 : 뭔가 좌측하단 기준 느낌임
+                // 결국 적용할 떄 safeArea / Canvas.scaleFactor 계산하면 될것 같음
             }
         }
     }
