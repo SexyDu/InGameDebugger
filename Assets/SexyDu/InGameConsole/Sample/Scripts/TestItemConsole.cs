@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     public class TestItemConsole : Console
     {
@@ -28,7 +28,7 @@ namespace SexyDu.InGameConsole
 
         public void Initialize()
         {
-            CreateLogItems(InGameConsoleConfig.Ins.Settings.ItemCount);
+            CreateLogItems(InGameDebuggerConfig.Ins.Settings.ItemCount);
         }
 
         [SerializeField] private LogItem[] logItems;

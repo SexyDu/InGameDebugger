@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using SexyDu.UGUI;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     /// <summary>
     /// 로그 상세 보기
@@ -32,7 +32,7 @@ namespace SexyDu.InGameConsole
         /// </summary>
         public LogDetail Set(ILogMessage message)
         {
-            icon.sprite = InGameConsoleConfig.Ins.GetLogIcon(message.Type);
+            icon.sprite = InGameDebuggerConfig.Ins.GetLogIcon(message.Type);
             text.SetText(message.GetLogString());
 
             return this;

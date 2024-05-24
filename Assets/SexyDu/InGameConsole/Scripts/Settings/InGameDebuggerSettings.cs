@@ -4,14 +4,14 @@ using TMPro;
 using UnityEditor;
 #endif
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
-    [CreateAssetMenu(fileName = "InGameConsoleSettings", menuName = "SexyDu/Settings/InGameConsole")]
-    public class InGameConsoleSettings : ScriptableObject
+    [CreateAssetMenu(fileName = "InGameDebuggerSettings", menuName = "SexyDu/Settings/InGameDebugger")]
+    public class InGameDebuggerSettings : ScriptableObject
     {
-        public const string ResourcePath = "Installer/InGameConsoleSettings";
+        public const string ResourcePath = "Installer/InGameDebuggerSettings";
 
-        [Tooltip("InGameConsole에 사용될 폰트에셋")]
+        [Tooltip("InGameDebugger에 사용될 폰트에셋")]
         [SerializeField] private TMP_FontAsset fontAsset;
         public TMP_FontAsset FontAsset { get { return fontAsset; } }
 
@@ -20,11 +20,11 @@ namespace SexyDu.InGameConsole
         public bool UseScrollPause { get { return useScrollPause; } }
 
         [Header("Canvas")]
-        [Tooltip("InGameConsole의 Sorting layer")]
+        [Tooltip("InGameDebugger의 Sorting layer")]
         [SerializeField] private string sortingLayer;
         public string SortingLayer { get { return sortingLayer; } }
         
-        [Tooltip("InGameConsole의 Order in layer")]
+        [Tooltip("InGameDebugger의 Order in layer")]
         [SerializeField] private int orderInLayer;
         public int OrderInLayer { get { return orderInLayer; } }
 
@@ -50,24 +50,24 @@ namespace SexyDu.InGameConsole
         public Sprite ErrorIcon { get => errorIcon; }
         #endregion
 
-        public InGameConsoleSettings Initialize()
+        public InGameDebuggerSettings Initialize()
         {
             return this;
         }
     }
 
 #if UNITY_EDITOR
-    [CustomEditor(typeof(InGameConsoleSettings))]
-    public class InGameConsoleSettingsEditor : Editor
+    [CustomEditor(typeof(InGameDebuggerSettings))]
+    public class InGameDebuggerSettingsEditor : Editor
     {
         private void OnEnable()
         {
-            Debug.LogFormat("OnEnable InGameConsoleSettings Editor");
+            Debug.LogFormat("OnEnable InGameDebuggerSettings Editor");
         }
 
         private void OnDisable()
         {
-            Debug.LogFormat("OnDisable InGameConsoleSettings Editor");
+            Debug.LogFormat("OnDisable InGameDebuggerSettings Editor");
         }
 
         public override void OnInspectorGUI()

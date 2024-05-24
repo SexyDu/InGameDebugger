@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SexyDu
 {
-    namespace InGameConsole
+    namespace InGameDebugger
     {
         public interface ILogMessage
         {

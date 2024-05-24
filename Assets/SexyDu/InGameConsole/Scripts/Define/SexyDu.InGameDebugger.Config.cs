@@ -1,23 +1,23 @@
 using System;
 using UnityEngine;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     /// <summary>
-    /// InGameConsole의 기본 설정
+    /// InGameDebugger의 기본 설정
     /// </summary>
-    public class InGameConsoleConfig
+    public class InGameDebuggerConfig
     {
-        private static Lazy<InGameConsoleConfig> ins = new Lazy<InGameConsoleConfig>(() => new InGameConsoleConfig());
-        public static InGameConsoleConfig Ins { get => ins.Value; }
+        private static Lazy<InGameDebuggerConfig> ins = new Lazy<InGameDebuggerConfig>(() => new InGameDebuggerConfig());
+        public static InGameDebuggerConfig Ins { get => ins.Value; }
 
-        public InGameConsoleConfig()
+        public InGameDebuggerConfig()
         {
-            settings = Resources.Load<InGameConsoleSettings>(InGameConsoleSettings.ResourcePath).Initialize();
+            settings = Resources.Load<InGameDebuggerSettings>(InGameDebuggerSettings.ResourcePath).Initialize();
         }
 
-        private readonly InGameConsoleSettings settings = null;
-        public InGameConsoleSettings Settings { get => settings; }
+        private readonly InGameDebuggerSettings settings = null;
+        public InGameDebuggerSettings Settings { get => settings; }
 
         #region Debugger
         /// <summary>

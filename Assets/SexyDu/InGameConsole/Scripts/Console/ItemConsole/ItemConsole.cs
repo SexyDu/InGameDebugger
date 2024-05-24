@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     public class ItemConsole : Console
     {
@@ -35,7 +35,7 @@ namespace SexyDu.InGameConsole
         /// </summary>
         public void Initialize()
         {
-            CreateLogItems(InGameConsoleConfig.Ins.Settings.ItemCount);
+            CreateLogItems(InGameDebuggerConfig.Ins.Settings.ItemCount);
         }
 
         [SerializeField] private LogItem[] logItems; // 로그 아이템 배열

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     public class LogItem : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace SexyDu.InGameConsole
         [SerializeField] private Image icon; // 아이콘 이미지
         [SerializeField] private TMP_Text text; // 텍스트
 
-        private InGameConsoleConfig Config { get => InGameConsoleConfig.Ins; }
+        private InGameDebuggerConfig Config { get => InGameDebuggerConfig.Ins; }
 
         /// <summary>
         /// 로그 메세지 설정

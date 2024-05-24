@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     public class Debugger : MonoBehaviour
     {
@@ -13,7 +13,7 @@ namespace SexyDu.InGameConsole
 
         private Debugger Initialize()
         {
-            InGameConsoleConfig.Ins.Debugger = this;
+            InGameDebuggerConfig.Ins.Debugger = this;
 
             return this;
         }

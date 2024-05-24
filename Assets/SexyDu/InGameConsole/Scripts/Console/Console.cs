@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SexyDu.InGameConsole
+namespace SexyDu.InGameDebugger
 {
     public abstract class Console : MonoBehaviour
     {
