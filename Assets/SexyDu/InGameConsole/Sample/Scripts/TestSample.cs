@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using SexyDu.Tool;
 
 namespace SexyDu.InGameConsole
 {
@@ -19,7 +20,7 @@ namespace SexyDu.InGameConsole
 
         private void OnLogMessageReceived(string condition, string stackTrace, LogType type)
         {
-            ILogMessage logMessage = new LogMessage(condition, stackTrace, type, index++);
+            ILogMessage logMessage = new LogMessageTest(condition, stackTrace, type, index++);
             logs.Add(logMessage);
             AddLogText(logMessage);
         }
@@ -37,7 +38,6 @@ namespace SexyDu.InGameConsole
             {
                 Debug.LogFormat("{0}", sampleLog);
             }
-
             if (GUI.Button(new Rect(100f, 0f, 100f, 100f), "LogAssertion"))
             {
                 Debug.LogAssertion(sampleLog);
@@ -60,6 +60,18 @@ namespace SexyDu.InGameConsole
 
             if (GUI.Button(new Rect(0f, 100f, 100f, 100f), ""))
             {
+                if (safeArea != null)
+                {
+                    safeArea.Set(testCanvas);
+                }
+
+                if (safeAreaAnchor != null)
+                {
+                    safeAreaAnchor.Set();
+                }
+            }
+            if (GUI.Button(new Rect(100f, 100f, 100f, 100f), ""))
+            {
                 Debug.LogFormat("renderingDisplaySize : [{0}, {1}], scaleFactor : {2}",
                     testCanvas.renderingDisplaySize.x, testCanvas.renderingDisplaySize.y,
                     testCanvas.scaleFactor);
@@ -73,5 +85,8 @@ namespace SexyDu.InGameConsole
                 // 결국 적용할 떄 safeArea / Canvas.scaleFactor 계산하면 될것 같음
             }
         }
+
+        [SerializeField] private SafeArea safeArea;
+        [SerializeField] private SafeAreaAnchor safeAreaAnchor;
     }
 }
