@@ -873,8 +873,8 @@ MonoBehaviour:
   logItems:
   - {fileID: 1855995718}
   backgroundColors:
+  - {r: 0, g: 0, b: 0, a: 0.29803923}
   - {r: 0, g: 0, b: 0, a: 0.2}
-  - {r: 0.2, g: 0.2, b: 0.2, a: 0.2}
 --- !u!1 &740583281
 GameObject:
   m_ObjectHideFlags: 0
@@ -2136,6 +2136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onAwakeInit: 1
+  consoleHandler: {fileID: 0}
   transformCache: {fileID: 1850980370}
 --- !u!1 &1855995716
 GameObject:
@@ -2265,7 +2266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.29803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

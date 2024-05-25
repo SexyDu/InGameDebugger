@@ -26,9 +26,11 @@ namespace SexyDu.InGameDebugger
             SetLogItem(message);
         }
 
-        public void Initialize()
+        public override Console Initialize()
         {
             CreateLogItems(InGameDebuggerConfig.Ins.Settings.ItemCount);
+
+            return this;
         }
 
         [SerializeField] private LogItem[] logItems;

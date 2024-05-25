@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +20,16 @@ namespace SexyDu.InGameDebugger
             }
         }
         #endregion
+        
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
+        public override Console Initialize()
+        {
+            CreateLogItems(InGameDebuggerConfig.Ins.Settings.ItemCount);
+
+            return this;
+        }
 
         /// <summary>
         /// 로그 추가
@@ -28,14 +37,6 @@ namespace SexyDu.InGameDebugger
         protected override void AddLogMessage(ILogMessage message)
         {
             SetLogItem(message);
-        }
-
-        /// <summary>
-        /// 초기 설정
-        /// </summary>
-        public void Initialize()
-        {
-            CreateLogItems(InGameDebuggerConfig.Ins.Settings.ItemCount);
         }
 
         [SerializeField] private LogItem[] logItems; // 로그 아이템 배열

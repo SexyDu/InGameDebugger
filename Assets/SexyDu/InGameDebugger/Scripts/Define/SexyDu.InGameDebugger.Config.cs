@@ -47,16 +47,33 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public Sprite GetLogIcon(LogType type)
         {
-            switch (type)
+            switch (ToGeneralType(type))
             {
-                case LogType.Assert:
                 case LogType.Error:
-                case LogType.Exception:
                     return Settings.ErrorIcon;
                 case LogType.Warning:
                     return Settings.WarningIcon;
                 default: // LogType.Log
                     return Settings.LogIcon;
+            }
+        }
+
+        /// <summary>
+        /// 통용 타입 반환
+        /// * Assert, Error, Exception은 모두 Error로 통용한다
+        /// </summary>
+        public LogType ToGeneralType(LogType type)
+        {
+            switch (type)
+            {
+                case LogType.Assert:
+                case LogType.Error:
+                case LogType.Exception:
+                    return LogType.Error;
+                case LogType.Warning:
+                    return LogType.Warning;
+                default: // LogType.Log
+                    return LogType.Log;
             }
         }
     }

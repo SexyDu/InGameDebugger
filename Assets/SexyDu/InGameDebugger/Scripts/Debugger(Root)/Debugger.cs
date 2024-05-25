@@ -15,6 +15,8 @@ namespace SexyDu.InGameDebugger
         {
             InGameDebuggerConfig.Ins.Debugger = this;
 
+            consoleHandler.Initialize();
+
             return this;
         }
 
@@ -22,6 +24,11 @@ namespace SexyDu.InGameDebugger
         {
             GameObject.Destroy(gameObject);
         }
+
+        #region ConsoleHandler
+        [Header("ConsoleHandler")]
+        [SerializeField] private ConsoleHandler consoleHandler;
+        #endregion
 
         #region ObjectCache
         [Header("ObjectCache")]

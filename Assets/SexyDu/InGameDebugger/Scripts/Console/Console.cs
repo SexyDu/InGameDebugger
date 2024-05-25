@@ -2,13 +2,19 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public abstract class Console : MonoBehaviour
+    public abstract partial class Console : MonoBehaviour
     {
+        // 수집 상태
+        private bool playing = false;
+        public bool Playing { get => playing; }
+
         /// <summary>
         /// 로깅 시작
         /// </summary>
         public virtual void Play()
         {
+            playing = true;
+
             Application.logMessageReceived += OnLogMessageReceived;
         }
 
@@ -17,6 +23,8 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public virtual void Pause()
         {
+            playing = false;
+
             Application.logMessageReceived -= OnLogMessageReceived;
         }
 
@@ -28,7 +36,15 @@ namespace SexyDu.InGameDebugger
             ILogMessage message = new LogMessage(condition, stackTrace, type);
 
             AddLogMessage(message);
+
+            // 로그 수 수집 (for 로그 옵저버)
+            CollectLogCount(type);
         }
+
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
+        public abstract Console Initialize();
 
         /// <summary>
         /// 로그 추가
