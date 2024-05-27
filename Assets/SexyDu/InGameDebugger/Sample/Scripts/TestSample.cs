@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using SexyDu.Tool;
 
-namespace SexyDu.InGameDebugger
+namespace SexyDu.InGameDebugger.Sample
 {
     public class TestSample : MonoBehaviour
     {

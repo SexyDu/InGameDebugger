@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IActivable
+    public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IActivable, IClearable
     {
         // 콘솔
         protected abstract Console console { get; }
@@ -21,6 +21,15 @@ namespace SexyDu.InGameDebugger
             console.Play();
 
             return this;
+        }
+
+        /// <summary>
+        /// 클리어
+        /// : IClearable
+        /// </summary>
+        public virtual void Clear()
+        {
+            console.Clear();
         }
 
         /// <summary>

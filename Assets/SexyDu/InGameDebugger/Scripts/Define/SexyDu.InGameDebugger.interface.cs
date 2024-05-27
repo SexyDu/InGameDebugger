@@ -4,4 +4,9 @@ namespace SexyDu.InGameDebugger
     {
         public void Activate();
     }
+
+    public interface IClearable
+    {
+        public void Clear();
+    }
 }

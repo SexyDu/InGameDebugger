@@ -11,6 +11,9 @@ namespace SexyDu.InGameDebugger
                 Initialize();
         }
 
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
         private Debugger Initialize()
         {
             InGameDebuggerConfig.Ins.Debugger = this;
@@ -22,28 +25,32 @@ namespace SexyDu.InGameDebugger
             return this;
         }
 
+        /// <summary>
+        /// 클리어
+        /// </summary>
+        private void Clear()
+        {
+            consoleHandler.Clear();
+        }
+
+        /// <summary>
+        /// 파괴
+        /// </summary>
         public void Destroy()
         {
+            Clear();
+
             GameObject.Destroy(gameObject);
         }
 
-        private void OnConsoleActivationChanged(bool active)
-        {
-            SetHomeActive(!active);
-        }
-
         #region Home
-        [SerializeField] private DebuggerHome home;
-
-        private void SetHomeActive(bool active)
-        {
-            home.SetActive(active);
-        }
+        [Header("Home")]
+        [SerializeField] private DebuggerHome home; // 홈화면
         #endregion
 
         #region ConsoleHandler
         [Header("ConsoleHandler")]
-        [SerializeField] private ConsoleHandler consoleHandler;
+        [SerializeField] private ConsoleHandler consoleHandler; // 콘솔 핸들러
         #endregion
 
         #region ObjectCache

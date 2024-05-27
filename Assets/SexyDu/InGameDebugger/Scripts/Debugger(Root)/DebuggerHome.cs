@@ -4,25 +4,27 @@ namespace SexyDu.InGameDebugger
 {
     public class DebuggerHome : MonoBehaviour, IConsoleActivationObserver
     {
-        public DebuggerHome Initialize(ConsoleHandler handler)
+        public DebuggerHome Initialize(IActivable consoleActivable)
         {
-            consoleActivable = handler;
+            this.consoleActivable = consoleActivable;
 
             return this;
         }
 
         private IActivable consoleActivable = null;
 
+        public void OnClickActivateConsole()
+        {
+            consoleActivable.Activate();
+        }
+
+        #region IConsoleActivationObserver
         public void OnConsoleActivationChanged(bool active)
         {
             Debug.LogFormat("콘솔 활성화 상태 변경 : {0}", active);
             SetActive(!active);
         }
-
-        public void OnClickActivateConsole()
-        {
-            consoleActivable.Activate();
-        }
+        #endregion
 
         #region ObjectCache
         [Header("ObjectCache")]

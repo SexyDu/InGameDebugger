@@ -5,8 +5,12 @@ namespace SexyDu.InGameDebugger
 {
     public class ItemConsoleHandlerUI : MonoBehaviour
     {
+        // ItemConsoleHandler UI 제어 핸들 인터페이스
         private IItemConsoleUIHandle handle = null;
 
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
         public ItemConsoleHandlerUI Initialize(IItemConsoleUIHandle handle)
         {
             this.handle = handle;

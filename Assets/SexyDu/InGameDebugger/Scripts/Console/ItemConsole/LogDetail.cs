@@ -10,7 +10,7 @@ namespace SexyDu.InGameDebugger
     /// </summary>
     public class LogDetail : MonoBehaviour
     {
-        public const string ResourcesPath = "IGCPrefabs/LogDetail";
+        public const string ResourcesPath = "IGDPrefabs/LogDetail";
 
         [SerializeField] private NullableImage icon;
         [SerializeField] private TMP_Text text;
