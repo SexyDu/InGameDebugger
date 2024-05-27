@@ -57,7 +57,7 @@ namespace SexyDu.InGameDebugger
             {
                 throw new System.Exception("Exception");
             }
-
+#if false
             if (GUI.Button(new Rect(0f, 100f, 100f, 100f), ""))
             {
                 if (safeArea != null)
@@ -84,6 +84,7 @@ namespace SexyDu.InGameDebugger
                 //  - landscape일 경우 확인 고려 필요 : 뭔가 좌측하단 기준 느낌임
                 // 결국 적용할 떄 safeArea / Canvas.scaleFactor 계산하면 될것 같음
             }
+#endif
         }
 
         [SerializeField] private SafeArea safeArea;

@@ -17,6 +17,8 @@ namespace SexyDu.InGameDebugger
 
             consoleHandler.Initialize();
 
+            consoleHandler.Subscribe(home.Initialize(consoleHandler));
+
             return this;
         }
 
@@ -24,6 +26,20 @@ namespace SexyDu.InGameDebugger
         {
             GameObject.Destroy(gameObject);
         }
+
+        private void OnConsoleActivationChanged(bool active)
+        {
+            SetHomeActive(!active);
+        }
+
+        #region Home
+        [SerializeField] private DebuggerHome home;
+
+        private void SetHomeActive(bool active)
+        {
+            home.SetActive(active);
+        }
+        #endregion
 
         #region ConsoleHandler
         [Header("ConsoleHandler")]

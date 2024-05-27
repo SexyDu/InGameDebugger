@@ -32,10 +32,22 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
+        /// 로그 클리어
+        /// </summary>
+        public override void Clear()
+        {
+            ClearLogItems();
+
+            base.Clear();
+        }
+
+        /// <summary>
         /// 로그 추가
         /// </summary>
         protected override void AddLogMessage(ILogMessage message)
         {
+            base.AddLogMessage(message);
+
             SetLogItem(message);
         }
 
@@ -70,6 +82,17 @@ namespace SexyDu.InGameDebugger
 
             if (currentIndex >= logItems.Length)
                 currentIndex = 0;
+        }
+
+        /// <summary>
+        /// 전체 로그아이템 클리어 함수
+        /// </summary>
+        private void ClearLogItems()
+        {
+            for (int i = 0; i < logItems.Length; i++)
+            {
+                logItems[i].Clear();
+            }
         }
 
         #region CreateLogItem

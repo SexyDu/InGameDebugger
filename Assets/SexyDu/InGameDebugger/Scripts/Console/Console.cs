@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SexyDu.InGameDebugger
@@ -29,6 +30,17 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
+        /// 로그 클리어
+        /// </summary>
+        public virtual void Clear()
+        {
+            messages.Clear();
+        }
+
+        // 로그 메세지 리스트
+        private List<ILogMessage> messages = new List<ILogMessage>();
+
+        /// <summary>
         /// 로깅 메세지 이벤트
         /// </summary>
         protected virtual void OnLogMessageReceived(string condition, string stackTrace, LogType type)
@@ -49,6 +61,9 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 로그 추가
         /// </summary>
-        protected abstract void AddLogMessage(ILogMessage message);
+        protected virtual void AddLogMessage(ILogMessage message)
+        {
+            messages.Add(message);
+        }
     }
 }
