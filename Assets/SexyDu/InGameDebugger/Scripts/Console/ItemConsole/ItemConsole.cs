@@ -48,11 +48,69 @@ namespace SexyDu.InGameDebugger
         {
             base.AddLogMessage(message);
 
-            SetLogItem(message);
+            DisplayLogItem(message);
+        }
+
+        public override void RefreshLogDisplay()
+        {
+            ClearLogItems();
+
+#if true
+            // 갱신 메세지 스택
+            Stack<ILogMessage> refreshMessages = new Stack<ILogMessage>();
+
+            for (int i = messages.Count - 1; i >= 0; i--)
+            {
+                if (ContainLogType(messages[i].Type))
+                {
+                    refreshMessages.Push(messages[i]);
+
+                    // 갱신 메세지 수가 로그 아이템과 같거나 큰 경우 더 이상 필요 없기에 반복문 탈출
+                    if (refreshMessages.Count >= logItems.Length)
+                        break;
+                }
+            }
+
+            while (refreshMessages.Count > 0)
+            {
+                SetLogItem(refreshMessages.Pop());
+            }
+#else
+            int lastItemIndex = currentIndex;
+
+            for (int i = messages.Count - 1; i >= 0; i--)
+            {
+                if (ContainLogType(messages[i].Type))
+                {
+                    // 이전 인덱스로 만들기
+                    /// * 여기서 이전인덱스로 먼저 만드는 이유
+                    ///  : 최초 여기 들어왔을 시점의 currentIndex는 아직 메세지가 최신으로 설정되지 않은 인덱스이기 때문에
+                    ///   현재의 최신 index인 Previous에 설정되도록 하기 위함
+                    Previous();
+
+                    SetLogItem(currentIndex, messages[i]);
+
+                    // 현재 설정된 인덱스가 
+                    if (currentIndex.Equals(lastItemIndex))
+                        break;
+                }
+            }
+#endif
         }
 
         [SerializeField] private LogItem[] logItems; // 로그 아이템 배열
         private int currentIndex = 0; // 현재 설정 로그 아이템 인덱스
+
+        /// <summary>
+        /// [활성화 로그 타입에 포함된 메세지인 경우]
+        /// 로그 메세지를 로그 아이템에 설정
+        /// </summary>
+        private void DisplayLogItem(ILogMessage message)
+        {
+            // 활성화 로그 타입에 포함된 경우만
+            if (ContainLogType(message.Type))
+                SetLogItem(message);
+        }
 
         /// <summary>
         /// 로그 메세지를 로그 아이템에 설정

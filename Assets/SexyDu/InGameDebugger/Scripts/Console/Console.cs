@@ -39,7 +39,7 @@ namespace SexyDu.InGameDebugger
         }
 
         // 로그 메세지 리스트
-        private List<ILogMessage> messages = new List<ILogMessage>();
+        protected List<ILogMessage> messages = new List<ILogMessage>();
 
         /// <summary>
         /// 로깅 메세지 이벤트
@@ -66,5 +66,52 @@ namespace SexyDu.InGameDebugger
         {
             messages.Add(message);
         }
+
+        /// <summary>
+        /// 로그 화면 갱신
+        /// </summary>
+        public abstract void RefreshLogDisplay();
+
+        #region LogType Activation
+        // 활성화된 로그 타입
+        private List<LogType> activatedLogTypes = new List<LogType>(
+            new LogType[] { LogType.Log, LogType.Warning, LogType.Error, LogType.Assert, LogType.Exception }
+            );
+
+        /// <summary>
+        /// 해당 로그 타입이 포함되어 있는지 여부 반환
+        /// </summary>
+        protected bool ContainLogType(LogType type)
+        {
+            return activatedLogTypes.Contains(type);
+        }
+
+        /// <summary>
+        /// 활성화 로그 타입 추가
+        /// </summary>
+        public void ActivateLogType(params LogType[] logTypes)
+        {
+            for (int i = 0; i < logTypes.Length; i++)
+            {
+                if (!activatedLogTypes.Contains(logTypes[i]))
+                    activatedLogTypes.Add(logTypes[i]);
+            }
+
+            RefreshLogDisplay();
+        }
+
+        /// <summary>
+        /// 활성화 로그 타입 제외
+        /// </summary>
+        public void InactivateLogType(params LogType[] logTypes)
+        {
+            for (int i = 0; i < logTypes.Length; i++)
+            {
+                activatedLogTypes.Remove(logTypes[i]);
+            }
+
+            RefreshLogDisplay();
+        }
+        #endregion
     }
 }

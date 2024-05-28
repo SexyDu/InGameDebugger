@@ -21,12 +21,21 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void Set(ILogMessage message)
         {
+#if true
+            // 설정과 동시에 하이어라키 맨 아래로 이동
+            /// * 설정과 동시에 디스플레이의 최하단에 보이도록 하기 위함
+            TransformCache.SetAsLastSibling();
+            // 활성화 되어 있지 않은 경우 활성화
+            if (!GameObjectCache.activeSelf)
+                SetActive(true);
+#else
             // 활성화 되어있는 경우 맨뒤로
             if (GameObjectCache.activeSelf)
                 TransformCache.SetAsLastSibling();
             // 활성화 되어 있지 않은 경우 활성화
             else
                 SetActive(true);
+#endif
 
             this.message = message;
 

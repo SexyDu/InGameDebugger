@@ -77,6 +77,18 @@ namespace SexyDu.InGameDebugger
         }
         #endregion
 
+        #region Activation Log Type
+        public void ActivateLogType(params LogType[] logTypes)
+        {
+            console.ActivateLogType(logTypes);
+        }
+
+        public void InactivateLogType(params LogType[] logTypes)
+        {
+            console.InactivateLogType(logTypes);
+        }
+        #endregion
+
         #region ObjectCache
         [Header("ObjectCache")]
         [SerializeField] private GameObject gameObjectCache;
