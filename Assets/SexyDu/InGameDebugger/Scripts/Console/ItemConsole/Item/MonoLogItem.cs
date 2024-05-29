@@ -4,7 +4,7 @@ using TMPro;
 
 namespace SexyDu.InGameDebugger
 {
-    public class LogItem : MonoBehaviour
+    public class MonoLogItem : MonoBehaviour
     {
         // 로그 메세지
         private ILogMessage message = null;

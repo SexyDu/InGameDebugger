@@ -61,7 +61,7 @@ namespace SexyDu.InGameDebugger
 
             for (int i = messages.Count - 1; i >= 0; i--)
             {
-                if (ContainLogType(messages[i].Type))
+                if (PassFilters(messages[i]))
                 {
                     refreshMessages.Push(messages[i]);
 
@@ -98,17 +98,17 @@ namespace SexyDu.InGameDebugger
 #endif
         }
 
-        [SerializeField] private LogItem[] logItems; // 로그 아이템 배열
+        [SerializeField] private MonoLogItem[] logItems; // 로그 아이템 배열
         private int currentIndex = 0; // 현재 설정 로그 아이템 인덱스
 
         /// <summary>
-        /// [활성화 로그 타입에 포함된 메세지인 경우]
+        /// [필터링 포함]
         /// 로그 메세지를 로그 아이템에 설정
         /// </summary>
         private void DisplayLogItem(ILogMessage message)
         {
-            // 활성화 로그 타입에 포함된 경우만
-            if (ContainLogType(message.Type))
+            // 필터에 통과된 경우만
+            if (PassFilters(message))
                 SetLogItem(message);
         }
 
@@ -176,9 +176,9 @@ namespace SexyDu.InGameDebugger
             }
             else
             {
-                LogItem source = logItems[0];
+                MonoLogItem source = logItems[0];
 
-                List<LogItem> list = new List<LogItem>(logItems);
+                List<MonoLogItem> list = new List<MonoLogItem>(logItems);
 
                 while (list.Count < targetCount)
                 {
@@ -192,9 +192,9 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 로그 아이템 생성
         /// </summary>
-        private LogItem CreateLogItem(int index, LogItem source)
+        private MonoLogItem CreateLogItem(int index, MonoLogItem source)
         {
-            LogItem clone = CreateLogItem(source);
+            MonoLogItem clone = CreateLogItem(source);
 
             clone.SetBackgroundColor(GetBackgroundColor(index));
 
@@ -204,7 +204,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 로그 아이템 생성
         /// </summary>
-        private LogItem CreateLogItem(LogItem source)
+        private MonoLogItem CreateLogItem(MonoLogItem source)
         {
             return Instantiate(source, source.Parent);
         }

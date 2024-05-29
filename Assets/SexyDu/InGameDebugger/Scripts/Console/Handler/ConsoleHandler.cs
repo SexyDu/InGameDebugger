@@ -77,15 +77,16 @@ namespace SexyDu.InGameDebugger
         }
         #endregion
 
-        #region Activation Log Type
-        public void ActivateLogType(params LogType[] logTypes)
+        // [임시] 필터 기능
+        #region Filter
+        public void AddConsoleFilter(IConsoleFilter filter)
         {
-            console.ActivateLogType(logTypes);
+            console.AddFilter(filter);
         }
 
-        public void InactivateLogType(params LogType[] logTypes)
+        public void RemoveConsoleFilter(IConsoleFilter filter)
         {
-            console.InactivateLogType(logTypes);
+            console.RemoveFilter(filter);
         }
         #endregion
 
