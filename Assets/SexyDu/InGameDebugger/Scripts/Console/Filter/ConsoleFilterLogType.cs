@@ -3,11 +3,19 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 콘솔 로그타입 필터 항목
+    /// </summary>
     public class ConsoleFilterLogType : ConsoleFilter
     {
         public ConsoleFilterLogType(params LogType[] logTypes)
         {
             activatedLogTypes = new List<LogType>(logTypes);
+        }
+
+        public ConsoleFilterLogType(List<LogType> logTypes)
+        {
+            activatedLogTypes = logTypes;
         }
 
         /// <summary>

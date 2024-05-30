@@ -21,7 +21,7 @@ namespace SexyDu.InGameDebugger.UI
         protected virtual void Initialize()
         {
             // 필터에 팔로워를 전달하며 초기 설정
-            filter.Initialize(BaseHandler.FilterFollower);
+            filter.Initialize(BaseHandler.FilterFollower, BaseHandler.ConsoleLogSubject);
         }
         #endregion
 

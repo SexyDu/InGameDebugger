@@ -1,5 +1,8 @@
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 콘솔 검색어 필터 항목
+    /// </summary>
     public class ConsoleFilterSearchWord : ConsoleFilter
     {
         /// <summary>

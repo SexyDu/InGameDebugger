@@ -20,6 +20,15 @@ namespace SexyDu.InGameDebugger
     /// </summary>
     public interface IConsoleLogObserver
     {
+        /// <summary>
+        /// 로그 카운트 변경 감지
+        /// * Clear 등
+        /// </summary>
+        public void OnDetectLog(IConsoleLogSubject subject);
+
+        /// <summary>
+        /// 로그 카운트 추가 감지
+        /// </summary>
         public void OnDetectLog(IConsoleLogSubject subject, LogType type);
     }
 }

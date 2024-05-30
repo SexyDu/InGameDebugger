@@ -2,6 +2,9 @@ using System;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 필터 항목
+    /// </summary>
     public abstract class ConsoleFilter : IConsoleFilter
     {
         /// <summary>

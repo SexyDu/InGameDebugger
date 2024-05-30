@@ -1,6 +1,7 @@
 #define USE_READONLY
 #if UNITY_EDITOR
-#define ONLY_EDITOR
+/// 아래 전처리기를 활성화 하면 하이어라키에 표시되는 LogItem에 ForEditor가 붙어 값이 제대로 설정되었는지 알 수 있다.
+//#define USE_FOREDITOR
 #endif
 
 using System;
@@ -8,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using SexyDu.UGUI;
-#if ONLY_EDITOR
+#if USE_FOREDITOR
 using SexyDu.InGameDebugger.ForEditor;
 #endif
 
@@ -32,7 +33,7 @@ namespace SexyDu.InGameDebugger
             this.rectTransformCache = rectTransformCache; // RectTransform
             this.gameObjectCache = gameObjectCache; // GameObject
 
-#if ONLY_EDITOR
+#if USE_FOREDITOR
             LogItemForEditor forEditor
                 = this.gameObjectCache.AddComponent<LogItemForEditor>()
                 .SetBackground(background)
@@ -77,7 +78,7 @@ namespace SexyDu.InGameDebugger
         {
             this.gameObjectCache = gameObjectCache;
 
-#if ONLY_EDITOR
+#if USE_FOREDITOR
             LogItemForEditor forEditor
                 = this.gameObjectCache.AddComponent<LogItemForEditor>()
                 .SetBackground(background)

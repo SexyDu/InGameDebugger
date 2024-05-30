@@ -25,6 +25,8 @@ namespace SexyDu.InGameDebugger
             logCount = 0;
             warningCount = 0;
             errorCount = 0;
+
+            NotifyDetectLog();
         }
 
         /// <summary>
@@ -55,13 +57,13 @@ namespace SexyDu.InGameDebugger
         {
             switch (InGameDebuggerConfig.Ins.ToGeneralType(type))
             {
-                case LogType.Error:
+                case LogType.Log:
                     logCount++;
                     break;
                 case LogType.Warning:
                     warningCount++;
                     break;
-                case LogType.Log:
+                case LogType.Error:
                     errorCount++;
                     break;
             }
@@ -77,6 +79,17 @@ namespace SexyDu.InGameDebugger
             for (int i = 0; i < logObservers.Count; i++)
             {
                 logObservers[i].OnDetectLog(this, type);
+            }
+        }
+
+        /// <summary>
+        /// 로그 옵저버 노티
+        /// </summary>
+        private void NotifyDetectLog()
+        {
+            for (int i = 0; i < logObservers.Count; i++)
+            {
+                logObservers[i].OnDetectLog(this);
             }
         }
     }
