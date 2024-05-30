@@ -1,13 +1,34 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SexyDu.InGameDebugger
+namespace SexyDu.InGameDebugger.UI
 {
-    public abstract class ConsoleHandlerUI : MonoBehaviour
+    public abstract class ConsoleHandlerUI : MonoBehaviour, IConsoleHandlerUI
     {
         protected abstract ConsoleHandler BaseHandler { get; }
 
-        private void RefreshUI()
+        #region OnAwakeInit
+        [SerializeField] private bool onAwakeInit = true;
+        private void Awake()
+        {
+            if (onAwakeInit)
+                Initialize();
+        }
+
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            // 필터에 팔로워를 전달하며 초기 설정
+            filter.Initialize(BaseHandler.FilterFollower);
+        }
+        #endregion
+
+        /// <summary>
+        /// UI 갱신
+        /// </summary>
+        public virtual void Refresh()
         {
             RefreshPlayState();
         }
@@ -63,6 +84,11 @@ namespace SexyDu.InGameDebugger
         {
             BaseHandler.Inactivate();
         }
+        #endregion
+
+        #region Filter
+        [Header("Filter")]
+        [SerializeField] private ConsoleFilterUI filter;
         #endregion
     }
 }

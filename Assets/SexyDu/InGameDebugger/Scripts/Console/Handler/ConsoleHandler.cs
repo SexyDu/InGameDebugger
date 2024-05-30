@@ -79,6 +79,11 @@ namespace SexyDu.InGameDebugger
         }
         #endregion
 
+        #region UI
+        // 베이스 UI 인터페이스
+        protected abstract IConsoleHandlerUI BaseUI { get; }
+        #endregion
+
         #region ObjectCache
         [Header("ObjectCache")]
         [SerializeField] private GameObject gameObjectCache;

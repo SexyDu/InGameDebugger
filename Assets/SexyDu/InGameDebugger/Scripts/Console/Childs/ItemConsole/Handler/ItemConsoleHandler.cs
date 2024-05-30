@@ -8,8 +8,6 @@ namespace SexyDu.InGameDebugger
         {
             base.Initialize();
 
-            ui.Initialize(this);
-
             return this;
         }
 
@@ -18,8 +16,13 @@ namespace SexyDu.InGameDebugger
         protected override Console console => itemConsole;
 
         #region UI
-        [Header("UI")]
-        [SerializeField] private ItemConsoleHandlerUI ui;
+        private IItemConsoleHandlerUI ui;
+        protected override IConsoleHandlerUI BaseUI => ui;
+
+        public void Connect(IItemConsoleHandlerUI ui)
+        {
+            this.ui = ui;
+        }
         #endregion
     }
 }
