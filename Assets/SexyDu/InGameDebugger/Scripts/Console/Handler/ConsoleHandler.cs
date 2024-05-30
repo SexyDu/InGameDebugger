@@ -9,6 +9,8 @@ namespace SexyDu.InGameDebugger
         protected abstract Console console { get; }
         // 로그 수집 서브젝트
         public IConsoleLogSubject ConsoleLogSubject { get => console; }
+        // 콘솔 필터 팔로워 : IConsoleUIHandle
+        public IConsoleFilterFollower FilterFollower { get => console; }
         // 로그 수집 상태 : IConsoleUIHandle
         public bool Playing { get { return console.Playing; } }
 
@@ -74,19 +76,6 @@ namespace SexyDu.InGameDebugger
             SetActive(false);
 
             NotifyActivation();
-        }
-        #endregion
-
-        // [임시] 필터 기능
-        #region Filter
-        public void AddConsoleFilter(IConsoleFilter filter)
-        {
-            console.AddFilter(filter);
-        }
-
-        public void RemoveConsoleFilter(IConsoleFilter filter)
-        {
-            console.RemoveFilter(filter);
         }
         #endregion
 

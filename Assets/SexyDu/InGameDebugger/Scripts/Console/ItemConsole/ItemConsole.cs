@@ -1,3 +1,8 @@
+//#define USE_MONOITEM
+#if UNITY_EDITOR
+#define ONLY_EDITOR
+#endif
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,11 +56,13 @@ namespace SexyDu.InGameDebugger
             DisplayLogItem(message);
         }
 
+        /// <summary>
+        /// 로그 화면 갱신
+        /// </summary>
         public override void RefreshLogDisplay()
         {
             ClearLogItems();
 
-#if true
             // 갱신 메세지 스택
             Stack<ILogMessage> refreshMessages = new Stack<ILogMessage>();
 
@@ -75,30 +82,12 @@ namespace SexyDu.InGameDebugger
             {
                 SetLogItem(refreshMessages.Pop());
             }
-#else
-            int lastItemIndex = currentIndex;
-
-            for (int i = messages.Count - 1; i >= 0; i--)
-            {
-                if (ContainLogType(messages[i].Type))
-                {
-                    // 이전 인덱스로 만들기
-                    /// * 여기서 이전인덱스로 먼저 만드는 이유
-                    ///  : 최초 여기 들어왔을 시점의 currentIndex는 아직 메세지가 최신으로 설정되지 않은 인덱스이기 때문에
-                    ///   현재의 최신 index인 Previous에 설정되도록 하기 위함
-                    Previous();
-
-                    SetLogItem(currentIndex, messages[i]);
-
-                    // 현재 설정된 인덱스가 
-                    if (currentIndex.Equals(lastItemIndex))
-                        break;
-                }
-            }
-#endif
         }
 
-        [SerializeField] private MonoLogItem[] logItems; // 로그 아이템 배열
+        /// <summary>
+        /// 로그 아이템 배열
+        /// </summary>
+        private ILogItem[] logItems;
         private int currentIndex = 0; // 현재 설정 로그 아이템 인덱스
 
         /// <summary>
@@ -155,7 +144,16 @@ namespace SexyDu.InGameDebugger
 
         #region CreateLogItem
         [Header("Create Log Item")]
+        [SerializeField] private Transform itemParent; // 로그 아이템의 부모 Transform
         [SerializeField] private Color[] backgroundColors; // 로그 아이템 배경 색상
+
+        /// <summary>
+        /// LogItem의 source 로드
+        /// </summary>
+        private T LoadItemSource<T>(string resourcePath) where T : MonoBehaviour
+        {
+            return Resources.Load<T>(resourcePath);
+        }
 
         /// <summary>
         /// 인덱스에 따른 배경 색상 반환
@@ -170,44 +168,62 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void CreateLogItems(int targetCount)
         {
+            if (logItems == null)
+                logItems = new ILogItem[0];
+
             if (logItems.Length >= targetCount)
             {
                 Debug.LogWarningFormat($"이미 목표 아이템 수({targetCount}) 보다 많은 콘솔 아이템({logItems.Length})을 가지고 있습니다.");
             }
             else
             {
-                MonoLogItem source = logItems[0];
+#if USE_MONOITEM
+                MonoLogItem source = LoadItemSource<MonoLogItem>(MonoLogItem.ResourcePath);
+#else
+                LogItemSource source = LoadItemSource<LogItemSource>(LogItemSource.ResourcePath);
+#endif
 
-                List<MonoLogItem> list = new List<MonoLogItem>(logItems);
+                List<ILogItem> list = new List<ILogItem>(logItems);
 
                 while (list.Count < targetCount)
                 {
-                    list.Add(CreateLogItem(list.Count, source));
+                    // 로그 아이템을 생성하고 백그라운드를 한 뒤 리스트에 추가
+                    list.Add(CreateLogItem(source).SetBackgroundColor(GetBackgroundColor(list.Count)));
                 }
 
                 logItems = list.ToArray();
             }
         }
 
+#if USE_MONOITEM
         /// <summary>
         /// 로그 아이템 생성
-        /// </summary>
-        private MonoLogItem CreateLogItem(int index, MonoLogItem source)
-        {
-            MonoLogItem clone = CreateLogItem(source);
-
-            clone.SetBackgroundColor(GetBackgroundColor(index));
-
-            return clone;
-        }
-
-        /// <summary>
-        /// 로그 아이템 생성
+        /// - MonoBehaviour 형식 아이템
         /// </summary>
         private MonoLogItem CreateLogItem(MonoLogItem source)
         {
-            return Instantiate(source, source.Parent);
+            return Instantiate(source, itemParent);
         }
+#else
+        /// <summary>
+        /// 로그 아이템 생성
+        /// - 기본 클래스 형식 아이템
+        /// </summary>
+        private LogItem CreateLogItem(LogItemSource source)
+        {
+            return Instantiate(source, itemParent).ConvertLogItem();
+        }
+#endif
         #endregion
+
+#if ONLY_EDITOR
+        [Header("Only Editor")]
+        /// 아이템 소스 (개발자 경로 확인용)
+        /// * 실제 소스 로드는 Resource.Load(LogItemSource.ResourcePath) 를 통해 이루어집니다.
+        [SerializeField] private LogItemSource logItemSource;
+        /// 모노타입의 아이템 소스 (개발자 경로 확인용)
+        /// * 실제 소스 로드는 Resource.Load(MonoLogItem.ResourcePath) 를 통해 이루어집니다.
+        [SerializeField] private MonoLogItem logItemSourceMono;
+#endif
     }
 }

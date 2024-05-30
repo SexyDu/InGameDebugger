@@ -4,10 +4,13 @@ using TMPro;
 
 namespace SexyDu.InGameDebugger
 {
-    public class MonoLogItem : MonoBehaviour
+    public class MonoLogItem : MonoBehaviour, ILogItem
     {
+        public const string ResourcePath = "IGDPrefabs/MonoLogItem";
+
         // 로그 메세지
         private ILogMessage message = null;
+        // : ILogItem
         public ILogMessage Message { get => message; }
 
         [SerializeField] private Image background; // 배경 이미지
@@ -18,6 +21,7 @@ namespace SexyDu.InGameDebugger
 
         /// <summary>
         /// 로그 메세지 설정
+        /// : ILogItem
         /// </summary>
         public void Set(ILogMessage message)
         {
@@ -47,6 +51,7 @@ namespace SexyDu.InGameDebugger
 
         /// <summary>
         /// 클리어
+        /// : ILogItem (IClearable)
         /// </summary>
         public void Clear()
         {
@@ -59,20 +64,24 @@ namespace SexyDu.InGameDebugger
 
             SetActive(false);
         }
+
+        /// <summary>
+        /// 배경색상 설정
+        /// : ILogItem
+        /// </summary>
+        public ILogItem SetBackgroundColor(Color color)
+        {
+            background.color = color;
+
+            return this;
+        }
+
         /// <summary>
         /// 아이콘 설정 상태에 따른 아이콘 색상 반환
         /// * 이미지가 비어있는 경우 안보이게 하기 위함
         private Color GetIconColor()
         {
             return icon.sprite == null ? Color.clear : Color.white;
-        }
-
-        /// <summary>
-        /// 배경색상 설정
-        /// </summary>
-        public void SetBackgroundColor(Color color)
-        {
-            background.color = color;
         }
 
         /// <summary>
@@ -92,6 +101,10 @@ namespace SexyDu.InGameDebugger
         }
 
         #region LogDetail
+        /// <summary>
+        /// 로그 상세보기 팝업 생성
+        /// </summary>
+        /// <returns></returns>
         private LogDetail CreateLogDetail()
         {
             LogDetail source = Resources.Load<LogDetail>(LogDetail.ResourcesPath);

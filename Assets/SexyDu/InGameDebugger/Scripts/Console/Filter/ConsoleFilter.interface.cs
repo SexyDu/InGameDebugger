@@ -14,4 +14,11 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public IConsoleFilter Subscribe(Action onChanged);
     }
+
+    public interface IConsoleFilterFollower
+    {
+        public void FollowFilter(IConsoleFilter filter);
+
+        public void UnfollowFilter(IConsoleFilter filter);
+    }
 }

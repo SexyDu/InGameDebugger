@@ -12,5 +12,8 @@ namespace SexyDu.InGameDebugger
 
         // 비활성화
         public void Inactivate();
+
+        // 콘솔 필터 팔로워
+        public IConsoleFilterFollower FilterFollower { get; }
     }
 }

@@ -18,8 +18,8 @@ namespace SexyDu.InGameDebugger.Sample
                 LogType.Error, LogType.Assert, LogType.Exception);
             filterSearchWord = new ConsoleFilterSearchWord();
 
-            ConsoleHandler.AddConsoleFilter(filterLogType);
-            ConsoleHandler.AddConsoleFilter(filterSearchWord);
+            ConsoleHandler.FilterFollower.FollowFilter(filterLogType);
+            ConsoleHandler.FilterFollower.FollowFilter(filterSearchWord);
         }
 
         private void OnGUI()

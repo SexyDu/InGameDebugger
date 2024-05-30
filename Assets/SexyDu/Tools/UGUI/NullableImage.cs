@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +7,11 @@ namespace SexyDu.UGUI
     [Serializable]
     public struct NullableImage
     {
+        public NullableImage(Image image)
+        {
+            this.image = image;
+        }
+
         [SerializeField] private Image image;
         public Image Image { get => image; }
 
@@ -20,6 +23,11 @@ namespace SexyDu.UGUI
 
                 SetColor();
             }
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            this.sprite = sprite;
         }
 
         private void SetColor()

@@ -6,7 +6,7 @@ namespace SexyDu.InGameDebugger
     /// <summary>
     /// 로그 수집에 따른 옵저버패턴
     /// </summary>
-    public abstract partial class Console
+    public abstract partial class Console : IConsoleFilterFollower
     {
         // 콘솔 필터 리스트
         private List<IConsoleFilter> filters = new List<IConsoleFilter>();
@@ -38,7 +38,7 @@ namespace SexyDu.InGameDebugger
         /// 필터 추가
         /// </summary>
         /// <param name="filter"></param>
-        public void AddFilter(IConsoleFilter filter)
+        public void FollowFilter(IConsoleFilter filter)
         {
             // 전달받은 필터가 리스트에 없는 경우
             if (!filters.Contains(filter))
@@ -49,7 +49,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 필터 제거
         /// </summary>
-        public void RemoveFilter(IConsoleFilter filter)
+        public void UnfollowFilter(IConsoleFilter filter)
         {
             filters.Remove(filter);
         }

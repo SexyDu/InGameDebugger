@@ -29,11 +29,17 @@ namespace SexyDu.InGameDebugger
             activationObservers.Remove(observer);
         }
 
+        /// <summary>
+        /// 활성화 알림
+        /// </summary>
         private void NotifyActivation()
         {
             NotifyActivation(GameObjectCache.activeSelf);
         }
 
+        /// <summary>
+        /// 활성화 알림
+        /// </summary>
         private void NotifyActivation(bool active)
         {
             for (int i = 0; i < activationObservers.Count; i++)
