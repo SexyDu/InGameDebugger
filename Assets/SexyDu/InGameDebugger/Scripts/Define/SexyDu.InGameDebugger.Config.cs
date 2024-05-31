@@ -15,7 +15,7 @@ namespace SexyDu.InGameDebugger
         {
             // Settings 로드
             settings = Resources.Load<InGameDebuggerSettings>(InGameDebuggerSettings.ResourcePath)?.Initialize();
-            if (settings)
+            if (settings == null)
                 throw new NullReferenceException($"지정된 경로({InGameDebuggerSettings.ResourcePath})에 맞는 InGameDebuggerSettings를 찾을 수 없습니다.");
         }
 

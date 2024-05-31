@@ -6864,10 +6864,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1850980369}
-  textMeshes:
-  - {fileID: 0}
-  inputFields:
-  - {fileID: 0}
+  textMeshes: []
+  inputFields: []
 --- !u!1 &1936192265
 GameObject:
   m_ObjectHideFlags: 0
