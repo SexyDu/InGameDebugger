@@ -8,14 +8,45 @@ namespace SexyDu.InGameDebugger
     /// </summary>
     public abstract partial class Console : IConsoleLogSubject
     {
+        /// <summary>
+        /// 로크 카운트 옵저버 리스트
+        /// </summary>
         private List<IConsoleLogObserver> logObservers = new List<IConsoleLogObserver>();
 
+        /// <summary>
+        /// 일반로그 수
+        /// </summary>
         private int logCount = 0;
-        private int warningCount = 0;
-        private int errorCount = 0;
         public int LogCount { get => logCount; }
+
+        /// <summary>
+        /// 경고로그 수
+        /// </summary>
+        private int warningCount = 0;
         public int WarningCount { get => warningCount; }
+
+        /// <summary>
+        /// 에러로그 수
+        /// </summary>
+        private int errorCount = 0;
         public int ErrorCount { get => errorCount; }
+
+        /// <summary>
+        /// 강조로그 수
+        /// </summary>
+        private int assertionCount = 0;
+        public int AssertionCount { get => assertionCount; }
+
+        /// <summary>
+        /// 예외로그 수
+        /// </summary>
+        private int exceptionCount = 0;
+        public int ExceptionCount { get => exceptionCount; }
+
+        /// <summary>
+        /// 일반적인 에러로그 수
+        /// </summary>
+        public int GeneralErrorCount { get => errorCount + assertionCount + exceptionCount; }
 
         /// <summary>
         /// 로그 카운트 클리어
@@ -31,6 +62,7 @@ namespace SexyDu.InGameDebugger
 
         /// <summary>
         /// 로그 옵저버 등록
+        /// : IConsoleLogSubject
         /// </summary>
         public void Subscribe(IConsoleLogObserver observer)
         {
@@ -44,6 +76,7 @@ namespace SexyDu.InGameDebugger
 
         /// <summary>
         /// 로그 옵저버 해제
+        /// : IConsoleLogSubject
         /// </summary>
         public void Unsubscribe(IConsoleLogObserver observer)
         {
@@ -55,7 +88,7 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         private void CollectLogCount(LogType type)
         {
-            switch (InGameDebuggerConfig.Ins.ToGeneralType(type))
+            switch (type)
             {
                 case LogType.Log:
                     logCount++;
@@ -66,13 +99,19 @@ namespace SexyDu.InGameDebugger
                 case LogType.Error:
                     errorCount++;
                     break;
+                case LogType.Assert:
+                    assertionCount++;
+                    break;
+                case LogType.Exception:
+                    exceptionCount++;
+                    break;
             }
 
             NotifyDetectLog(type);
         }
 
         /// <summary>
-        /// 로그 옵저버 노티
+        /// 신규 로그 추가에 따른 옵저버 노티
         /// </summary>
         private void NotifyDetectLog(LogType type)
         {
@@ -83,7 +122,7 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
-        /// 로그 옵저버 노티
+        /// 로그 수 변경에 따른 옵저버 노티
         /// </summary>
         private void NotifyDetectLog()
         {

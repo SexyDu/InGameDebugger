@@ -13,6 +13,7 @@ namespace SexyDu.InGameDebugger
         public int LogCount { get; }
         public int WarningCount { get; }
         public int ErrorCount { get; }
+        public int GeneralErrorCount { get; }
     }
 
     /// <summary>

@@ -1,21 +1,42 @@
+using System;
 using UnityEngine;
 
-namespace SexyDu.Tool
+namespace SexyDu.UGUI
 {
-    public class SafeArea : MonoBehaviour
+    public class SafeAreaOffset : SafeArea
     {
-        [SerializeField] private RectTransform target;
+        [SerializeField] private Canvas canvas;
+
+        /// <summary>
+        /// SafeArea 설정
+        /// </summary>
+        public override void Set()
+        {
+            if (HasTarget)
+                Set(canvas);
+            else
+                throw new NullReferenceException($"SafeAreaOffset({name})에 canvas가 설정되지 않았습니다.");
+        }
+
+        /// <summary>
+        /// SafeArea 설정
+        /// </summary>
         public void Set(Canvas canvas)
         {
             Set(canvas.scaleFactor);
         }
 
+        /// <summary>
+        /// SafeArea 설정
+        /// </summary>
         public void Set(float scaleFactor)
         {
             Vector2 safeAreaSize = Screen.safeArea.size;
 
 #if true
+            // Left, Bottom
             Vector2 offsetMin = Screen.safeArea.position;
+            // Right, Top
             Vector2 offsetMax = new Vector2(
                 Screen.width - safeAreaSize.x - offsetMin.x,
                 Screen.height - safeAreaSize.y - offsetMin.y

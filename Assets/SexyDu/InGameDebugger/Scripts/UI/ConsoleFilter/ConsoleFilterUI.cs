@@ -36,6 +36,9 @@ namespace SexyDu.InGameDebugger.UI
         // 로그 옵저버
         [SerializeField] private ConsoleLogObserver consoleLogObserver;
 
+        /// <summary>
+        /// 수집된 로그 카운트 표시 클래스
+        /// </summary>
         [Serializable]
         public class ConsoleLogObserver : IConsoleLogObserver
         {
@@ -46,7 +49,7 @@ namespace SexyDu.InGameDebugger.UI
             {
                 SetLogCount(textCountLog, subject.LogCount);
                 SetLogCount(textCountWarning, subject.WarningCount);
-                SetLogCount(textCountGeneralError, subject.ErrorCount);
+                SetLogCount(textCountGeneralError, subject.GeneralErrorCount);
             }
 
             /// <summary>
@@ -63,27 +66,23 @@ namespace SexyDu.InGameDebugger.UI
                         SetLogCount(textCountWarning, subject.WarningCount);
                         break;
                     default: // case LogType.Error: case LogType.Assert: case LogType.Exception:
-                        SetLogCount(textCountGeneralError, subject.ErrorCount);
+                        SetLogCount(textCountGeneralError, subject.GeneralErrorCount);
                         break;
                 }
             }
 
-            private const int MaxCount = 999;
-            private const string MaxString = "999+";
-            [SerializeField] private TMP_Text textCountLog;
-            [SerializeField] private TMP_Text textCountWarning;
-            [SerializeField] private TMP_Text textCountGeneralError;
+            private const int MaxCount = 999; // 표시 최대 수
+            private const string MaxString = "999+"; // 표시 최대 수 초과 시 문자열
+            [SerializeField] private TMP_Text textCountLog; // 로그 카운트 텍스트
+            [SerializeField] private TMP_Text textCountWarning; // 경고 카운트 텍스트
+            [SerializeField] private TMP_Text textCountGeneralError; // 일반에러 카운트 텍스트
 
             private void SetLogCount(TMP_Text textCount, int count)
             {
                 if (count > MaxCount)
-                {
                     textCount.SetText(MaxString);
-                }
                 else
-                {
                     textCount.SetText(count.ToString());
-                }
             }
         }
     }

@@ -22,6 +22,8 @@ namespace SexyDu.InGameDebugger.UI
         {
             // 필터에 팔로워를 전달하며 초기 설정
             filter.Initialize(BaseHandler.FilterFollower, BaseHandler.ConsoleLogSubject);
+
+            anchor.Initialize();
         }
         #endregion
 
@@ -89,6 +91,11 @@ namespace SexyDu.InGameDebugger.UI
         #region Filter
         [Header("Filter")]
         [SerializeField] private ConsoleFilterUI filter;
+        #endregion
+
+        #region Anchor
+        [Header("Anchor")]
+        [SerializeField] private ConsoleAnchorUI anchor;
         #endregion
     }
 }

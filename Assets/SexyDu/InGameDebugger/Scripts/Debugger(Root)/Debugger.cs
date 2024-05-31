@@ -51,7 +51,6 @@ namespace SexyDu.InGameDebugger
         #region ConsoleHandler
         [Header("ConsoleHandler")]
         [SerializeField] private ConsoleHandler consoleHandler; // 콘솔 핸들러
-        public ConsoleHandler ConsoleHandler { get => consoleHandler; } // [임시]
         #endregion
 
         #region ObjectCache
