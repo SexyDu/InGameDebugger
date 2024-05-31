@@ -43,7 +43,7 @@ namespace SexyDu.InGameDebugger
 
             this.message = message;
 
-            icon.sprite = Config.GetLogIcon(this.message.Type);
+            icon.sprite = Config.Settings.GetLogIcon(this.message.Type);
             icon.color = GetIconColor();
 
             text.SetText(this.message.GetLogString());

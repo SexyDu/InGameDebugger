@@ -8,6 +8,7 @@ namespace SexyDu.InGameDebugger
     /// </summary>
     public class InGameDebuggerConfig
     {
+        #region Singleton
         private static Lazy<InGameDebuggerConfig> ins = new Lazy<InGameDebuggerConfig>(() => new InGameDebuggerConfig());
         public static InGameDebuggerConfig Ins { get => ins.Value; }
 
@@ -17,7 +18,10 @@ namespace SexyDu.InGameDebugger
             settings = Resources.Load<InGameDebuggerSettings>(InGameDebuggerSettings.ResourcePath)?.Initialize();
             if (settings == null)
                 throw new NullReferenceException($"지정된 경로({InGameDebuggerSettings.ResourcePath})에 맞는 InGameDebuggerSettings를 찾을 수 없습니다.");
+
+            
         }
+        #endregion
 
         /// Settings
         private readonly InGameDebuggerSettings settings = null;
@@ -45,40 +49,5 @@ namespace SexyDu.InGameDebugger
             }
         }
         #endregion
-
-        /// <summary>
-        /// 로그 타입에 따른 로그 아이콘 Sprite 반환
-        /// </summary>
-        public Sprite GetLogIcon(LogType type)
-        {
-            switch (ToGeneralType(type))
-            {
-                case LogType.Error:
-                    return Settings.ErrorIcon;
-                case LogType.Warning:
-                    return Settings.WarningIcon;
-                default: // LogType.Log
-                    return Settings.LogIcon;
-            }
-        }
-
-        /// <summary>
-        /// 통용 타입 반환
-        /// * Assert, Error, Exception은 모두 Error로 통용한다
-        /// </summary>
-        public LogType ToGeneralType(LogType type)
-        {
-            switch (type)
-            {
-                case LogType.Assert:
-                case LogType.Error:
-                case LogType.Exception:
-                    return LogType.Error;
-                case LogType.Warning:
-                    return LogType.Warning;
-                default: // LogType.Log
-                    return LogType.Log;
-            }
-        }
     }
 }

@@ -134,7 +134,7 @@ namespace SexyDu.InGameDebugger
 
             this.message = message;
 
-            icon.SetSprite(Config.GetLogIcon(this.message.Type));
+            icon.SetSprite(Config.Settings.GetLogIcon(this.message.Type));
 
             text.SetText(this.message.GetLogString());
         }

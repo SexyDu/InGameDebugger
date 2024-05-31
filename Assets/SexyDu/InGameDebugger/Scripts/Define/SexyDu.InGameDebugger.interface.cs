@@ -9,4 +9,9 @@ namespace SexyDu.InGameDebugger
     {
         public void Clear();
     }
+
+    public interface IDestroyable
+    {
+        public void Destroy();
+    }
 }

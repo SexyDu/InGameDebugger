@@ -6,18 +6,18 @@ using UnityEditor;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// InGameDebugger 설정
+    /// ***** Header *****
+    /// </summary>
     [CreateAssetMenu(fileName = "InGameDebuggerSettings", menuName = "SexyDu/Settings/InGameDebugger")]
-    public class InGameDebuggerSettings : ScriptableObject
+    public partial class InGameDebuggerSettings : ScriptableObject
     {
         public const string ResourcePath = "Installer/InGameDebuggerSettings";
 
         [Tooltip("InGameDebugger에 사용될 폰트에셋")]
         [SerializeField] private TMP_FontAsset fontAsset;
         public TMP_FontAsset FontAsset { get { return fontAsset; } }
-
-        [Tooltip("로그 Scroll 시 로그 출력 Pause 여부\n* 체크되어 있는 경우 스크롤 시 로그 출력이 멈춥니다.")]
-        [SerializeField] private bool activeCommand = true;
-        public bool ActiveCommand { get { return activeCommand; } }
 
         [Header("Canvas")]
         [Tooltip("InGameDebugger의 Sorting layer")]
@@ -45,15 +45,12 @@ namespace SexyDu.InGameDebugger
         [SerializeField] private Sprite warningIcon;
         [Tooltip("에러 로그(Error)에 사용될 아이콘 Sprite")]
         [SerializeField] private Sprite errorIcon;
-        public Sprite LogIcon { get => logIcon; }
-        public Sprite WarningIcon { get => warningIcon; }
-        public Sprite ErrorIcon { get => errorIcon; }
         #endregion
 
-        public InGameDebuggerSettings Initialize()
-        {
-            return this;
-        }
+        [Header("Command")]
+        [Tooltip("(빌드된) 커맨드 활성화 여부")]
+        [SerializeField] private bool useCommand = true;
+        public bool UseCommand { get { return useCommand; } }
     }
 
 #if UNITY_EDITOR

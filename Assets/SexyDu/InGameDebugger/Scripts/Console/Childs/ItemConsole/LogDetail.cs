@@ -8,7 +8,7 @@ namespace SexyDu.InGameDebugger
     /// <summary>
     /// 로그 상세 보기
     /// </summary>
-    public class LogDetail : MonoBehaviour
+    public class LogDetail : MonoBehaviour, IClearable, IDestroyable
     {
         public const string ResourcesPath = "IGDPrefabs/LogDetail";
 
@@ -32,7 +32,7 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public LogDetail Set(ILogMessage message)
         {
-            icon.sprite = InGameDebuggerConfig.Ins.GetLogIcon(message.Type);
+            icon.sprite = InGameDebuggerConfig.Ins.Settings.GetLogIcon(message.Type);
             text.SetText(message.GetLogString());
 
             return this;
@@ -50,18 +50,20 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 클리어
         /// </summary>
-        private void Clear()
+        public void Clear()
         {
             icon.sprite = null;
             text.SetText(string.Empty);
         }
+
         /// <summary>
         /// 파괴
         /// </summary>
-        private void Destroy()
+        public void Destroy()
         {
             Destroy(gameObject);
         }
+
         /// <summary>
         /// 종료 클릭 이벤트
         /// </summary>

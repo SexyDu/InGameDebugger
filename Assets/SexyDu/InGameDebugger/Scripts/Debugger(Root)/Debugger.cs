@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public class Debugger : MonoBehaviour
+    public class Debugger : MonoBehaviour, IDestroyable, IClearable
     {
         [SerializeField] private bool onAwakeInit;
         private void Awake()
@@ -18,6 +18,7 @@ namespace SexyDu.InGameDebugger
         {
             InGameDebuggerConfig.Ins.Debugger = this;
 
+            // DebuggerInitializer가 있는 경우 초기화
             GetComponent<DebuggerInitializer>()?.Initialize().Release();
 
             consoleHandler.Initialize();
@@ -30,7 +31,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 클리어
         /// </summary>
-        private void Clear()
+        public void Clear()
         {
             consoleHandler.Clear();
         }

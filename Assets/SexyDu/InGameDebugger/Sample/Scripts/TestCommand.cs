@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SexyDu.InGameDebugger
+namespace SexyDu.InGameDebugger.Sample
 {
     public class TestCommand : MonoBehaviour
     {
