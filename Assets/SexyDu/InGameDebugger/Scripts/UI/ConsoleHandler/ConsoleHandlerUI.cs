@@ -23,6 +23,7 @@ namespace SexyDu.InGameDebugger.UI
             // 필터에 팔로워를 전달하며 초기 설정
             filter.Initialize(BaseHandler.FilterFollower, BaseHandler.ConsoleLogSubject);
 
+            // 앵커 초기 설정
             anchor.Initialize();
         }
         #endregion

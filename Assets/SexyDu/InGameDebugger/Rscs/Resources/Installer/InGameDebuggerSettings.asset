@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InGameDebuggerSettings
   m_EditorClassIdentifier: 
   fontAsset: {fileID: 11400000, guid: 0a7be9f5c172942619b3ae1893582a75, type: 2}
-  useScrollPause: 1
+  activeCommand: 1
   sortingLayer: 
   orderInLayer: 0
   itemCount: 100

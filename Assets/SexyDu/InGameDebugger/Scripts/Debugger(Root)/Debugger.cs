@@ -18,6 +18,8 @@ namespace SexyDu.InGameDebugger
         {
             InGameDebuggerConfig.Ins.Debugger = this;
 
+            GetComponent<DebuggerInitializer>()?.Initialize().Release();
+
             consoleHandler.Initialize();
 
             consoleHandler.Subscribe(home.Initialize(consoleHandler));

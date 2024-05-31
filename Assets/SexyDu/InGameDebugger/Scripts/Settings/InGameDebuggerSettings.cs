@@ -16,17 +16,17 @@ namespace SexyDu.InGameDebugger
         public TMP_FontAsset FontAsset { get { return fontAsset; } }
 
         [Tooltip("로그 Scroll 시 로그 출력 Pause 여부\n* 체크되어 있는 경우 스크롤 시 로그 출력이 멈춥니다.")]
-        [SerializeField] private bool useScrollPause = true;
-        public bool UseScrollPause { get { return useScrollPause; } }
+        [SerializeField] private bool activeCommand = true;
+        public bool ActiveCommand { get { return activeCommand; } }
 
         [Header("Canvas")]
         [Tooltip("InGameDebugger의 Sorting layer")]
         [SerializeField] private string sortingLayer;
-        public string SortingLayer { get { return sortingLayer; } }
+        public string SortingLayerName { get { return sortingLayer; } }
         
         [Tooltip("InGameDebugger의 Order in layer")]
         [SerializeField] private int orderInLayer;
-        public int OrderInLayer { get { return orderInLayer; } }
+        public int SortingOrder { get { return orderInLayer; } }
 
         #region Item Console
         [Header("Item Console")]
