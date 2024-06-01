@@ -4,7 +4,7 @@ namespace SexyDu.InGameDebugger.Sample
 {
     public class TestCommand : MonoBehaviour
     {
-        private ICommandDictionary CommandDictionary => InGameDebuggerConfig.Ins.CommandDictionary;
+        private ICommandContainer CommandDictionary => InGameDebuggerConfig.Ins.CommandDictionary;
 
         private void Awake()
         {

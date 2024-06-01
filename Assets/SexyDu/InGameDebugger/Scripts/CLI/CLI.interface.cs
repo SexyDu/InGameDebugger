@@ -19,9 +19,9 @@ namespace SexyDu.InGameDebugger
     }
     
     /// <summary>
-    /// CLI 명령어 딕셔너리 인터페이스
+    /// CLI 명령어 컨테이너 인터페이스
     /// </summary>
-    public interface ICommandDictionary
+    public interface ICommandContainer
     {
         /// <summary>
         /// 명령 추가

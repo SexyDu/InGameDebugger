@@ -58,7 +58,7 @@ namespace SexyDu.InGameDebugger
         private Terminal terminal = null;
 
         public ICommandLineInterface CLI => terminal;
-        public ICommandDictionary CommandDictionary => terminal;
+        public ICommandContainer CommandDictionary => terminal;
         #endregion
     }
 }

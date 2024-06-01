@@ -8,7 +8,7 @@ namespace SexyDu.InGameDebugger
     /// <summary>
     /// 명령어 처리 터미널
     /// </summary>
-    public class Terminal : ICommandDictionary, ICommandLineInterface
+    public class Terminal : ICommandContainer, ICommandLineInterface
     {
         // 명령 딕셔너리
         private Dictionary<string, Action<string[]>> commands;
