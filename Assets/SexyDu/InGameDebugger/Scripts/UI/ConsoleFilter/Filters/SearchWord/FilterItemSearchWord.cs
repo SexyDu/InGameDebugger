@@ -49,6 +49,19 @@ namespace SexyDu.InGameDebugger.UI
             CreatePopup();
         }
 
+#if true
+        /// <summary>
+        /// 검색 팝업 생성
+        /// </summary>
+        private void CreatePopup()
+        {
+            PopupInputField popup = ResourcePopup.Load<PopupInputField>(PopupPath, popupParent);
+
+            popup.Initialize(filter.SearchWord)
+                .SelectInputField()
+                .CallbackOnDecided(SetSearchWord);
+        }
+#else
         /// <summary>
         /// 검색 팝업 생성
         /// </summary>
@@ -73,6 +86,7 @@ namespace SexyDu.InGameDebugger.UI
                 .SelectInputField()
                 .CallbackOnDecided(SetSearchWord);
         }
+#endif
         #endregion
 
         /// <summary>

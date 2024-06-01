@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public class DebuggerHome : MonoBehaviour, IConsoleActivationObserver
+    public class DebuggerHome : MonoBehaviour, IConsoleActivationObserver, IActivationConfigurable
     {
         public DebuggerHome Initialize(IActivable consoleActivable)
         {

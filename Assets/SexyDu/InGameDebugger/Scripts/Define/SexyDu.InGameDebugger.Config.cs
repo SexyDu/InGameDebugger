@@ -19,7 +19,11 @@ namespace SexyDu.InGameDebugger
             if (settings == null)
                 throw new NullReferenceException($"지정된 경로({InGameDebuggerSettings.ResourcePath})에 맞는 InGameDebuggerSettings를 찾을 수 없습니다.");
 
-            
+            // CLI 터미널 생성
+            terminal = new Terminal();
+
+            if (!Settings.UseCLI)
+                Debug.LogWarning("[InGameDebugger] CLI 상태가 비활성화 되어 있어습니다.\n 활성화 전까지 Command 추가가 되지 않습니다.");
         }
         #endregion
 
@@ -48,6 +52,13 @@ namespace SexyDu.InGameDebugger
                 debugger = value;
             }
         }
+        #endregion
+
+        #region CLI
+        private Terminal terminal = null;
+
+        public ICommandLineInterface CLI => terminal;
+        public ICommandDictionary CommandDictionary => terminal;
         #endregion
     }
 }

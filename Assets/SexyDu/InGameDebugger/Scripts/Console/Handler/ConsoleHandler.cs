@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IActivable, IClearable
+    public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IActivable, IInactivable, IClearable
     {
         // 콘솔
         protected abstract Console console { get; }

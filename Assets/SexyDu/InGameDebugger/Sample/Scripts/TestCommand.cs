@@ -1,48 +1,56 @@
-using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SexyDu.InGameDebugger.Sample
 {
     public class TestCommand : MonoBehaviour
     {
-        private Dictionary<string, Action<string>> cmdDictionary = new Dictionary<string, Action<string>>();
+        private ICommandDictionary CommandDictionary => InGameDebuggerConfig.Ins.CommandDictionary;
 
-        public void Add(string cmd, Action<string> act)
+        private void Awake()
         {
-            if (cmdDictionary.ContainsKey(cmd))
-                Debug.LogWarningFormat($"Command '{cmd}'가 이미 정의되어 있습니다.");
-            else
-                cmdDictionary.Add(cmd, act);
-        }
-
-        public void Remove(string cmd)
-        {
-            cmdDictionary.Remove(cmd);
-        }
-
-        public string[] GetMatchedCommands(string keyword)
-        {
-            string patternCore = $"{keyword.ToLower()}.*";
-            string patternContain = $".*{keyword.ToLower()}.*";
-
-            int coreIndex = 0;
-            List<string> list = new List<string>();
-
-            foreach (string cmd in cmdDictionary.Keys)
-            {
-                if (Regex.IsMatch(cmd, patternCore))
+            CommandDictionary.Bind("abcd", (parameters) => {
+                Debug.LogFormat("Execute abcd");
+                if (parameters != null)
                 {
-                    list.Insert(coreIndex++, cmd);
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        Debug.LogFormat("- {0}", parameters[i]);
+                    }
                 }
-                else if (Regex.IsMatch(cmd, patternContain))
-                {
-                    list.Add(cmd);
-                }
-            }
+            });
 
-            return list.ToArray();
+            CommandDictionary.Bind("abcdef", (parameters) => {
+                Debug.LogFormat("Execute abcdef");
+                if (parameters != null)
+                {
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        Debug.LogFormat("- {0}", parameters[i]);
+                    }
+                }
+            });
+
+            CommandDictionary.Bind("abcdefgggg", (parameters) => {
+                Debug.LogFormat("Execute abcdefgggg");
+                if (parameters != null)
+                {
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        Debug.LogFormat("- {0}", parameters[i]);
+                    }
+                }
+            });
+
+            CommandDictionary.Bind("kkzz", (parameters) => {
+                Debug.LogFormat("Execute kkzz");
+                if (parameters != null)
+                {
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        Debug.LogFormat("- {0}", parameters[i]);
+                    }
+                }
+            });
         }
     }
 }

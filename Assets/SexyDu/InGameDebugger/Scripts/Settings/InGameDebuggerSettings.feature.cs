@@ -10,21 +10,10 @@ namespace SexyDu.InGameDebugger
     {
         public InGameDebuggerSettings Initialize()
         {
-            // 커맨드가 비활성화 되어있지만 로컬 커맨드가 활성화 되어있는 경우 커맨드 활성화
-            if (!useCommand && UseCommandInLocal)
-                useCommand = true;
-
             return this;
         }
 
         #region Command
-        // 커맨드 로컬 활성화 키
-        private const string UseCommandKey = "InGameDebugger.UseCommand";
-
-        // 커맨드 로컬 화성화 여부
-        /// - 지정된 키가 있는 경우 로컬에서 활성화된 것으로 간주한다.
-        private bool UseCommandInLocal => PlayerPrefs.HasKey(UseCommandKey);
-
         /// <summary>
         /// 커맨트 로컬 활성화 상태 설정
         /// </summary>
@@ -34,11 +23,11 @@ namespace SexyDu.InGameDebugger
             {
                 // 혹시 사용할 일이 있을지 모르지만... 값은 활성화 시간으로...
                 DateTime now = DateTime.Now;
-                PlayerPrefs.SetString(UseCommandKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
+                PlayerPrefs.SetString(UseCLIKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
             }
             else
             {
-                PlayerPrefs.DeleteKey(UseCommandKey);
+                PlayerPrefs.DeleteKey(UseCLIKey);
             }
         }
         #endregion

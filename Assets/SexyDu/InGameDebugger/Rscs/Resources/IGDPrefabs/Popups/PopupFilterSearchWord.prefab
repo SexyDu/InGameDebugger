@@ -434,8 +434,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3973227919833324744}
-        m_TargetAssemblyTypeName: SexyDu.InGameDebugger.UI.PopupInputField, Assembly-CSharp
-        m_MethodName: OnClickClear
+        m_TargetAssemblyTypeName: SexyDu.UGUI.PopupInputField, Assembly-CSharp
+        m_MethodName: OnClickDecideClearable
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

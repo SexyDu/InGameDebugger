@@ -47,10 +47,16 @@ namespace SexyDu.InGameDebugger
         [SerializeField] private Sprite errorIcon;
         #endregion
 
-        [Header("Command")]
+        [Header("CommandLineInterface")]
         [Tooltip("(빌드된) 커맨드 활성화 여부")]
-        [SerializeField] private bool useCommand = true;
-        public bool UseCommand { get { return useCommand; } }
+        [SerializeField] private bool useCLI = true;
+        // 커맨드 로컬 활성화 키
+        private const string UseCLIKey = "InGameDebugger.UseCLI";
+        // 커맨드 로컬 화성화 여부
+        /// - 지정된 키가 있는 경우 로컬에서 활성화된 것으로 간주한다.
+        private bool UseCLIInLocal => PlayerPrefs.HasKey(UseCLIKey);
+        // 커맨드 활성화 여부
+        public bool UseCLI { get { return useCLI || UseCLIInLocal; } }
     }
 
 #if UNITY_EDITOR
