@@ -14,7 +14,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 초기 설정
         /// </summary>
-        private Debugger Initialize()
+        public Debugger Initialize()
         {
             InGameDebuggerConfig.Ins.Debugger = this;
 
@@ -23,7 +23,7 @@ namespace SexyDu.InGameDebugger
 
             consoleHandler.Initialize();
 
-            consoleHandler.Subscribe(home.Initialize(consoleHandler));
+            consoleHandler.Subscribe(home.Initialize(consoleHandler).ConsoleActivationObserver);
 
             return this;
         }
@@ -59,7 +59,7 @@ namespace SexyDu.InGameDebugger
         #region ObjectCache
         [Header("ObjectCache")]
         [SerializeField] private Transform transformCache;
-        public Transform TransformCache { get => transformCache; }
+        public Transform TransformCache => transformCache;
         #endregion
     }
 }

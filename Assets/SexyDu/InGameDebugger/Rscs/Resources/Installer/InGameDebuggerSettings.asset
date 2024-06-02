@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6ab0e8515604e8fb275ddcd7a6976b, type: 3}
   m_Name: InGameDebuggerSettings
   m_EditorClassIdentifier: 
-  fontAsset: {fileID: 11400000, guid: 0a7be9f5c172942619b3ae1893582a75, type: 2}
-  activeCommand: 1
+  activeDebugger: 1
   sortingLayer: 
   orderInLayer: 0
-  itemCount: 100
-  selectedItemColor: {r: 0.14117648, g: 0.32156864, b: 0.47843137, a: 1}
+  fontAsset: {fileID: 11400000, guid: 0a7be9f5c172942619b3ae1893582a75, type: 2}
   logIcon: {fileID: 21300000, guid: 43de35d13bca44068a15978d2d688ba6, type: 3}
   warningIcon: {fileID: 21300000, guid: 7f8c54773095a4718857ee0c1faa5a89, type: 3}
   errorIcon: {fileID: 21300000, guid: 2f59fb7dc9dc243c6b572a75e9749445, type: 3}
+  useCLI: 1
+  itemCount: 100
+  selectedItemColor: {r: 0.14117648, g: 0.32156864, b: 0.47843137, a: 1}
