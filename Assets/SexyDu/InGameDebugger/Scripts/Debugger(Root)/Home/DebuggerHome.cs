@@ -2,27 +2,35 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public class DebuggerHome : MonoBehaviour, IDebuggerHome, IConsoleActivationObserver, IActivationConfigurable
+    public class DebuggerHome : MonoBehaviour, IDebuggerHome, IConsoleActivationObserver, IActivationConfigurable, IClearable
     {
-        public IDebuggerHome Initialize(IActivable consoleActivable)
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
+        /// <param name="consoleActivable"></param>
+        /// <returns></returns>
+        public IDebuggerHome Initialize()
         {
-            this.consoleActivable = consoleActivable;
+            for (int i = 0; i < inHomeContents.Length; i++)
+            {
+                inHomeContents[i].Initialize();
+            }
 
             return this;
         }
 
-        public IConsoleActivationObserver ConsoleActivationObserver => this;
-
-        // 콘솔 활성화 인터페이스
-        private IActivable consoleActivable = null;
-
         /// <summary>
-        /// 콘솔 활성화 클릭
+        /// 클리어
         /// </summary>
-        public void OnClickActivateConsole()
+        public void Clear()
         {
-            consoleActivable.Activate();
+            for (int i = 0; i < inHomeContents.Length; i++)
+            {
+                inHomeContents[i].Clear();
+            }
         }
+
+        public IConsoleActivationObserver ConsoleActivationObserver => this;
 
         #region IConsoleActivationObserver
         /// <summary>
@@ -35,6 +43,10 @@ namespace SexyDu.InGameDebugger
             Debug.LogFormat("콘솔 활성화 상태 변경 : {0}", active);
             SetActive(!active);
         }
+        #endregion
+
+        #region MonoInDebuggerHome
+        [SerializeField] private MonoInDebuggerHome[] inHomeContents;
         #endregion
 
         #region ObjectCache

@@ -51,5 +51,15 @@ namespace SexyDu.InGameDebugger
         }
         #endregion
 
+#if UNITY_EDITOR
+        /// <summary>
+        /// TMPro 관련 컴포넌트를 모두 찾아 연결
+        /// </summary>
+        public void SetTMProComponents()
+        {
+            textMeshes = GetComponentsInChildren<TMP_Text>(true);
+            inputFields = GetComponentsInChildren<TMP_InputField>(true);
+        }
+#endif
     }
 }

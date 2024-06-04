@@ -19,7 +19,7 @@ namespace SexyDu.InGameDebugger.Sample
                 }
             });
 
-            CommandDictionary.Bind("abcdef", (parameters) => {
+            CommandDictionary.Bind("AbcdeF", (parameters) => {
                 Debug.LogFormat("Execute abcdef");
                 if (parameters != null)
                 {
@@ -30,7 +30,7 @@ namespace SexyDu.InGameDebugger.Sample
                 }
             });
 
-            CommandDictionary.Bind("abcdefgggg", (parameters) => {
+            CommandDictionary.Bind("abCdefggGg", (parameters) => {
                 Debug.LogFormat("Execute abcdefgggg");
                 if (parameters != null)
                 {

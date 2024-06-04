@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 디버거 루트
+    /// </summary>
     public class Debugger : MonoBehaviour, IDestroyable, IClearable
     {
         [SerializeField] private bool onAwakeInit;
@@ -23,7 +26,7 @@ namespace SexyDu.InGameDebugger
 
             consoleHandler.Initialize();
 
-            consoleHandler.Subscribe(home.Initialize(consoleHandler).ConsoleActivationObserver);
+            consoleHandler.Subscribe(home.Initialize().ConsoleActivationObserver);
 
             return this;
         }
@@ -33,6 +36,7 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void Clear()
         {
+            home.Clear();
             consoleHandler.Clear();
         }
 
@@ -54,6 +58,17 @@ namespace SexyDu.InGameDebugger
         #region ConsoleHandler
         [Header("ConsoleHandler")]
         [SerializeField] private ConsoleHandler consoleHandler; // 콘솔 핸들러
+        public IConsoleLogSubject ConsoleLogSubject => consoleHandler.ConsoleLogSubject;
+        public IConsoleActivationSubject ConsoleActivationSubject => consoleHandler;
+        public IConsoleFilterFollower ConsoleFilterFollower => consoleHandler.FilterFollower;
+
+        /// <summary>
+        /// 콘솔 활성화
+        /// </summary>
+        public void ActivateConsole()
+        {
+            consoleHandler.Activate();
+        }
         #endregion
 
         #region ObjectCache

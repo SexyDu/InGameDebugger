@@ -1245,6 +1245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 335626539}
+  - component: {fileID: 335626543}
   - component: {fileID: 335626541}
   - component: {fileID: 335626540}
   - component: {fileID: 335626542}
@@ -1359,9 +1360,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1518349577}
-        m_TargetAssemblyTypeName: SexyDu.InGameDebugger.DebuggerHome, Assembly-CSharp
-        m_MethodName: OnClickActivateConsole
+      - m_Target: {fileID: 335626543}
+        m_TargetAssemblyTypeName: SexyDu.InGameDebugger.View.BugCatcher, Assembly-CSharp
+        m_MethodName: OnClickBug
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1371,6 +1372,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &335626543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335626538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a967567c61a7a4602a1bfe163924fb6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &346310138
 GameObject:
   m_ObjectHideFlags: 0
@@ -6249,6 +6262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004e1fc61dd5f487faa32bb7649de9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHomeContents:
+  - {fileID: 335626543}
   gameObjectCache: {fileID: 1518349575}
 --- !u!114 &1518349578
 MonoBehaviour:
@@ -7137,7 +7152,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1850980369}
-  textMeshes: []
+  textMeshes:
+  - {fileID: 692412425}
+  - {fileID: 23533745}
+  - {fileID: 910868419}
+  - {fileID: 2033232703}
+  - {fileID: 769264431}
+  - {fileID: 1165507044}
+  - {fileID: 1193889400}
   inputFields: []
 --- !u!1 &1868386305
 GameObject:

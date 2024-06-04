@@ -2,8 +2,14 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 아이템 콘솔 Handler
+    /// </summary>
     public class ItemConsoleHandler : ConsoleHandler, IItemConsoleUIHandle
     {
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
         public override ConsoleHandler Initialize()
         {
             base.Initialize();

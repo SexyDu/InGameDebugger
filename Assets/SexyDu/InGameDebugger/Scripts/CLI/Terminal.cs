@@ -79,11 +79,14 @@ namespace SexyDu.InGameDebugger
 
             foreach (string cmd in commands.Keys)
             {
-                if (Regex.IsMatch(cmd, patternCore))
+                // 패턴 비교 문자열
+                string compare = cmd.ToLower();
+
+                if (Regex.IsMatch(compare, patternCore))
                 {
                     list.Insert(coreIndex++, cmd);
                 }
-                else if (Regex.IsMatch(cmd, patternContain))
+                else if (Regex.IsMatch(compare, patternContain))
                 {
                     list.Add(cmd);
                 }

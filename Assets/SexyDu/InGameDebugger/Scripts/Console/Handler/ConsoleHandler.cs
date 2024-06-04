@@ -1,8 +1,10 @@
-using System;
 using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 콘솔 Handler
+    /// </summary>
     public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IActivable, IInactivable, IClearable
     {
         // 콘솔
