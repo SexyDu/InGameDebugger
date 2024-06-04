@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace SexyDu.InGameDebugger
+namespace SexyDu.InGameDebugger.View
 {
-    [CustomEditor(typeof(DebuggerInitializer))]
+    [CustomEditor(typeof(BugCatcher), true)]
     [CanEditMultipleObjects]
-    public class DebuggerInitializerEditor : Editor
+    public class BugCatcherEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -17,8 +15,8 @@ namespace SexyDu.InGameDebugger
             {
                 for (int i = 0; i < targets.Length; i++)
                 {
-                    DebuggerInitializer component = targets[i] as DebuggerInitializer;
-                    component.SetTMProComponents();
+                    BugCatcher component = targets[i] as BugCatcher;
+                    component.SetDefaultAnimationSpecs();
                 }
             }
         }

@@ -35,6 +35,8 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public virtual void Clear()
         {
+            Pause();
+
             messages.Clear();
 
             ClearLogCount();

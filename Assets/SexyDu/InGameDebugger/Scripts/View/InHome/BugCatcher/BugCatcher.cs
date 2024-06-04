@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger.View
 {
-    public class BugCatcher : MonoInDebuggerHome, IConsoleLogObserver
+    public partial class BugCatcher : MonoInDebuggerHome, IConsoleLogObserver
     {
         Debugger Debugger => InGameDebuggerConfig.Ins.Debugger;
 
@@ -12,8 +12,10 @@ namespace SexyDu.InGameDebugger.View
         /// <returns></returns>
         public override MonoInDebuggerHome Initialize()
         {
-            Debugger.ConsoleLogSubject.Subscribe(this);
+            InitializeAnimation();
 
+            Debugger.ConsoleLogSubject.Subscribe(this);
+            
             return this;
         }
 
@@ -31,7 +33,7 @@ namespace SexyDu.InGameDebugger.View
         /// </summary>
         public void OnDetectLog(IConsoleLogSubject subject)
         {
-            .
+            
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace SexyDu.InGameDebugger.View
         /// </summary>
         public void OnDetectLog(IConsoleLogSubject subject, LogType type)
         {
-
+            Animate(type);
         }
 
         /// <summary>
