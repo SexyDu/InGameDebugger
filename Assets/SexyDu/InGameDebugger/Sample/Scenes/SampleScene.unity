@@ -1498,6 +1498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cefc85a736ab4578974f1201f57826d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logging: {fileID: 931610068}
   command: {fileID: 1955712448}
 --- !u!1 &931610066
 GameObject:
@@ -3032,7 +3033,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7858a9af33247a9b8e0db52472d097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugger: {fileID: 0}
   contents: {fileID: 858689832}
 --- !u!4 &2118491720
 Transform:

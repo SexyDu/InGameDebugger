@@ -14,6 +14,8 @@ namespace SexyDu.InGameDebugger.View
             {
                 TerminalAutoComplete component = target as TerminalAutoComplete;
                 component.SetWordCompletionItems();
+
+                EditorUtility.SetDirty(component);
             }
         }
     }

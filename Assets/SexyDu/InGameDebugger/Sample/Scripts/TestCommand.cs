@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger.Sample
 {
+    /// <summary>
+    /// [샘플] CLI 명령 관리 예제
+    /// </summary>
     public class TestCommand : MonoBehaviour
     {
         private ICommandContainer CommandContainer => InGameDebuggerConfig.Ins.CommandContainer;
@@ -11,6 +14,9 @@ namespace SexyDu.InGameDebugger.Sample
         [SerializeField] private string[] commandDatas;
         [SerializeField] private int commandValue;
 
+        /// <summary>
+        /// 명령 등록
+        /// </summary>
         public void Bind()
         {
             CommandContainer.Bind("ExecuteTestCommand", (parameters) => {
@@ -63,6 +69,9 @@ namespace SexyDu.InGameDebugger.Sample
             });
         }
 
+        /// <summary>
+        /// 명령 해제
+        /// </summary>
         public void Unbind()
         {
             CommandContainer.Unbind("ExecuteTestCommand");

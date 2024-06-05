@@ -1,9 +1,12 @@
-#define TESTING_SAMPLE
+//#define TESTING_SAMPLE
 
 using UnityEngine;
 
 namespace SexyDu.InGameDebugger.Sample
 {
+    /// <summary>
+    /// [샘플] 앱 실행 관리
+    /// </summary>
     public class SampleApplicationExecutor : MonoBehaviour
     {
         private InGameDebuggerConfig DebuggerConfig => InGameDebuggerConfig.Ins;
@@ -15,6 +18,7 @@ namespace SexyDu.InGameDebugger.Sample
 
         private void Awake()
         {
+            // Debugger 활성화 상태인 경우
             if (DebuggerConfig.Settings.ActiveDebugger)
             {
 #if TESTING_SAMPLE
@@ -26,6 +30,7 @@ namespace SexyDu.InGameDebugger.Sample
                     debugger.Initialize();
                 }
 #else
+                // Debugger 생성
                 DebuggerConfig.CreateDebugger();
 #endif
             }

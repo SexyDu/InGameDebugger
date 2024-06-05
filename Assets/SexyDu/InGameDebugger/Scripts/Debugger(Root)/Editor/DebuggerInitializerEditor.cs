@@ -17,6 +17,8 @@ namespace SexyDu.InGameDebugger
                 {
                     DebuggerInitializer component = targets[i] as DebuggerInitializer;
                     component.SetTMProComponents();
+
+                    EditorUtility.SetDirty(component);
                 }
             }
         }

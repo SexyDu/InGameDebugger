@@ -9,7 +9,7 @@ namespace SexyDu.InGameDebugger.View
         [SerializeField] private AnimationTarget animationBase;
 
         /// <summary>
-        /// AnimationSpec 기본값 설정
+        /// [Editor] AnimationSpec 기본값 설정
         /// </summary>
         public void SetDefaultAnimationSpecs()
         {

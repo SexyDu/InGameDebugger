@@ -17,6 +17,8 @@ namespace SexyDu.InGameDebugger.View
                 {
                     BugCatcher component = targets[i] as BugCatcher;
                     component.SetDefaultAnimationSpecs();
+
+                    EditorUtility.SetDirty(component);
                 }
             }
         }
