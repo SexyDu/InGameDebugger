@@ -23,7 +23,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 활성화 옵저버 해제
         /// </summary>
-        public void Unsubsctibe(IConsoleActivationObserver observer)
+        public void Unsubscribe(IConsoleActivationObserver observer)
         {
             activationObservers.Remove(observer);
         }
@@ -56,6 +56,6 @@ namespace SexyDu.InGameDebugger
     public interface IConsoleActivationSubject
     {
         public void Subscribe(IConsoleActivationObserver observer);
-        public void Unsubsctibe(IConsoleActivationObserver observer);
+        public void Unsubscribe(IConsoleActivationObserver observer);
     }
 }

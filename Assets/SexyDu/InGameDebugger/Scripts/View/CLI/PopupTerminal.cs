@@ -55,10 +55,13 @@ namespace SexyDu.InGameDebugger.View
             return this;
         }
 
+        /// <summary>
+        /// input field 값 변경 이벤트
+        /// </summary>
         private void OnInputFieldChanged(string text)
         {
+            // 자동완성 문자열 가져오고 설정
             string[] wordCompletions = string.IsNullOrEmpty(text) ? null : CLI.GetMatchedCommands(text);
-
             autoComplete.SetWordCompletions(wordCompletions);
         }
         #endregion

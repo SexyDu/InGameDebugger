@@ -1,3 +1,5 @@
+#define TESTING_SAMPLE
+
 using System;
 using UnityEngine;
 
@@ -39,8 +41,9 @@ namespace SexyDu.InGameDebugger
         public Debugger Debugger
         {
             get => debugger;
-            
-            private set
+
+#if TESTING_SAMPLE
+            set
             {
                 if (debugger != null)
                 {
@@ -51,6 +54,7 @@ namespace SexyDu.InGameDebugger
 
                 debugger = value;
             }
+#endif
         }
 
         /// <summary>
@@ -63,7 +67,10 @@ namespace SexyDu.InGameDebugger
                 Debugger source = Resources.Load<Debugger>(Settings.DebuggerPath);
 
                 if (source != null)
+                {
                     debugger = MonoBehaviour.Instantiate(source);
+                    debugger.Initialize();
+                }
                 else
                     throw new NullReferenceException($"해당 경로에서 Debugger를 찾을 수 없습니다. path : {Settings.DebuggerPath}");
             }

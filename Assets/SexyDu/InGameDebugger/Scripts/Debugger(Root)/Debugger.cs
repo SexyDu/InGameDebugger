@@ -19,14 +19,23 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public Debugger Initialize()
         {
-            // DebuggerInitializer가 있는 경우 초기화
-            GetComponent<DebuggerInitializer>()?.Initialize().Release();
+            DebuggerInitializer initializer = GetComponent<DebuggerInitializer>();
 
-            consoleHandler.Initialize();
+            // initializer가 있는 경우 (아직 초기 설정 안된 상태)
+            if (initializer != null)
+            {
+                initializer.Initialize().Release();
 
-            consoleHandler.Subscribe(home.Initialize().ConsoleActivationObserver);
+                consoleHandler.Initialize();
 
-            DontDestroyOnLoad(gameObject);
+                consoleHandler.Subscribe(home.Initialize().ConsoleActivationObserver);
+
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Debug.LogWarning("이미 초기화 되었습니다. 선 넘지 마시죠?");
+            }
 
             return this;
         }
