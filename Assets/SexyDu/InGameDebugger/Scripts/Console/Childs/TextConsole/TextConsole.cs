@@ -56,6 +56,9 @@ namespace SexyDu.InGameDebugger
             CollectLogCount(type);
         }
 
+        /// <summary>
+        /// 로그 추가
+        /// </summary>
         protected override void AddLogMessage(ILogMessage message)
         {
             base.AddLogMessage(message);
@@ -63,6 +66,9 @@ namespace SexyDu.InGameDebugger
             AppendLogText(message);
         }
 
+        /// <summary>
+        /// 로그 화면 갱신
+        /// </summary>
         public override void RefreshLogDisplay()
         {
             ClearLogText();
@@ -72,7 +78,7 @@ namespace SexyDu.InGameDebugger
                 if (PassFilters(messages[i]))
                 {
                     InsertStringBuilder(GetLog(messages[i]));
-                    if (AmendStringBuilder())
+                    if (AmendStringBuilderLength())
                         break;
                 }
             }
@@ -82,11 +88,17 @@ namespace SexyDu.InGameDebugger
 
         #region Text
         [Header("Text")]
-        [SerializeField] private TMP_Text textMesh;
+        [SerializeField] private TMP_Text textMesh; // 로그 텍스트 메쉬
         private int MaxLength => InGameDebuggerConfig.Ins.Settings.MaxTextLength;
 
-        private StringBuilder sb = new StringBuilder();
+        // 로그 string builder
+        private StringBuilder logStringBuilder = new StringBuilder();
 
+        /// <summary>
+        /// ILogMessage를 기반으로 Log 문자열 반환
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private string GetLog(ILogMessage message)
         {
             if (enableStackTrace)
@@ -95,46 +107,65 @@ namespace SexyDu.InGameDebugger
                 return message.GetLogString();
         }
 
-        private bool AmendStringBuilder()
+        /// <summary>
+        /// StringBuilder Max길이 보정
+        /// </summary>
+        private bool AmendStringBuilderLength()
         {
-            if (sb.Length > MaxLength)
+            if (logStringBuilder.Length > MaxLength)
             {
-                sb.Remove(0, sb.Length - MaxLength);
+                logStringBuilder.Remove(0, logStringBuilder.Length - MaxLength);
                 return true;
             }
             else
                 return false;
         }
 
+        /// <summary>
+        /// string builder log 추가
+        /// </summary>
         private void AppendStringBuilder(string log)
         {
-            sb.AppendLine();
-            sb.AppendLine(log);
+            logStringBuilder.AppendLine();
+            logStringBuilder.AppendLine(log);
         }
 
+        /// <summary>
+        /// string builder 앞에 log 추가
+        /// </summary>
         public void InsertStringBuilder(string log)
         {
-            sb.Insert(0, log);
-            sb.Insert(0, "\n\n");
+            logStringBuilder.Insert(0, log);
+            logStringBuilder.Insert(0, "\n\n");
         }
 
+        /// <summary>
+        /// LogMessage 추가
+        /// </summary>
+        /// <param name="message"></param>
         private void AppendLogText(ILogMessage message)
         {
             AppendStringBuilder(GetLog(message));
 
-            AmendStringBuilder();
+            AmendStringBuilderLength();
 
             DisplayLogText();
         }
 
+        /// <summary>
+        /// string builder 표시
+        /// </summary>
         private void DisplayLogText()
         {
-            textMesh.SetText(sb.ToString());
+            textMesh.SetText(logStringBuilder.ToString());
         }
 
+        /// <summary>
+        /// 로그 클리어
+        /// </summary>
         private void ClearLogText()
         {
-            sb.Clear();
+            logStringBuilder.Clear();
 
             DisplayLogText();
         }
