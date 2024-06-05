@@ -20,13 +20,18 @@ namespace SexyDu.InGameDebugger.View
             Vector2 anchoredPositionStart = animationTarget.GetAnchoredPosition();
             Vector2 anchoredPositionEnd = animationBase.GetAnchoredPosition();
 
+            Vector2 sizeDeltaStart = animationTarget.GetSizeDelta();
+            Vector2 sizeDeltaEnd = animationBase.GetSizeDelta();
+
             for (int i = 0; i < animationSpecs.Length; i++)
             {
                 animationSpecs[i]
                     .SetColorStart(colorStart)
                     .SetColorEnd(colorEnd)
                     .SetAnchoredPositionStart(anchoredPositionStart)
-                    .SetAnchoredPositionEnd(anchoredPositionEnd);
+                    .SetAnchoredPositionEnd(anchoredPositionEnd)
+                    .SetSizeDeltaStart(sizeDeltaStart)
+                    .SetSizeDeltaEnd(sizeDeltaEnd);
             }
         }
 
@@ -45,6 +50,13 @@ namespace SexyDu.InGameDebugger.View
             public Vector2 GetAnchoredPosition()
             {
                 return rectTransform.anchoredPosition;
+            }
+            /// <summary>
+            /// [Editor] 현재 크기 반환
+            /// </summary>
+            public Vector2 GetSizeDelta()
+            {
+                return rectTransform.sizeDelta;
             }
         }
 
@@ -78,11 +90,29 @@ namespace SexyDu.InGameDebugger.View
                 return this;
             }
             /// <summary>
-            /// [Editor] 시작 위치 설정
+            /// [Editor] 종료 위치 설정
             /// </summary>
             public AnimationSpec SetAnchoredPositionEnd(Vector2 anchoredPosition)
             {
                 anchoredPositionEnd = anchoredPosition;
+
+                return this;
+            }
+            /// <summary>
+            /// [Editor] 시작 크기 설정
+            /// </summary>
+            public AnimationSpec SetSizeDeltaStart(Vector2 sizeDelta)
+            {
+                sizeDeltaStart = sizeDelta;
+
+                return this;
+            }
+            /// <summary>
+            /// [Editor] 종료 크기 설정
+            /// </summary>
+            public AnimationSpec SetSizeDeltaEnd(Vector2 sizeDelta)
+            {
+                sizeDeltaEnd = sizeDelta;
 
                 return this;
             }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using SexyDu.UGUI;
 
 namespace SexyDu.InGameDebugger.View
 {
@@ -26,15 +25,5 @@ namespace SexyDu.InGameDebugger.View
         {
             base.Refresh();
         }
-
-        #region CLI
-        [Header("CLI")]
-        [SerializeField] private Transform parentOfCLI; // [임시] 테스트용으로만 쓰자
-        public void OnClickCLI()
-        {
-            ResourcePopup.Load<PopupTerminal>(PopupTerminal.ResourcePath, parentOfCLI)
-                .Initialize().SelectInputField();
-        }
-        #endregion
     }
 }

@@ -3,7 +3,7 @@ using TMPro;
 
 namespace SexyDu.InGameDebugger
 {
-    public class DebuggerInitializer : MonoBehaviour
+    public class DebuggerInitializer : MonoBehaviour, IReleasable
     {
         private InGameDebuggerSettings Settings => InGameDebuggerConfig.Ins.Settings;
 
@@ -24,12 +24,26 @@ namespace SexyDu.InGameDebugger
         #region Canvas
         [Header("Canvas")]
         [SerializeField] private Canvas canvas;
+
         private void InitializeCanvas()
         {
             if (!string.IsNullOrEmpty(Settings.SortingLayerName))
                 canvas.sortingLayerName = Settings.SortingLayerName;
 
             canvas.sortingOrder = Settings.SortingOrder;
+
+            // CanvasBaseWidth 값이 있는 경우
+            if (Settings.CanvasBaseWidth > 0)
+            {
+                // Orientaion을 고려한 Portrait 기준의 화면 width 값
+                float width = canvas.renderingDisplaySize.y < canvas.renderingDisplaySize.x ?
+                    canvas.renderingDisplaySize.y : canvas.renderingDisplaySize.x;
+                // Portrait 기준 width값이 기준보다 작은 경우 scaleFactor 조절
+                if (width < Settings.CanvasBaseWidth)
+                    canvas.scaleFactor = width / Settings.CanvasBaseWidth;
+            }
+            else
+                Debug.LogWarning("InGameDebuggerSettings에 CanvasBaseWidth 값이 없어 scaleFactor를 설정하지 않았습니다.");
         }
         #endregion
 

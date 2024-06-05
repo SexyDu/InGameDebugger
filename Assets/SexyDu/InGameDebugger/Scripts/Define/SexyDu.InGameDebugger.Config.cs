@@ -39,8 +39,8 @@ namespace SexyDu.InGameDebugger
         public Debugger Debugger
         {
             get => debugger;
-
-            set
+            
+            private set
             {
                 if (debugger != null)
                 {
@@ -52,13 +52,33 @@ namespace SexyDu.InGameDebugger
                 debugger = value;
             }
         }
+
+        /// <summary>
+        /// 디버거 생성
+        /// </summary>
+        public Debugger CreateDebugger()
+        {
+            if (debugger == null)
+            {
+                Debugger source = Resources.Load<Debugger>(Settings.DebuggerPath);
+
+                if (source != null)
+                    debugger = MonoBehaviour.Instantiate(source);
+                else
+                    throw new NullReferenceException($"해당 경로에서 Debugger를 찾을 수 없습니다. path : {Settings.DebuggerPath}");
+            }
+            else
+                Debug.LogWarningFormat("이미 Debugger({0})가 존재합니다.", debugger.name);
+
+            return debugger;
+        }
         #endregion
 
         #region CLI
         private Terminal terminal = null;
 
         public ICommandLineInterface CLI => terminal;
-        public ICommandContainer CommandDictionary => terminal;
+        public ICommandContainer CommandContainer => terminal;
         #endregion
     }
 }

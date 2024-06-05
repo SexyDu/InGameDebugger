@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
-    public abstract partial class Console : MonoBehaviour, IClearable
+    public abstract partial class Console : MonoBehaviour, IClearable, IReleasable 
     {
         // 수집 상태
         private bool playing = false;
@@ -30,7 +30,7 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
-        /// 콘솔 클리어
+        /// 클리어
         /// : IClearable
         /// </summary>
         public virtual void Clear()
@@ -38,6 +38,16 @@ namespace SexyDu.InGameDebugger
             messages.Clear();
 
             ClearLogCount();
+        }
+
+        /// <summary>
+        /// 해제
+        /// </summary>
+        public virtual void Release()
+        {
+            Pause();
+
+            Clear();
         }
 
         // 로그 메세지 리스트

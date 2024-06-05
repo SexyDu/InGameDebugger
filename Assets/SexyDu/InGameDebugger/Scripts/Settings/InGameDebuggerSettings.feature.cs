@@ -13,6 +13,27 @@ namespace SexyDu.InGameDebugger
             return this;
         }
 
+        #region DebuggerType
+        /// <summary>
+        /// 현재 선택된 Debugger 리소스 경로
+        /// </summary>
+        public string DebuggerPath
+        {
+            get
+            {
+                switch (debuggerType)
+                {
+                    case DebuggerType.Item:
+                        return itemDebuggerPath;
+                    case DebuggerType.Text:
+                        return textDebuggerPath;
+                    default:
+                        throw new NotImplementedException($"아직 정의되지 않은 DebuggerType({debuggerType})입니다");
+                }
+            }
+        }
+        #endregion
+
         #region Command
         /// <summary>
         /// 커맨트 로컬 활성화 상태 설정

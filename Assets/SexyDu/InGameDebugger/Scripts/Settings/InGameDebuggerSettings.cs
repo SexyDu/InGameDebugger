@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 #if UNITY_EDITOR
@@ -34,6 +35,10 @@ namespace SexyDu.InGameDebugger
         [Tooltip("InGameDebugger의 Order in layer")]
         [SerializeField] private int orderInLayer;
         public int SortingOrder => orderInLayer;
+
+        [Tooltip("InGameDebugger Canvas의 작업기준 width값")]
+        [SerializeField] private float canvasBaseWidth;
+        public float CanvasBaseWidth => canvasBaseWidth;
         #endregion
 
         #region TMPro
@@ -66,8 +71,16 @@ namespace SexyDu.InGameDebugger
         public bool UseCLI => useCLI || UseCLIInLocal;
         #endregion
 
+        #region DebuggerType
+        [Header("Debugger")]
+        [SerializeField] private DebuggerType debuggerType;
+        #endregion
+
         #region Item Console
         [Header("Item Console")]
+        [Tooltip("Item 타입 Debugger(Prefab) 리소스 경로")]
+        [SerializeField] private string itemDebuggerPath;
+
         [Tooltip("Item의 총 수\n* 해당 수를 넘어가는 순간 기존 아이템을 재사용합니다.")]
         [SerializeField] private int itemCount;
         public int ItemCount => itemCount;
@@ -75,6 +88,16 @@ namespace SexyDu.InGameDebugger
         [Tooltip("선택된 아이템에 표시될 색상입니다.")]
         [SerializeField] private Color selectedItemColor;
         public Color SelectedItemColor => selectedItemColor;
+        #endregion
+
+        #region Text Console
+        [Header("Text Console")]
+        [Tooltip("Text 타입 Debugger(Prefab) 리소스 경로")]
+        [SerializeField] private string textDebuggerPath;
+
+        [Tooltip("TextMesh가 표시할 최대 길이")]
+        [SerializeField] private int maxTextLength;
+        public int MaxTextLength => maxTextLength;
         #endregion
     }
 

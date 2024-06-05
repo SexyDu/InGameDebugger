@@ -19,14 +19,14 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public Debugger Initialize()
         {
-            InGameDebuggerConfig.Ins.Debugger = this;
-
             // DebuggerInitializer가 있는 경우 초기화
             GetComponent<DebuggerInitializer>()?.Initialize().Release();
 
             consoleHandler.Initialize();
 
             consoleHandler.Subscribe(home.Initialize().ConsoleActivationObserver);
+
+            DontDestroyOnLoad(gameObject);
 
             return this;
         }

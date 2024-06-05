@@ -15,10 +15,15 @@ MonoBehaviour:
   activeDebugger: 1
   sortingLayer: 
   orderInLayer: 0
+  canvasBaseWidth: 1080
   fontAsset: {fileID: 11400000, guid: 0a7be9f5c172942619b3ae1893582a75, type: 2}
   logIcon: {fileID: 21300000, guid: 43de35d13bca44068a15978d2d688ba6, type: 3}
   warningIcon: {fileID: 21300000, guid: 7f8c54773095a4718857ee0c1faa5a89, type: 3}
   errorIcon: {fileID: 21300000, guid: 2f59fb7dc9dc243c6b572a75e9749445, type: 3}
   useCLI: 1
+  debuggerType: 1
+  itemDebuggerPath: IGDPrefabs/Debuggers/Debugger Item
   itemCount: 100
   selectedItemColor: {r: 0.14117648, g: 0.32156864, b: 0.47843137, a: 1}
+  textDebuggerPath: IGDPrefabs/Debuggers/Debugger Text
+  maxTextLength: 20000

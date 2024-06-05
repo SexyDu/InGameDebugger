@@ -40,7 +40,6 @@ namespace SexyDu.InGameDebugger
         /// <param name="active"></param>
         public void OnConsoleActivationChanged(bool active)
         {
-            Debug.LogFormat("콘솔 활성화 상태 변경 : {0}", active);
             SetActive(!active);
         }
         #endregion

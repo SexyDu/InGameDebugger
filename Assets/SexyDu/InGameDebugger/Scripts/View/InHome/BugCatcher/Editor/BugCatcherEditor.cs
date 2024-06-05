@@ -11,7 +11,7 @@ namespace SexyDu.InGameDebugger.View
         {
             base.OnInspectorGUI();
 
-            if (GUILayout.Button("SetWordCompletionItems"))
+            if (GUILayout.Button("SetDefaultAnimationSpecs"))
             {
                 for (int i = 0; i < targets.Length; i++)
                 {

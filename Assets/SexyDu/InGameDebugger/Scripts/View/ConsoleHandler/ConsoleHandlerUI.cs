@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using SexyDu.UGUI;
 
 namespace SexyDu.InGameDebugger.View
 {
@@ -28,8 +29,15 @@ namespace SexyDu.InGameDebugger.View
         }
         #endregion
 
+        #region ObjectCache
+        [Header("ObjectCache")]
+        [SerializeField] private Transform transformCache;
+        protected Transform TransformCache => transformCache;
+        #endregion
+
         /// <summary>
         /// UI 갱신
+        /// : IConsoleHandlerUI
         /// </summary>
         public virtual void Refresh()
         {
@@ -38,24 +46,29 @@ namespace SexyDu.InGameDebugger.View
 
         #region PlayState
         [Header("PlayState")]
-        [SerializeField] private Image imagePlayState;
-        [SerializeField] private Sprite spritePlay;
-        [SerializeField] private Sprite spritePause;
+        [SerializeField] private Image imagePlayState; // 플레이 상태 이미지 Component
+        [SerializeField] private Sprite spritePlay; // 플레이 Sprite
+        [SerializeField] private Sprite spritePause; // 정지 Sprite
 
+        /// <summary>
+        /// 콘솔 플레이
+        /// </summary>
         private void Play()
         {
             BaseHandler.PauseConsole(false);
-
-            RefreshPlayState();
         }
 
+        /// <summary>
+        /// 콘솔 정지
+        /// </summary>
         private void Pause()
         {
             BaseHandler.PauseConsole(true);
-
-            RefreshPlayState();
         }
 
+        /// <summary>
+        /// 콘솔 플레이 상태 토글 클릭
+        /// </summary>
         public void OnClickTogglePlay()
         {
             if (BaseHandler.Playing)
@@ -64,12 +77,19 @@ namespace SexyDu.InGameDebugger.View
                 Play();
         }
 
+        /// <summary>
+        /// Play 상태 UI 갱신
+        /// </summary>
         private void RefreshPlayState()
         {
-            SetPlayState(BaseHandler.Playing);
+            SetPlayStatus(BaseHandler.Playing);
         }
 
-        private void SetPlayState(bool playing)
+        /// <summary>
+        /// 플레이 상태 UI 설정
+        /// : IConsoleHandlerUI
+        /// </summary>
+        public void SetPlayStatus(bool playing)
         {
             imagePlayState.sprite = playing ? spritePause : spritePlay;
         }
@@ -97,6 +117,17 @@ namespace SexyDu.InGameDebugger.View
         #region Anchor
         [Header("Anchor")]
         [SerializeField] private ConsoleAnchorUI anchor;
+        #endregion
+
+        #region CLI
+        /// <summary>
+        /// CLI 팝업 실행 버튼 클릭
+        /// </summary>
+        public void OnClickCLI()
+        {
+            ResourcePopup.Load<PopupTerminal>(PopupTerminal.ResourcePath, TransformCache)
+                .Initialize().SelectInputField();
+        }
         #endregion
     }
 }

@@ -56,6 +56,8 @@ namespace SexyDu.InGameDebugger
             logCount = 0;
             warningCount = 0;
             errorCount = 0;
+            assertionCount = 0;
+            exceptionCount = 0;
 
             NotifyDetectLog();
         }
@@ -86,7 +88,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 로그 카운트 추가
         /// </summary>
-        private void CollectLogCount(LogType type)
+        protected void CollectLogCount(LogType type)
         {
             switch (type)
             {

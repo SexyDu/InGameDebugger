@@ -46,6 +46,8 @@ namespace SexyDu.InGameDebugger
                 console.Pause();
             else
                 console.Play();
+
+            BaseUI?.SetPlayStatus(Playing);
         }
 
         /// <summary>

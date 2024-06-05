@@ -117,6 +117,8 @@ namespace SexyDu.InGameDebugger.View
         public void OnClickExecute()
         {
             Execute();
+
+            ClearInputField();
         }
 
         /// <summary>
