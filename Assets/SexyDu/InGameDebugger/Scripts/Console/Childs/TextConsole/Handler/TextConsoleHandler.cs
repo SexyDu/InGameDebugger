@@ -39,6 +39,7 @@ namespace SexyDu.InGameDebugger
 
         /// <summary>
         /// StackTrace 표시 여부 설정
+        /// : ITextConsoleUIHandle
         /// </summary>
         public void SetStackTrace(bool enable)
         {

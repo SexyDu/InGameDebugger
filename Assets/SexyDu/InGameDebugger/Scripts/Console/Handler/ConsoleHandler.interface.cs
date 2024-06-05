@@ -13,7 +13,11 @@ namespace SexyDu.InGameDebugger
         // 비활성화
         public void Inactivate();
 
+        // 로그 수집 서브젝트
+        public IConsoleLogSubject ConsoleLogSubject { get; }
+
         // 콘솔 필터 팔로워
         public IConsoleFilterFollower FilterFollower { get; }
+
     }
 }
