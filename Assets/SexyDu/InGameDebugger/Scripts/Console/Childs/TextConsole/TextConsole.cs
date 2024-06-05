@@ -179,6 +179,9 @@ namespace SexyDu.InGameDebugger
         private bool enableStackTrace = false;
         public bool EnableStackTrace => enableStackTrace;
 
+        /// <summary>
+        /// StackTrace가 표시될 영역의 텍스트 포맷
+        /// </summary>
         private string stackTraceFormat = "{0}";
 
         /// <summary>

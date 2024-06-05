@@ -12,8 +12,18 @@ namespace SexyDu.InGameDebugger
     {
         public const string ResourcesPath = "IGDPrefabs/LogDetail";
 
+        // 로그 메세지
+        private ILogMessage message = null;
+        // 아이콘 이미지
         [SerializeField] private NullableImage icon;
+        // 로그 텍스트메쉬
         [SerializeField] private TMP_Text text;
+        // StackTrace 크기 비율 (텍스트메쉬 폰트 크기 기준)
+        [SerializeField] private float stackTraceRatio;
+        // StackTrace가 표시될 영역의 텍스트 포맷
+        /// {0} : 폰트 크기
+        /// {1} : StackTrace 문자열
+        private const string StackTraceFormat = "<size={0}>{1}</size>";
 
         private Action onClosed = null; // 종료 시 이벤트
 
@@ -32,8 +42,14 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public LogDetail Set(ILogMessage message)
         {
-            icon.sprite = InGameDebuggerConfig.Ins.Settings.GetLogIcon(message.Type);
-            text.SetText(message.GetLogString());
+            // 메세지 설정
+            this.message = message;
+
+            /// 아이콘 설정
+            icon.sprite = InGameDebuggerConfig.Ins.Settings.GetLogIcon(this.message.Type);
+
+            /// 텍스트 설정
+            text.SetText(string.Format("{0}\n{1}", this.message.Condition, GetStackTraceString(this.message)));
 
             return this;
         }
@@ -45,6 +61,16 @@ namespace SexyDu.InGameDebugger
             this.onClosed = onClosed;
 
             return this;
+        }
+
+        /// <summary>
+        /// 텍스트 메쉬에 표시될 StackTrace 문자열 반환
+        /// </summary>
+        private string GetStackTraceString(ILogMessage message)
+        {
+            float stackTraceFontSize = text.fontSize * stackTraceRatio;
+
+            return string.Format(StackTraceFormat, stackTraceFontSize, message.StackTrace);
         }
 
         /// <summary>
@@ -65,6 +91,14 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
+        /// 로그 메세지 복사
+        /// </summary>
+        private void CopyLog()
+        {
+            GUIUtility.systemCopyBuffer = string.Format("{0}\n{1}", message.Condition, message.StackTrace);
+        }
+
+        /// <summary>
         /// 종료 클릭 이벤트
         /// </summary>
         public void OnClickClose()
@@ -79,7 +113,7 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void OnClickCopy()
         {
-            GUIUtility.systemCopyBuffer = text.text;
+            CopyLog();
         }
 
         #region ObjectCaches
