@@ -1,5 +1,7 @@
 # 유니티 InGameDebugger
 
+[GitHub repository](https://github.com/SexyDu/InGameDebugger)
+
 ## 개요
 * 인게임콘솔 및 CLI 기능으로 디버깅에 도움을 주기 위한 목적으로 만들어진 도구
 * 2가지 형식의 콘솔 인터페이스 제공 (아래 이미지 참고)
