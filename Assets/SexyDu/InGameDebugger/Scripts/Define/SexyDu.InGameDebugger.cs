@@ -1,4 +1,6 @@
+#if UNITY_EDITOR
 #define TEST_CSHARP_STACKTRACE
+#endif
 
 using System;
 using UnityEngine;
@@ -35,7 +37,22 @@ namespace SexyDu
                 this.type = type;
 #if TEST_CSHARP_STACKTRACE
                 StackTrace st = new StackTrace(true);
+#if false
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                for (int i = 0; i < st.FrameCount; i++)
+                {
+                    StackFrame sf = st.GetFrame(i);
+                    sb.AppendFormat("{0} (line {1}, col {2} in file {3}",
+                        sf.HasMethod() ? sf.GetMethod().ToString() : "[none]",
+                        sf.GetFileLineNumber(), sf.GetFileColumnNumber(),
+                        sf.GetFileName());
+                    sb.AppendLine();
+                }
+                this.stackTrace = sb.ToString();
+#else
                 this.stackTrace = st.ToString();
+#endif
+
 #endif
 
                 this.time = DateTime.Now.ToString("HH:mm:ss");
