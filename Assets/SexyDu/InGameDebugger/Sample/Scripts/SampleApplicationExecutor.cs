@@ -11,6 +11,8 @@ namespace SexyDu.InGameDebugger.Sample
     {
         private InGameDebuggerConfig DebuggerConfig => InGameDebuggerConfig.Ins;
 
+        [SerializeField] private int targetFrameRate = 120;
+
 #if TESTING_SAMPLE
         [SerializeField] private Debugger debugger;
 #endif
@@ -35,7 +37,12 @@ namespace SexyDu.InGameDebugger.Sample
 #endif
             }
 
+            Application.targetFrameRate = targetFrameRate;
+
             contents.Initialize();
+
+            Destroy(gameObject);
+            Destroy(this);
         }
     }
 }
