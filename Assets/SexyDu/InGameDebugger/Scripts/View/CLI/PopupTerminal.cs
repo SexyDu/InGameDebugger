@@ -26,6 +26,7 @@ namespace SexyDu.InGameDebugger.View
         public PopupTerminal Initialize()
         {
             inputField.onValueChanged.AddListener(OnInputFieldChanged);
+            inputField.onSubmit.AddListener(OnInputFieldSubmit);
 
             // 자동완성 초기 설정
             autoComplete.Initialize(OnWordCompletionSelected);
@@ -64,17 +65,17 @@ namespace SexyDu.InGameDebugger.View
             string[] wordCompletions = string.IsNullOrEmpty(text) ? null : CLI.GetMatchedCommands(text);
             autoComplete.SetWordCompletions(wordCompletions);
         }
+
+        /// <summary>
+        /// input field 값 제출 이벤트
+        /// </summary>
+        private void OnInputFieldSubmit(string text)
+        {
+            Submit(text);
+        }
         #endregion
 
         #region feature
-        /// <summary>
-        /// 현재 입력된 커맨드 실행
-        /// </summary>
-        private void Execute()
-        {
-            Execute(text);
-        }
-
         /// <summary>
         /// 커맨드 실행
         /// </summary>
@@ -84,11 +85,22 @@ namespace SexyDu.InGameDebugger.View
         }
 
         /// <summary>
+        /// 입력 제출
+        /// </summary>
+        private void Submit(string text)
+        {
+            Execute(text);
+
+            ClearInputField();
+        }
+
+        /// <summary>
         /// 팝업 클리어
         /// </summary>
         private void Clear()
         {
             inputField.onValueChanged.RemoveAllListeners();
+            inputField.onSubmit.RemoveAllListeners();
 
             autoComplete.Clear();
         }
@@ -119,9 +131,7 @@ namespace SexyDu.InGameDebugger.View
         /// </summary>
         public void OnClickExecute()
         {
-            Execute();
-
-            ClearInputField();
+            Submit(text);
         }
 
         /// <summary>

@@ -1,5 +1,8 @@
+#define TEST_CSHARP_STACKTRACE
+
 using System;
 using UnityEngine;
+using System.Diagnostics;
 
 namespace SexyDu
 {
@@ -30,6 +33,10 @@ namespace SexyDu
                 this.condition = condition;
                 this.stackTrace = stackTrace;
                 this.type = type;
+#if TEST_CSHARP_STACKTRACE
+                StackTrace st = new StackTrace(true);
+                this.stackTrace = st.ToString();
+#endif
 
                 this.time = DateTime.Now.ToString("HH:mm:ss");
             }

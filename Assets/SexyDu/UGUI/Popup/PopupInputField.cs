@@ -21,6 +21,10 @@ namespace SexyDu.UGUI
         /// <returns></returns>
         public PopupInputField Initialize()
         {
+            inputField.onSubmit.AddListener(text => {
+                Submit(text);
+            });
+
             return this;
         }
 
@@ -69,19 +73,21 @@ namespace SexyDu.UGUI
 
         #region feature
         /// <summary>
-        /// 현재 입력된 워드 결정
-        /// </summary>
-        private void Decide()
-        {
-            Decide(text);
-        }
-
-        /// <summary>
         /// 워드 결정
         /// </summary>
         private void Decide(string text)
         {
             onDecided?.Invoke(text);
+        }
+
+        /// <summary>
+        /// 입력 제출
+        /// </summary>
+        private void Submit(string text)
+        {
+            Decide(text);
+
+            Close();
         }
 
         /// <summary>
@@ -110,9 +116,7 @@ namespace SexyDu.UGUI
         /// </summary>
         public void OnClickDecide()
         {
-            Decide();
-
-            Close();
+            Submit(text);
         }
 
         /// <summary>
