@@ -3284,6 +3284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7858a9af33247a9b8e0db52472d097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetFrameRate: 120
+  debugger: {fileID: 0}
   contents: {fileID: 858689832}
 --- !u!4 &2118491720
 Transform:

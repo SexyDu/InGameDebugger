@@ -98,6 +98,8 @@ namespace SexyDu.InGameDebugger
         private void SetActive(bool active)
         {
             GameObjectCache.SetActive(active);
+
+            console.SetDisplayStatus(active);
         }
         #endregion
     }

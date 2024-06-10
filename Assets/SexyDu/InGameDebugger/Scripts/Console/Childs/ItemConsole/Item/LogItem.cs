@@ -3,6 +3,8 @@
 /// 아래 전처리기를 활성화 하면 하이어라키에 표시되는 LogItem에 ForEditor가 붙어 값이 제대로 설정되었는지 알 수 있다.
 //#define USE_FOREDITOR
 #endif
+// 변형 Queue(class QueueLogItem) 형식의 아이템 관리 구조 사용
+#define USE_QUEUE
 
 using System;
 using UnityEngine;
@@ -116,21 +118,14 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void Set(ILogMessage message)
         {
-#if true
+#if !USE_QUEUE
             // 설정과 동시에 하이어라키 맨 아래로 이동
             /// * 설정과 동시에 디스플레이의 최하단에 보이도록 하기 위함
             rectTransformCache.SetAsLastSibling();
+#endif
             // 활성화 되어 있지 않은 경우 활성화
             if (!gameObjectCache.activeSelf)
                 SetActive(true);
-#else
-            // 활성화 되어있는 경우 맨뒤로
-            if (GameObjectCache.activeSelf)
-                TransformCache.SetAsLastSibling();
-            // 활성화 되어 있지 않은 경우 활성화
-            else
-                SetActive(true);
-#endif
 
             this.message = message;
 
@@ -193,11 +188,30 @@ namespace SexyDu.InGameDebugger
             return MonoBehaviour.Instantiate(source, Config.Debugger.TransformCache);
         }
         #endregion
-        
+
         #region ObjectCache
+        /// <summary>
+        /// 활성화 상태
+        /// : ILogItem
+        /// </summary>
+        public bool Activated => gameObjectCache.activeSelf;
+
+        /// <summary>
+        /// 활성화 상태 설정
+        /// </summary>
         private void SetActive(bool active)
         {
             gameObjectCache.SetActive(active);
+        }
+
+        /// <summary>
+        /// 위치값
+        /// : ILogItem
+        /// </summary>
+        public Vector2 anchoredPosition
+        {
+            get => rectTransformCache.anchoredPosition;
+            set { rectTransformCache.anchoredPosition = value; }
         }
         #endregion
     }

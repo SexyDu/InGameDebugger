@@ -1,4 +1,4 @@
-//#define TESTING_SAMPLE
+#define TESTING_SAMPLE
 
 using UnityEngine;
 

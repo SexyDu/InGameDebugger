@@ -1,7 +1,9 @@
-//#define USE_MONOITEM
 #if UNITY_EDITOR
 #define ONLY_EDITOR
 #endif
+
+// 변형 Queue(class QueueLogItem) 형식의 아이템 관리 구조 사용
+#define USE_QUEUE
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +33,7 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public override Console Initialize()
         {
-            CreateLogItems(InGameDebuggerConfig.Ins.Settings.ItemCount);
+            queue.Initialize(InGameDebuggerConfig.Ins.Settings.ItemCount);
 
             return this;
         }
@@ -41,11 +43,67 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public override void Clear()
         {
+#if USE_QUEUE
+            ClearQueue();
+#else
             ClearLogItems();
+#endif
 
             base.Clear();
         }
 
+#if USE_QUEUE
+        /// <summary>
+        /// 콘솔 표시 상태 설정
+        /// </summary>
+        public override void SetDisplayStatus(bool isDisplaying)
+        {
+            base.SetDisplayStatus(isDisplaying);
+
+            RangeQueue();
+        }
+
+        /// <summary>
+        /// 로그 추가
+        /// </summary>
+        protected override void AddLogMessage(ILogMessage message)
+        {
+            base.AddLogMessage(message);
+
+            EnqueueMessage(message);
+            RangeQueue();
+        }
+
+        /// <summary>
+        /// 로그 화면 갱신
+        /// </summary>
+        public override void RefreshLogDisplay()
+        {
+            ClearQueue();
+
+            // 갱신 메세지 스택
+            Stack<ILogMessage> refreshMessages = new Stack<ILogMessage>();
+
+            for (int i = messages.Count - 1; i >= 0; i--)
+            {
+                if (PassFilters(messages[i]))
+                {
+                    refreshMessages.Push(messages[i]);
+
+                    // 갱신 메세지 수가 로그 아이템과 같거나 큰 경우 더 이상 필요 없기에 반복문 탈출
+                    if (refreshMessages.Count >= queue.Count)
+                        break;
+                }
+            }
+
+            while (refreshMessages.Count > 0)
+            {
+                EnqueueMessage(refreshMessages.Pop());
+            }
+
+            RangeQueue();
+        }
+#else
         /// <summary>
         /// 로그 추가
         /// </summary>
@@ -83,7 +141,41 @@ namespace SexyDu.InGameDebugger
                 SetLogItem(refreshMessages.Pop());
             }
         }
+#endif
 
+#if USE_QUEUE
+        #region Queue
+        [Header("Queue")]
+        // 로그 아이템 관리 변형 Queue
+        [SerializeField] private QueueLogItem queue;
+
+        /// <summary>
+        /// 로그 메세지 Queue에 인입
+        /// </summary>
+        private void EnqueueMessage(ILogMessage message)
+        {
+            queue.Enqueue(message);
+        }
+
+        /// <summary>
+        /// 로그 큐 내부 아이템 클리어 함수
+        /// </summary>
+        private void ClearQueue()
+        {
+            queue.Clear();
+        }
+
+        /// <summary>
+        /// 로그 큐 내부 활성화된 아이템 정렬
+        /// </summary>
+        private void RangeQueue()
+        {
+            // 콘솔 표시상태일 경우만 정렬
+            if (IsDisplaying)
+                queue.Range();
+        }
+        #endregion
+#else
         /// <summary>
         /// 로그 아이템 배열
         /// </summary>
@@ -141,19 +233,13 @@ namespace SexyDu.InGameDebugger
                 logItems[i].Clear();
             }
         }
+#endif
 
+#if !USE_QUEUE
         #region CreateLogItem
         [Header("Create Log Item")]
         [SerializeField] private Transform itemParent; // 로그 아이템의 부모 Transform
         [SerializeField] private Color[] backgroundColors; // 로그 아이템 배경 색상
-
-        /// <summary>
-        /// LogItem의 source 로드
-        /// </summary>
-        private T LoadItemSource<T>(string resourcePath) where T : MonoBehaviour
-        {
-            return Resources.Load<T>(resourcePath);
-        }
 
         /// <summary>
         /// 인덱스에 따른 배경 색상 반환
@@ -161,6 +247,14 @@ namespace SexyDu.InGameDebugger
         private Color GetBackgroundColor(int index)
         {
             return backgroundColors[index % backgroundColors.Length];
+        }
+
+        /// <summary>
+        /// LogItem의 source 로드
+        /// </summary>
+        private T LoadItemSource<T>(string resourcePath) where T : MonoBehaviour
+        {
+            return Resources.Load<T>(resourcePath);
         }
 
         /// <summary>
@@ -177,11 +271,7 @@ namespace SexyDu.InGameDebugger
             }
             else
             {
-#if USE_MONOITEM
-                MonoLogItem source = LoadItemSource<MonoLogItem>(MonoLogItem.ResourcePath);
-#else
                 LogItemSource source = LoadItemSource<LogItemSource>(LogItemSource.ResourcePath);
-#endif
 
                 List<ILogItem> list = new List<ILogItem>(logItems);
 
@@ -195,16 +285,6 @@ namespace SexyDu.InGameDebugger
             }
         }
 
-#if USE_MONOITEM
-        /// <summary>
-        /// 로그 아이템 생성
-        /// - MonoBehaviour 형식 아이템
-        /// </summary>
-        private MonoLogItem CreateLogItem(MonoLogItem source)
-        {
-            return Instantiate(source, itemParent);
-        }
-#else
         /// <summary>
         /// 로그 아이템 생성
         /// - 기본 클래스 형식 아이템
@@ -213,17 +293,17 @@ namespace SexyDu.InGameDebugger
         {
             return Instantiate(source, itemParent).ConvertLogItem();
         }
-#endif
+
         #endregion
+#endif
+
+
 
 #if ONLY_EDITOR
         [Header("Only Editor")]
         /// 아이템 소스 (개발자 경로 확인용)
         /// * 실제 소스 로드는 Resource.Load(LogItemSource.ResourcePath) 를 통해 이루어집니다.
         [SerializeField] private LogItemSource logItemSource;
-        /// 모노타입의 아이템 소스 (개발자 경로 확인용)
-        /// * 실제 소스 로드는 Resource.Load(MonoLogItem.ResourcePath) 를 통해 이루어집니다.
-        [SerializeField] private MonoLogItem logItemSourceMono;
 #endif
     }
 }

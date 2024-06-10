@@ -83,5 +83,19 @@ namespace SexyDu.InGameDebugger
         /// 로그 화면 갱신
         /// </summary>
         public abstract void RefreshLogDisplay();
+
+        #region Display Status
+        // 콘솔 표시 상태
+        private bool isDisplaying = false;
+        protected bool IsDisplaying => isDisplaying;
+
+        /// <summary>
+        /// 콘솔 표시 상태 설정
+        /// </summary>
+        public virtual void SetDisplayStatus(bool isDisplaying)
+        {
+            this.isDisplaying = isDisplaying;
+        }
+        #endregion
     }
 }
