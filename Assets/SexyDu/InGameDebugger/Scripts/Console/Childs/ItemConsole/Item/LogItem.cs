@@ -10,7 +10,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using SexyDu.UGUI;
+using SexyDu.UI.UGUI;
 #if USE_FOREDITOR
 using SexyDu.InGameDebugger.ForEditor;
 #endif

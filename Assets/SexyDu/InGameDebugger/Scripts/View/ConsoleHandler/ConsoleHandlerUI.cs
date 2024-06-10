@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using SexyDu.UGUI;
+using SexyDu.UI.UGUI;
 
 namespace SexyDu.InGameDebugger.View
 {

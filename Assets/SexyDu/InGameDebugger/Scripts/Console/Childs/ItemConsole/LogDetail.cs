@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
-using SexyDu.UGUI;
+using SexyDu.UI.UGUI;
 
 namespace SexyDu.InGameDebugger
 {
