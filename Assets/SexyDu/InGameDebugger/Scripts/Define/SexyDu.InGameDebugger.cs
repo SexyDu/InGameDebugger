@@ -1,10 +1,13 @@
 #if !UNITY_EDITOR
-#define TEST_CSHARP_STACKTRACE
+#define USE_CSHARP_STACKTRACE
 #endif
+#define HIDE_STACKTRACE_INLOG
 
 using System;
 using UnityEngine;
+#if USE_CSHARP_STACKTRACE
 using System.Diagnostics;
+#endif
 
 namespace SexyDu
 {
@@ -33,26 +36,12 @@ namespace SexyDu
             public LogMessage(string condition, string stackTrace, LogType type)
             {
                 this.condition = condition;
-                this.stackTrace = stackTrace;
                 this.type = type;
-#if TEST_CSHARP_STACKTRACE
+#if USE_CSHARP_STACKTRACE
                 StackTrace st = new StackTrace(true);
-#if false
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                for (int i = 0; i < st.FrameCount; i++)
-                {
-                    StackFrame sf = st.GetFrame(i);
-                    sb.AppendFormat("{0} (line {1}, col {2} in file {3}",
-                        sf.HasMethod() ? sf.GetMethod().ToString() : "[none]",
-                        sf.GetFileLineNumber(), sf.GetFileColumnNumber(),
-                        sf.GetFileName());
-                    sb.AppendLine();
-                }
-                this.stackTrace = sb.ToString();
-#else
                 this.stackTrace = st.ToString();
-#endif
-
+#else
+                this.stackTrace = stackTrace;
 #endif
 
                 this.time = DateTime.Now.ToString("HH:mm:ss");
@@ -60,7 +49,11 @@ namespace SexyDu
 
             public string GetLogString()
             {
+#if HIDE_STACKTRACE_INLOG
+                return string.Format($"[{time}] {condition}");
+#else
                 return string.Format($"[{time}] {condition}\n{stackTrace}");
+#endif
             }
         }
 

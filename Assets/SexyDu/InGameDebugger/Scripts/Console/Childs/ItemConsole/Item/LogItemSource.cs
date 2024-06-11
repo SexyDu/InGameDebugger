@@ -3,6 +3,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SexyDu.UI.UGUI;
+using SexyDu.Touch;
 
 namespace SexyDu.InGameDebugger
 {
@@ -14,7 +16,7 @@ namespace SexyDu.InGameDebugger
         [SerializeField] private Image icon; // 아이콘 이미지
         [SerializeField] private TMP_Text text; // 텍스트
 
-        [SerializeField] private Button button; // 버튼 오브젝트
+        [SerializeField] private ButtonInTouchSender button; // 버튼 오브젝트
 
         #region ObjectCache
         [Header("ObjectCache")]
@@ -22,6 +24,9 @@ namespace SexyDu.InGameDebugger
         [SerializeField] private GameObject gameObjectCache;
         #endregion
 
+        /// <summary>
+        /// 해당 클래스를 LogItem으로 컨버팅
+        /// </summary>
         public LogItem ConvertLogItem()
         {
 #if USE_READONLY
@@ -40,6 +45,17 @@ namespace SexyDu.InGameDebugger
             Destroy(this);
 
             return item;
+        }
+
+        /// <summary>
+        /// 해당 클래스를 LogItem으로 컨버팅
+        /// * 버튼에 TouchReceiver 연결하여 슬라이더 대응
+        /// </summary>
+        public LogItem ConvertLogItem(ITouchTarget touchReceiver)
+        {
+            button.SetTouchReceiver(touchReceiver);
+
+            return ConvertLogItem();
         }
     }
 }

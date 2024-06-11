@@ -1,5 +1,11 @@
+#define USE_SLIDER
+#define TEMPORARY
+
 using System;
 using UnityEngine;
+#if USE_SLIDER
+using SexyDu.UI.UGUI;
+#endif
 
 namespace SexyDu.InGameDebugger
 {
@@ -9,8 +15,7 @@ namespace SexyDu.InGameDebugger
     [Serializable]
     public class QueueLogItem : IClearable, IReleasable
     {
-        [SerializeField] private float height; // 아이템별 높이값
-        private int current = -1; // 현재 인덱스
+        [SerializeField] private float itemHeight; // 아이템별 높이값
         private ILogItem[] items = null; // 로그 아이템 배열
 
         // 로그 아이템 수
@@ -37,12 +42,9 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void Enqueue(ILogMessage message)
         {
-            int target = current + 1;
-            if (target >= items.Length)
-                target = 0;
+            current = GetNextIndex(current);
 
-            items[target].Set(message);
-            current = target;
+            items[current].Set(message);
         }
 
         /// <summary>
@@ -54,6 +56,9 @@ namespace SexyDu.InGameDebugger
             {
                 items[i].Clear();
             }
+
+            // 활성화 수 0으로 설정
+            SetActivatedCount(0);
         }
 
         /// <summary>
@@ -71,32 +76,142 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void Range()
         {
+            // 현재 인덱스
             int index = current;
 
+            // 아이템 위치값 저장소
             Vector2 anchoredPosition = Vector2.zero;
-            float totalHeight = 0f;
-            
+            // 활성화 아이템 수
+            int activatedCount = 0;
+
             do
             {
+                // 현재 아이템 위치값 설정
                 items[index].anchoredPosition = anchoredPosition;
-                anchoredPosition.y += height;
-                totalHeight = anchoredPosition.y;
+                // 위치값 증가
+                anchoredPosition.y += itemHeight;
 
-                index--;
-                if (index < 0)
-                    index = items.Length - 1;
-            } while (!index.Equals(current) && items[index].Activated);
+                // 활성화 아이템 수 증가
+                activatedCount++;
 
+                // 이전 인덱스 설정
+                index = GetPreviousIndex(index);
+                
+            } while (!index.Equals(current) && items[index].Activated); // 인덱스와 현재와 같아지지 않고 현재 인덱스 아이템이 활성화 되어있는 경우 반복
+
+#if USE_SLIDER
+
+#if TEMPORARY
+            // 활성화 아이템 수 설정
+            SetActivatedCount(activatedCount);
+#else
+            slider?.SetMinimum(-totalHeight);
+#endif
+
+#else
             Vector2 sizeDelta = parent.sizeDelta;
             sizeDelta.y = totalHeight;
             parent.sizeDelta = sizeDelta;
+#endif
         }
+
+        #region Index
+        // Queue의 현재 인덱스
+        private int current = -1;
+        // 아이템 총 활성화 수
+        private int activatedCount = 0;
+
+        /// <summary>
+        /// 이전 인덱스 반환
+        /// </summary>
+        private int GetPreviousIndex(int current)
+        {
+            current--;
+
+            if (current < 0)
+                current = items.Length - 1;
+
+            return current;
+        }
+
+        /// <summary>
+        /// 다음 인덱스 반환
+        /// </summary>
+        private int GetNextIndex(int current)
+        {
+            current++;
+
+            if (current >= items.Length)
+                current = 0;
+
+            return current;
+        }
+
+        /// <summary>
+        /// 활성화 아이템 수 설정
+        /// </summary>
+        private void SetActivatedCount(int activatedCount)
+        {
+            // 현재 수와 설정하려는 수가 다른 경우
+            if (!this.activatedCount.Equals(activatedCount))
+            {
+                // 설정 및 slider 제한 설정
+                this.activatedCount = activatedCount;
+
+                // 활성화 아이템 수 변경에 따른 슬라이더 제한영역 설정
+                SetSliderLimit(this.activatedCount);
+            }
+        }
+        #endregion
 
         #region ContentsParent
         [Header("ContentsParent")]
         /// UGUI의 ScrollView 동작을 위해 크기가 설정될 오브젝트
         [SerializeField] private RectTransform parent;
         #endregion
+
+#if USE_SLIDER
+        #region Slider
+        [Header("Slider")]
+        [SerializeField] private VerticalSliderLight slider; // 스크롤뷰
+
+        /// <summary>
+        /// 슬라이더의 제한값 설정
+        /// </summary>
+        public void SetSliderLimit()
+        {
+            SetSliderLimit(activatedCount);
+        }
+
+        /// <summary>
+        /// 슬라이더의 제한값 설정
+        /// </summary>
+        private void SetSliderLimit(int activatedCount)
+        {
+            // 활성화 아이템 영역 높이
+            float height = itemHeight * activatedCount;
+            // 활성화 아이템 영역 및 스크롤뷰 영역을 고려하여 min 계산
+            float min = slideAreaRect.rect.height - height;
+
+            //Debug.LogFormat("rect.height ({0}) - height ({1}) = min ({2})", slideAreaRect.rect.height, height, min);
+            if (min > 0)
+                min = 0;
+            slider?.SetMinimum(min);
+        }
+
+        /// <summary>
+        /// 제한수치에 따른 슬라이더 위치값 보정
+        /// </summary>
+        public void AmendSliderPosition()
+        {
+            slider.AmendTargetPosition();
+        }
+
+#if TEMPORARY
+        [SerializeField] private RectTransform slideAreaRect; // 스크롤뷰 제한영역 계산을 위한 Transform
+#endif
+        #endregion
+#endif
 
         #region Create
         [Header("Create Log Item")]
@@ -135,7 +250,7 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         private LogItem CreateLogItem(LogItemSource source)
         {
-            return MonoBehaviour.Instantiate(source, parent).ConvertLogItem();
+            return MonoBehaviour.Instantiate(source, parent).ConvertLogItem(slider);
         }
         #endregion
     }

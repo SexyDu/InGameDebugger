@@ -44,7 +44,9 @@ namespace SexyDu.InGameDebugger
         public override void Clear()
         {
 #if USE_QUEUE
+            // 클리어 후 슬라이더 위치 보정
             ClearQueue();
+            queue.AmendSliderPosition();
 #else
             ClearLogItems();
 #endif
@@ -101,7 +103,10 @@ namespace SexyDu.InGameDebugger
                 EnqueueMessage(refreshMessages.Pop());
             }
 
+            // queue 정렬
             RangeQueue();
+            // queue의 슬라이더 위치값 보정
+            queue.AmendSliderPosition();
         }
 #else
         /// <summary>

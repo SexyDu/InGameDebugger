@@ -4,6 +4,9 @@ using SexyDu.Touch;
 
 namespace SexyDu.UI.UGUI
 {
+    /// <summary>
+    /// 가벼운 수직 스크롤
+    /// </summary>
     public sealed class VerticalSliderLight : TouchTarget
     {
         #region OnAwakeInit
@@ -15,6 +18,9 @@ namespace SexyDu.UI.UGUI
                 Initialize();
         }
 
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
         private VerticalSliderLight Initialize()
         {
             // 상위 Transform으로부터 Canvas를 찾아서 초기설정 하는 루틴
@@ -33,11 +39,17 @@ namespace SexyDu.UI.UGUI
         }
         #endregion
 
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
         public VerticalSliderLight Initialize(Canvas canvas)
         {
             return Initialize(canvas.scaleFactor);
         }
 
+        /// <summary>
+        /// 초기 설정
+        /// </summary>
         public VerticalSliderLight Initialize(float scaleFactor)
         {
             scaleFactorForMult = 1f / scaleFactor;
@@ -45,23 +57,106 @@ namespace SexyDu.UI.UGUI
             return this;
         }
 
+        /// <summary>
+        /// 터치 추가
+        /// : TouchTarget : ITouchTarget
+        /// </summary>
         public override void AddTouch(int fingerId)
         {
             StartSlide(fingerId);
         }
 
+        /// <summary>
+        /// 터치 클리어
+        /// : TouchTarget : ITouchTarget
+        /// </summary>
         public override void ClearTouch()
         {
             EndSlide();
         }
 
+        /// <summary>
+        /// 하위 Sender의 Receiver에 해당 슬라이더 연결
+        /// </summary>
+        public void ConnectSendersInChildren()
+        {
+            ITouchTargetSender[] senders = GetComponentsInChildren<ITouchTargetSender>();
+            if (senders != null)
+            {
+                for (int i = 0; i < senders.Length; i++)
+                {
+                    senders[i].SetTouchReceiver(this);
+                }
+            }
+        }
+
+        // 슬라이드 대상
         [SerializeField] private RectTransform target;
+        // 터치 보정용 Canvas scale factor
         private float scaleFactorForMult = 1f;
 
-        #region Slide
-        [SerializeField] private float min;
-        [SerializeField] private float max;
+        private Vector2 TargetPosition
+        {
+            get => target.anchoredPosition;
+            set => target.anchoredPosition = value;
+        }
 
+        /// <summary>
+        /// 제한수치에 따른 위치 조정
+        /// </summary>
+        public void AmendTargetPosition()
+        {
+            // 일단 슬라이드 종료
+            EndSlide();
+
+            Vector2 anchoredPosition = TargetPosition;
+            // 위치값이 보정된 경우 설정
+            if (AmendLimitPosition(ref anchoredPosition.y))
+                TargetPosition = anchoredPosition;
+        }
+
+        #region Slide
+        [SerializeField] private float min; // slide 최솟값
+        [SerializeField] private float max; // slide 최댓값
+
+        /// <summary>
+        /// slide 최솟값 설정
+        /// </summary>
+        public void SetMinimum(float min)
+        {
+            this.min = min;
+        }
+        /// <summary>
+        /// slide 최댓값 설정
+        /// </summary>
+        public void SetMaximum(float max)
+        {
+            this.max = max;
+        }
+
+        /// <summary>
+        /// 제한범위 값 보정
+        /// </summary>
+        /// <returns>제한범위를 벗어났는지 여부(보정 여부)</returns>
+        private bool AmendLimitPosition(ref float val)
+        {
+            if (val < min)
+            {
+                val = min;
+                return true;
+            }
+            else if (val > max)
+            {
+                val = max;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// 슬라이더 실행
+        /// </summary>
         private void StartSlide(int fingerId)
         {
             EndSlide();
@@ -70,6 +165,9 @@ namespace SexyDu.UI.UGUI
             StartCoroutine(IeSlide);
         }
 
+        /// <summary>
+        /// 슬라이더 종료
+        /// </summary>
         private void EndSlide()
         {
             if (IeSlide != null)
@@ -79,14 +177,19 @@ namespace SexyDu.UI.UGUI
             }
         }
 
+        /// <summary>
+        /// 슬라이더 코루틴
+        /// </summary>
         private IEnumerator IeSlide = null;
         private IEnumerator CoSlide(int fingerId)
         {
             Vector2 prev = GetTouchPosition(fingerId);
 
+            // 터치 포지션을 찾지 못한 경우 종료
             if (prev.Equals(Vector2.zero))
                 yield break;
 
+            // 관성 사용인 경우 초기화
             if (UseInertia)
             {
                 if (inertiaQueue == null)
@@ -95,7 +198,8 @@ namespace SexyDu.UI.UGUI
                     inertiaQueue.ClearQueue();
             }
 
-            Vector2 anchoredPosition = target.anchoredPosition;
+            // 초기 타겟 위치
+            Vector2 anchoredPosition = TargetPosition;
 
             do
             {
@@ -103,20 +207,27 @@ namespace SexyDu.UI.UGUI
 
                 Vector2 current = GetTouchPosition(fingerId);
 
+                // 현재 위치값을 찾지 못한 경우(터치 종료)
                 if (current.Equals(Vector2.zero))
                 {
+                    // 관성 코루틴 실행
                     StartInertia(inertiaQueue.PositionPerOneSecond());
+                    // 관성 데이터 클리어
                     inertiaQueue.ClearQueue();
                 }
                 else
                 {
+                    // deltaPosition 계산 및 적용
                     float deltaPosition = (current.y - prev.y) * scaleFactorForMult;
                     anchoredPosition.y += deltaPosition;
+                    AmendLimitPosition(ref anchoredPosition.y);
 
-                    target.anchoredPosition = anchoredPosition;
+                    TargetPosition = anchoredPosition;
 
+                    // 관성 queue에 현재 delta 데이터 입력
                     inertiaQueue?.Enqueue(deltaPosition, Time.deltaTime);
 
+                    // 이전값을 현재값으로 변경
                     prev = current;
                 }
 
@@ -136,64 +247,88 @@ namespace SexyDu.UI.UGUI
         // 관성 관리 queue
         private InertiaQueue inertiaQueue = null;
 
+        /// <summary>
+        /// 관성 코루틴 실행
+        /// </summary>
         private void StartInertia(float inertiaPerOneSec)
         {
-            Debug.LogFormat("StartInertia({0})", inertiaPerOneSec);
+            // 기존 코루틴 종료
             EndSlide();
 
+            // 증가상태인 경우
             if (inertiaPerOneSec > inertiaBreak)
             {
+                // 관성 제한값이 있는 경우 보정
                 if (HasLimitInertia && inertiaPerOneSec > limitInertia)
                     inertiaPerOneSec = limitInertia;
-
+                // 코루틴 실행
                 IeSlide = CoInertiaIncrease(inertiaPerOneSec);
                 StartCoroutine(IeSlide);
             }
+            // 감소상태인 경우
             else if (inertiaPerOneSec < -inertiaBreak)
             {
+                // 관성 제한값이 있는 경우 보정
                 if (HasLimitInertia && inertiaPerOneSec < -limitInertia)
                     inertiaPerOneSec = -limitInertia;
-
+                // 코루틴 실행
                 IeSlide = CoInertiaDecrease(inertiaPerOneSec);
                 StartCoroutine(IeSlide);
             }
         }
 
+        /// <summary>
+        /// 증가 관성 코루틴
+        /// </summary>
         private IEnumerator CoInertiaDecrease(float inertiaPerOneSec)
         {
-            Vector2 anchoredPosition = target.anchoredPosition;
+            Vector2 anchoredPosition = TargetPosition;
 
             do
             {
                 yield return null;
 
+                // 관성 수치 적용
                 float deltaTime = Time.deltaTime;
                 anchoredPosition.y += inertiaPerOneSec * deltaTime;
-                target.anchoredPosition = anchoredPosition;
+                bool isOver = AmendLimitPosition(ref anchoredPosition.y);
+                TargetPosition = anchoredPosition;
 
+                if (isOver)
+                    break;
+
+                // 감속처리
                 inertiaPerOneSec += decelerationRate / deltaTime;
-                Debug.LogFormat("inertiaPerOneSec : {0}", inertiaPerOneSec);
                 
             } while (inertiaPerOneSec < -inertiaBreak);
         }
-
+        /// <summary>
+        /// 감소 관성 코루틴
+        /// </summary>
         private IEnumerator CoInertiaIncrease(float inertiaPerOneSec)
         {
-            Vector2 anchoredPosition = target.anchoredPosition;
+            Vector2 anchoredPosition = TargetPosition;
 
             do
             {
                 yield return null;
 
+                // 관성 수치 적용
                 float deltaTime = Time.deltaTime;
                 anchoredPosition.y += inertiaPerOneSec * deltaTime;
-                target.anchoredPosition = anchoredPosition;
+                bool isOver = AmendLimitPosition(ref anchoredPosition.y);
+                TargetPosition = anchoredPosition;
 
+                if (isOver)
+                    break;
+
+                // 감속처리
                 inertiaPerOneSec -= decelerationRate / deltaTime;
-                Debug.LogFormat("inertiaPerOneSec : {0}", inertiaPerOneSec);
 
             } while (inertiaPerOneSec > inertiaBreak);
         }
         #endregion
+
+
     }
 }

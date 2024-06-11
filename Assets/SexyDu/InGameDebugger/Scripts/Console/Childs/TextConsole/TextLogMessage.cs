@@ -1,4 +1,11 @@
+#if !UNITY_EDITOR
+#define USE_CSHARP_STACKTRACE
+#endif
+
 using UnityEngine;
+#if USE_CSHARP_STACKTRACE
+using System.Diagnostics;
+#endif
 
 namespace SexyDu.InGameDebugger
 {
@@ -15,8 +22,13 @@ namespace SexyDu.InGameDebugger
         public TextLogMessage(string condition, string stackTrace, LogType type)
         {
             this.condition = condition;
-            this.stackTrace = stackTrace;
             this.type = type;
+#if USE_CSHARP_STACKTRACE
+            StackTrace st = new StackTrace(true);
+            this.stackTrace = st.ToString();
+#else
+            this.stackTrace = stackTrace;
+#endif
         }
 
         private const string WarningSign = "<color=yellow>[!]</color>";
