@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 콘솔 앵커 처리 인터페이스
+    /// </summary>
     public interface IConsoleAnchor
     {
         /// <summary>
@@ -25,6 +28,9 @@ namespace SexyDu.InGameDebugger
         public bool Collect(ScreenOrientation orientation);
     }
 
+    /// <summary>
+    /// 콘솔 앵커 타입
+    /// </summary>
     public enum ConsoleAnchorType : byte
     {
         Whole = 0,

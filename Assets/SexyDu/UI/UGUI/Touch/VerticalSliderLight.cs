@@ -329,6 +329,17 @@ namespace SexyDu.UI.UGUI
         }
         #endregion
 
+        #region ObjectCache
+        [Header("ObjectCache")]
+        [SerializeField] private RectTransform rectTransformCache;
+        private RectTransform RectTransformCache => rectTransformCache;
 
+        /// <summary>
+        /// 슬라이더의 영역
+        /// RectTransform.rect.size.x == RectTransform.rect.width
+        /// RectTransform.rect.size.y == RectTransform.rect.height
+        /// </summary>
+        public Vector2 Area => rectTransformCache.rect.size;
+        #endregion
     }
 }

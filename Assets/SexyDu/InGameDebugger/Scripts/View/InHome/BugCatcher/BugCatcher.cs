@@ -1,4 +1,9 @@
+//#define USE_ERROR_COUNT
+
 using UnityEngine;
+#if USE_ERROR_COUNT
+using TMPro;
+#endif
 
 namespace SexyDu.InGameDebugger.View
 {
@@ -33,7 +38,9 @@ namespace SexyDu.InGameDebugger.View
         /// </summary>
         public void OnDetectLog(IConsoleLogSubject subject)
         {
-            
+#if USE_ERROR_COUNT
+            SetGeneralErrorCount(subject.GeneralErrorCount);
+#endif
         }
 
         /// <summary>
@@ -43,6 +50,10 @@ namespace SexyDu.InGameDebugger.View
         public void OnDetectLog(IConsoleLogSubject subject, LogType type)
         {
             Animate(type);
+
+#if USE_ERROR_COUNT
+            SetGeneralErrorCount(subject.GeneralErrorCount);
+#endif
         }
 
         /// <summary>
@@ -52,5 +63,25 @@ namespace SexyDu.InGameDebugger.View
         {
             Debugger.ActivateConsole();
         }
+
+#if USE_ERROR_COUNT
+        #region Error Count
+        [Header("ErrorCount")]
+        [SerializeField] private TMP_Text textMeshGeneralError; // 에러 수 표시 텍스트
+        private const int MaximumErrorCount = 999;
+        private const string OverErrorCountString = "+999";
+
+        /// <summary>
+        /// 에러 수 설정
+        /// </summary>
+        private void SetGeneralErrorCount(int generalErrorCount)
+        {
+            if (generalErrorCount > MaximumErrorCount)
+                textMeshGeneralError.SetText(OverErrorCountString);
+            else
+                textMeshGeneralError.SetText(generalErrorCount.ToString());
+        }
+        #endregion
+#endif
     }
 }

@@ -1,5 +1,4 @@
 #define USE_SLIDER
-#define TEMPORARY
 
 using System;
 using UnityEngine;
@@ -101,12 +100,8 @@ namespace SexyDu.InGameDebugger
 
 #if USE_SLIDER
 
-#if TEMPORARY
             // 활성화 아이템 수 설정
             SetActivatedCount(activatedCount);
-#else
-            slider?.SetMinimum(-totalHeight);
-#endif
 
 #else
             Vector2 sizeDelta = parent.sizeDelta;
@@ -191,12 +186,12 @@ namespace SexyDu.InGameDebugger
             // 활성화 아이템 영역 높이
             float height = itemHeight * activatedCount;
             // 활성화 아이템 영역 및 스크롤뷰 영역을 고려하여 min 계산
-            float min = slideAreaRect.rect.height - height;
+            float min = slider.Area.y - height;
 
             //Debug.LogFormat("rect.height ({0}) - height ({1}) = min ({2})", slideAreaRect.rect.height, height, min);
             if (min > 0)
                 min = 0;
-            slider?.SetMinimum(min);
+            slider.SetMinimum(min);
         }
 
         /// <summary>
@@ -206,10 +201,6 @@ namespace SexyDu.InGameDebugger
         {
             slider.AmendTargetPosition();
         }
-
-#if TEMPORARY
-        [SerializeField] private RectTransform slideAreaRect; // 스크롤뷰 제한영역 계산을 위한 Transform
-#endif
         #endregion
 #endif
 

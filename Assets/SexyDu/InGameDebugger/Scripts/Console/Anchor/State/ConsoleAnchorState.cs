@@ -51,9 +51,5 @@ namespace SexyDu.InGameDebugger
         {
             return Screen.safeArea.size / canvas.scaleFactor;
         }
-
-       
-
-
     }
 }
