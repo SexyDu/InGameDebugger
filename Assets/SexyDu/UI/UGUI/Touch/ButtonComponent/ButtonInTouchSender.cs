@@ -149,13 +149,8 @@ namespace SexyDu.UI.UGUI
         /// </summary>
         private bool IsLeave(float compare, Vector2 distance)
         {
-#if true
             distance = Abs(distance);
             return distance.x > compare || distance.y > compare;
-#else
-            return compare < distance.x || -compare > distance.x
-                || compare < distance.y || -compare > distance.y;
-#endif
         }
 
         /// <summary>
