@@ -6,9 +6,6 @@ namespace SexyDu.InGameDebugger.View
 {
     /// <summary>
     /// 앵커 UI
-    /// TODO: 현재는 Anchor 기능이 독립적으로 구성되어 있음. ConsoleHandler에 앵커 기능에 대한 의존성을 부여하여 여기에선 해당 기능을 제어만 해야함
-    ///  - 위 업무를 하면 Handler에서 Anchor변경이 제대로 감지되고 Anchor 변경 시 필요한 작업 가능 (예를들어 Anchor 변경으로 인한 슬라이더 영역 변경 등?)
-    ///    - 현재는 위와 같은 연결성을 두려면 구조가 복잡해지기 때문에 하지 않음
     /// </summary>
     public class ConsoleAnchorUI : MonoBehaviour
     {
