@@ -309,6 +309,7 @@ MonoBehaviour:
       m_Calls: []
   interacts: []
   touchReceiver: {fileID: 0}
+  onDownClearReceiver: 1
 --- !u!114 &3327908149599603184
 MonoBehaviour:
   m_ObjectHideFlags: 0
