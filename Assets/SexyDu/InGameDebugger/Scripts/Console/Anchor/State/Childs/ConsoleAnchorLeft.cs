@@ -23,9 +23,9 @@ namespace SexyDu.InGameDebugger
         /// 현재 앵커로 설정
         /// : IConsoleAnchor
         /// </summary>
-        public override void Process(Canvas canvas, RectTransform target)
+        public override void Process(RectTransform target, float scaleFactor = 1f)
         {
-            Vector2 canvasSafeArea = GetSafeAreaSize(canvas);
+            Vector2 canvasSafeArea = GetSafeAreaSize(scaleFactor);
 
             target.offsetMin = Vector2.zero;
             target.offsetMax = new Vector3(-GetOppositeSideValue(canvasSafeArea.x), 0f);

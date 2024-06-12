@@ -3,9 +3,19 @@ using TMPro;
 
 namespace SexyDu.InGameDebugger
 {
+    /// <summary>
+    /// 디버거의 기본 초기 설정 수행 클래스
+    /// </summary>
     public class DebuggerInitializer : MonoBehaviour, IReleasable
     {
         private InGameDebuggerSettings Settings => InGameDebuggerConfig.Ins.Settings;
+
+        public DebuggerInitializer Initialize(Canvas canvas)
+        {
+            this.canvas = canvas;
+
+            return Initialize();
+        }
 
         public DebuggerInitializer Initialize()
         {

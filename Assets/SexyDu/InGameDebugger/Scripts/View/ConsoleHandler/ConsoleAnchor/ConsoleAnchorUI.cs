@@ -12,17 +12,16 @@ namespace SexyDu.InGameDebugger.View
     /// </summary>
     public class ConsoleAnchorUI : MonoBehaviour
     {
-        private IConsoleAnchor current = null;
-        [SerializeField] private Canvas canvas;
-        [SerializeField] private RectTransform target;
+        // 앵커 설정 대상
+        private IConsoleAnchorSetter setter = null;
 
         /// <summary>
         /// 초기 설정
         /// </summary>
         /// <returns></returns>
-        public ConsoleAnchorUI Initialize()
+        public ConsoleAnchorUI Initialize(IConsoleAnchorSetter setter)
         {
-            current = new ConsoleAnchorWhole();
+            this.setter = setter;
 
             return this;
         }
@@ -32,9 +31,7 @@ namespace SexyDu.InGameDebugger.View
         /// </summary>
         private void Next()
         {
-            current = current.Next();
-
-            current.Process(canvas, target);
+            setter.NextAnchor();
 
             SetCurrentIconImage();
         }
@@ -57,7 +54,7 @@ namespace SexyDu.InGameDebugger.View
         /// </summary>
         private void SetCurrentIconImage()
         {
-            SetIconImage(current.Anchor);
+            SetIconImage(setter.AnchorType);
         }
 
         /// <summary>

@@ -173,7 +173,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 슬라이더의 제한값 설정
         /// </summary>
-        public void SetSliderLimit()
+        public void RefreshSliderLimit()
         {
             SetSliderLimit(activatedCount);
         }

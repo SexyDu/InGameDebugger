@@ -33,7 +33,7 @@ namespace SexyDu.InGameDebugger
         /// 현재 앵커로 설정
         /// : IConsoleAnchor
         /// </summary>
-        public override void Process(Canvas canvas, RectTransform target)
+        public override void Process(RectTransform target, float scaleFactor = 1f)
         {
             target.offsetMin = Vector2.zero;
             target.offsetMax = Vector2.zero;

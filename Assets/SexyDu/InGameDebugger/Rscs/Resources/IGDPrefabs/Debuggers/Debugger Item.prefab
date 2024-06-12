@@ -639,6 +639,7 @@ MonoBehaviour:
   onAwakeInit: 0
   home: {fileID: 2237102951742876553}
   consoleHandler: {fileID: 2237102952810124453}
+  canvas: {fileID: 2237102951402258065}
   transformCache: {fileID: 2237102951402258066}
 --- !u!114 &2237102951402258069
 MonoBehaviour:
@@ -1569,8 +1570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea9a54beb62c4436be44e32746fc105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 2237102951402258065}
-  target: {fileID: 2237102952810124451}
   icon:
     image: {fileID: 2237102951191533560}
   iconSprites:
@@ -3685,7 +3684,6 @@ MonoBehaviour:
     sizeDeltaStart: {x: 108, y: 108}
     sizeDeltaEnd: {x: 72, y: 72}
     time: 0.4
-  textMeshGeneralError: {fileID: 2237102952594138761}
   animationBase:
     graphic: {fileID: 2237102952954501817}
     rectTransform: {fileID: 2237102952954501816}

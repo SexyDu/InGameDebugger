@@ -25,7 +25,7 @@ namespace SexyDu.InGameDebugger.View
             filter.Initialize(BaseHandler.FilterFollower, BaseHandler.ConsoleLogSubject);
 
             // 앵커 초기 설정
-            anchor.Initialize();
+            anchor.Initialize(BaseHandler);
         }
         #endregion
 

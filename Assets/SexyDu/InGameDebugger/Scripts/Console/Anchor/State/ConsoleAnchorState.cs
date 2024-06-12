@@ -20,7 +20,7 @@ namespace SexyDu.InGameDebugger
         /// 현재 앵커로 설정
         /// : IConsoleAnchor
         /// </summary>
-        public abstract void Process(Canvas canvas, RectTransform target);
+        public abstract void Process(RectTransform target, float scaleFactor = 1f);
 
         /// <summary>
         /// 현재 orientation에 적합 여부
@@ -45,11 +45,11 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
-        /// 캔버스에 따른 SafeArea 반환
+        /// 캔버스 scaleFactor에 따른 SafeArea 반환
         /// </summary>
-        protected Vector2 GetSafeAreaSize(Canvas canvas)
+        protected Vector2 GetSafeAreaSize(float scaleFactor)
         {
-            return Screen.safeArea.size / canvas.scaleFactor;
+            return Screen.safeArea.size / scaleFactor;
         }
     }
 }

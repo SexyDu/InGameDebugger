@@ -179,6 +179,15 @@ namespace SexyDu.InGameDebugger
             if (IsDisplaying)
                 queue.Range();
         }
+
+        /// <summary>
+        /// 아이템 슬라이더의 이동제한수치 갱신
+        /// </summary>
+        public void RefreshItemSlider()
+        {
+            queue.RefreshSliderLimit();
+            queue.AmendSliderPosition();
+        }
         #endregion
 #else
         /// <summary>

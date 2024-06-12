@@ -986,6 +986,7 @@ MonoBehaviour:
   onAwakeInit: 0
   home: {fileID: 3346695149087156077}
   consoleHandler: {fileID: 3346695150154405953}
+  canvas: {fileID: 3346695148738146933}
   transformCache: {fileID: 3346695148738146934}
 --- !u!114 &3346695148738146929
 MonoBehaviour:
@@ -2011,8 +2012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea9a54beb62c4436be44e32746fc105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 3346695148738146933}
-  target: {fileID: 3346695150154405959}
   icon:
     image: {fileID: 3346695148535782172}
   iconSprites:

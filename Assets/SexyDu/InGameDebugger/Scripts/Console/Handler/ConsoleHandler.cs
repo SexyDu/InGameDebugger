@@ -5,7 +5,7 @@ namespace SexyDu.InGameDebugger
     /// <summary>
     /// 콘솔 Handler
     /// </summary>
-    public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IActivable, IInactivable, IClearable
+    public abstract partial class ConsoleHandler : MonoBehaviour, IConsoleUIHandle, IConsoleAnchorSetter, IActivable, IInactivable, IClearable
     {
         // 콘솔
         protected abstract Console console { get; }
@@ -58,6 +58,39 @@ namespace SexyDu.InGameDebugger
         {
             console.Clear();
         }
+
+        #region Anchor
+        /// <summary>
+        /// 현재 설정된 앵커 (초기 전체 모드 앵커)
+        /// </summary>
+        private IConsoleAnchor anchor = new ConsoleAnchorWhole();
+        // 현재 앵커 타입 : IConsoleAnchorSetter
+        public ConsoleAnchorType AnchorType => anchor.Anchor;
+
+        /// <summary>
+        /// 앵커 설정
+        /// : IConsoleAnchorSetter
+        /// </summary>
+        public virtual void SetAnchor(IConsoleAnchor anchor)
+        {
+            if (anchor != null)
+            {
+                this.anchor = anchor;
+                this.anchor.Process(rectTransformCache, InGameDebuggerConfig.Ins.Debugger.ScaleFactor);
+            }
+            else
+                Debug.LogError("설정하려는 anchor가 null입니다.");
+        }
+
+        /// <summary>
+        /// 다음 앵커 설정
+        /// : IConsoleAnchorSetter
+        /// </summary>
+        public void NextAnchor()
+        {
+            SetAnchor(anchor.Next());
+        }
+        #endregion
 
         #region Activation
         /// <summary>

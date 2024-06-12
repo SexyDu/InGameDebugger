@@ -24,10 +24,13 @@ namespace SexyDu.InGameDebugger
             // initializer가 있는 경우 (아직 초기 설정 안된 상태)
             if (initializer != null)
             {
-                initializer.Initialize().Release();
+                // 기본 초기 설정 (후 Component 해제)
+                initializer.Initialize(canvas).Release();
 
+                // 콘솔 핸들러 초기설정
                 consoleHandler.Initialize();
 
+                // 홈 초기 설정과 동시에 콘솔 활성화 상태 옵저버 등록
                 consoleHandler.Subscribe(home.Initialize().ConsoleActivationObserver);
 
                 DontDestroyOnLoad(gameObject);
@@ -78,6 +81,13 @@ namespace SexyDu.InGameDebugger
         {
             consoleHandler.Activate();
         }
+        #endregion
+
+        #region Canvas
+        [Header("Canvas")]
+        [SerializeField] private Canvas canvas; // 캔버스
+        //public Canvas Canvas => canvas;
+        public float ScaleFactor => canvas.scaleFactor;
         #endregion
 
         #region ObjectCache
