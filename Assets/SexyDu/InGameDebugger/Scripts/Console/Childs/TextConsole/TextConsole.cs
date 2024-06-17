@@ -63,7 +63,8 @@ namespace SexyDu.InGameDebugger
         {
             base.AddLogMessage(message);
 
-            AppendLogText(message);
+            if (PassFilters(message))
+                AppendLogText(message);
         }
 
         /// <summary>
