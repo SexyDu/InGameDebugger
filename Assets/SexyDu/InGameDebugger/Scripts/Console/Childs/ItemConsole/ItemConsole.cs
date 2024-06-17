@@ -72,8 +72,11 @@ namespace SexyDu.InGameDebugger
         {
             base.AddLogMessage(message);
 
-            EnqueueMessage(message);
-            RangeQueue();
+            if (PassFilters(message))
+            {
+                EnqueueMessage(message);
+                RangeQueue();
+            }
         }
 
         /// <summary>
