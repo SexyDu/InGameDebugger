@@ -31,7 +31,7 @@ namespace SexyDu.InGameDebugger
                 consoleHandler.Initialize();
 
                 // 홈 초기 설정과 동시에 콘솔 활성화 상태 옵저버 등록
-                consoleHandler.Subscribe(home.Initialize().ConsoleActivationObserver);
+                consoleHandler.Subscribe(home.Initialize(this).ConsoleActivationObserver);
 
                 DontDestroyOnLoad(gameObject);
             }
@@ -80,6 +80,14 @@ namespace SexyDu.InGameDebugger
         public void ActivateConsole()
         {
             consoleHandler.Activate();
+        }
+
+        /// <summary>
+        /// 콘솔 활성화 인터페이스에 콘솔 Activable 연결
+        /// </summary>
+        public void ConnectToConsoleActivator(IActivator activator)
+        {
+            activator.Set(consoleHandler);
         }
         #endregion
 

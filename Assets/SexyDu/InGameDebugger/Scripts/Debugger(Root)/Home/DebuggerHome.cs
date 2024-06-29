@@ -9,12 +9,17 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         /// <param name="consoleActivable"></param>
         /// <returns></returns>
-        public IDebuggerHome Initialize()
+        public IDebuggerHome Initialize(Debugger debugger)
         {
             for (int i = 0; i < inHomeContents.Length; i++)
             {
                 inHomeContents[i].Initialize();
             }
+
+            // 터치 인터페이스로 콘솔 활성화 기능 설정 및 디버거 연결
+            activator = new ActivatorByMultipleTouch();
+            debugger.ConnectToConsoleActivator(activator);
+            activator.SetEnableActivation(true);
 
             return this;
         }
@@ -40,8 +45,16 @@ namespace SexyDu.InGameDebugger
         /// <param name="active"></param>
         public void OnConsoleActivationChanged(bool active)
         {
-            SetActive(!active);
+            bool activaHome = !active;
+
+            SetActive(activaHome);
+            activator?.SetEnableActivation(activaHome);
         }
+        #endregion
+
+        #region ConsoleActivator
+        // 콘솔 활성화 기능
+        private IActivator activator = null;
         #endregion
 
         #region MonoInDebuggerHome
