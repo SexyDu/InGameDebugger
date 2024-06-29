@@ -48,11 +48,17 @@ namespace SexyDu.InGameDebugger
         }
     }
 
+    /// <summary>
+    /// 활성화 상태 변경 옵저버
+    /// </summary>
     public interface IConsoleActivationObserver
     {
         public void OnConsoleActivationChanged(bool active);
     }
 
+    /// <summary>
+    /// 활성화 상태 변경 서브젝트
+    /// </summary>
     public interface IConsoleActivationSubject
     {
         public void Subscribe(IConsoleActivationObserver observer);

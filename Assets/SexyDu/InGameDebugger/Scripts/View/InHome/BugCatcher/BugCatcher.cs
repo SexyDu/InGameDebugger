@@ -9,6 +9,9 @@ namespace SexyDu.InGameDebugger.View
 {
     public partial class BugCatcher : MonoInDebuggerHome, IConsoleLogObserver
     {
+        /// <summary>
+        /// 현재 활성화된 디버거
+        /// </summary>
         Debugger Debugger => InGameDebuggerConfig.Ins.Debugger;
 
         /// <summary>
@@ -53,16 +56,6 @@ namespace SexyDu.InGameDebugger.View
 #if USE_ERROR_COUNT
             SetGeneralErrorCount(subject.GeneralErrorCount);
 #endif
-        }
-
-        /// <summary>
-        /// 버그 클릭 이벤트
-        /// TODO: 추후 현재와 같은 버튼 클릭 방식이 아닌 다른 방식으로 디버거를 활성화 시키도록 수정
-        ///  - 예1: 화면을 3터치로 0.5초간 누르고 있는다
-        /// </summary>
-        public void OnClickBug()
-        {
-            Debugger.ActivateConsole();
         }
 
 #if USE_ERROR_COUNT

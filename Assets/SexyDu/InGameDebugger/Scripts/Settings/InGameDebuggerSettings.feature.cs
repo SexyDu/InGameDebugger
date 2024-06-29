@@ -6,7 +6,7 @@ namespace SexyDu.InGameDebugger
     /// <summary>
     /// InGameDebugger 설정
     /// </summary>
-    public partial class InGameDebuggerSettings
+    public partial class InGameDebuggerSettings : IActivationConfigurable
     {
         public InGameDebuggerSettings Initialize()
         {
@@ -34,6 +34,22 @@ namespace SexyDu.InGameDebugger
         }
         #endregion
 
+        #region Activation
+        /// <summary>
+        /// 디버거 로컬 활성화 상태 설정
+        /// </summary>
+        public void SetActive(bool active)
+        {
+            if (active)
+            {
+                DateTime now = DateTime.Now;
+                PlayerPrefs.SetString(ActiveDebuggerKey, now.ToString(SavedDateTimeFormat));
+            }
+            else
+                PlayerPrefs.SetString(ActiveDebuggerKey, string.Empty);
+        }
+        #endregion
+
         #region Command
         /// <summary>
         /// 커맨트 로컬 활성화 상태 설정
@@ -44,12 +60,10 @@ namespace SexyDu.InGameDebugger
             {
                 // 혹시 사용할 일이 있을지 모르지만... 값은 활성화 시간으로...
                 DateTime now = DateTime.Now;
-                PlayerPrefs.SetString(UseCLIKey, now.ToString("yyyy-MM-dd HH:mm:ss"));
+                PlayerPrefs.SetString(UseCLIKey, now.ToString(SavedDateTimeFormat));
             }
             else
-            {
-                PlayerPrefs.DeleteKey(UseCLIKey);
-            }
+                PlayerPrefs.SetString(UseCLIKey, string.Empty);
         }
         #endregion
 

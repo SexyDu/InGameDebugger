@@ -14,17 +14,29 @@ namespace SexyDu.InGameDebugger
     [CreateAssetMenu(fileName = "InGameDebuggerSettings", menuName = "SexyDu/Settings/InGameDebugger")]
     public partial class InGameDebuggerSettings : ScriptableObject
     {
-        public const string ResourcePath = "Installer/InGameDebuggerSettings";
+        public const string ResourcePath = "Installer/InGameDebuggerSettings"; // 세팅 리소스 경로
+        private const string SavedDateTimeFormat = "yyyy-MM-dd HH:mm:ss"; // 저장되는 로컬 시간 포맷
 
         [Tooltip("InGameDebugger 활성화 상태")]
         [SerializeField] private bool activeDebugger;
         // 디버거 활성화 로컬 키
         private const string ActiveDebuggerKey = "InGameDebugger.ActiveDebugger";
-        // 디버거 로컬 화성화 여부
-        /// - 지정된 키가 있는 경우 로컬에서 활성화된 것으로 간주한다.
-        private bool ActiveDebuggerInLocal => PlayerPrefs.HasKey(ActiveDebuggerKey);
+        // 디버거 활성화 정보가 로컬에 설정되어 있는지에 대한 여부
+        private bool HasLocalActiveDebugger => PlayerPrefs.HasKey(ActiveDebuggerKey);
+        // 로컬에 설정된 디버거 활성화 여부
+        private bool LocalActiveDebugger => !PlayerPrefs.GetString(ActiveDebuggerKey).Equals(string.Empty);
         // 디버거 활성화 여부
-        public bool ActiveDebugger => activeDebugger || ActiveDebuggerInLocal;
+        public bool ActiveDebugger
+        {
+            get
+            {
+                // 디버거 활성화 로컬 설정이 있는 경우
+                if (HasLocalActiveDebugger)
+                    return LocalActiveDebugger;
+                else
+                    return activeDebugger;
+            }
+        }
 
         #region Canvas
         [Header("Canvas")]
@@ -64,11 +76,22 @@ namespace SexyDu.InGameDebugger
         [SerializeField] private bool useCLI = true;
         // 커맨드 활성화 로컬 키
         private const string UseCLIKey = "InGameDebugger.UseCLI";
-        // 커맨드 로컬 화성화 여부
-        /// - 지정된 키가 있는 경우 로컬에서 활성화된 것으로 간주한다.
-        private bool UseCLIInLocal => PlayerPrefs.HasKey(UseCLIKey);
+        // 커맨드 활성화 정보가 로컬에 설정되어 있는지에 대한 여부
+        private bool HasLocalUseCLI => PlayerPrefs.HasKey(UseCLIKey);
+        // 로컬에 설정된 디버거 활성화 여부
+        private bool LocalUseCLI => !PlayerPrefs.GetString(UseCLIKey).Equals(string.Empty);
         // 커맨드 활성화 여부
-        public bool UseCLI => useCLI || UseCLIInLocal;
+        public bool UseCLI
+        {
+            get
+            {
+                // 디버거 활성화 로컬 설정이 있는 경우
+                if (HasLocalUseCLI)
+                    return LocalUseCLI;
+                else
+                    return useCLI;
+            }
+        }
         #endregion
 
         #region DebuggerType

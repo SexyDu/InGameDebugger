@@ -85,7 +85,7 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 콘솔 활성화 인터페이스에 콘솔 Activable 연결
         /// </summary>
-        public void ConnectToConsoleActivator(IActivator activator)
+        public void ConnectToConsoleActivator(IConsoleActivator activator)
         {
             activator.Set(consoleHandler);
         }

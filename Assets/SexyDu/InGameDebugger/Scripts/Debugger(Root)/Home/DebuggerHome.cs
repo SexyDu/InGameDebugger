@@ -7,8 +7,6 @@ namespace SexyDu.InGameDebugger
         /// <summary>
         /// 초기 설정
         /// </summary>
-        /// <param name="consoleActivable"></param>
-        /// <returns></returns>
         public IDebuggerHome Initialize(Debugger debugger)
         {
             for (int i = 0; i < inHomeContents.Length; i++)
@@ -54,7 +52,7 @@ namespace SexyDu.InGameDebugger
 
         #region ConsoleActivator
         // 콘솔 활성화 기능
-        private IActivator activator = null;
+        private IConsoleActivator activator = null;
         #endregion
 
         #region MonoInDebuggerHome
