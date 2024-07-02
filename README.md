@@ -22,7 +22,14 @@
 <br>7-1. 로그 상세 문자열 Copy
 8. (텍스트 형식 콘솔) StackTrace 정보 활성화/비활성화
 
+## 콘솔 활성화
+* 지정된 터치 수(FingerCount)를 지정된 입력시간(PressureTime)동안 유지 수 활성화 (InGameDebuggerSettings asset의 ActivationInfo 설정 내용 기반)
+  - <b>(기본) 손가락 3개로 화면 터치 후 0.5초 유지 시 콘솔 활성화</b>
+* [에디터 전용] 지정된 키(KeyCode)를 지정된 입력시간(PressureTime)동안 유지 수 활성화 (InGameDebuggerSettings asset의 ActivationInfo 설정 내용 기반)
+  - <b>(기본) BackQuote(`) 키를 0.5초간 누르고 있으면 콘솔 활성화</b>
+
 ## 설정
 InGameDebuggerSettings asset을 통한 설정
 * InGameDebuggerSettings.cs 내용 참고
-![Setting](https://github.com/SexyDu/InGameDebugger/assets/128912129/82f1feda-4369-4a77-96dc-0f20d187bdbe)
+
+![Settomgs](https://github.com/SexyDu/InGameDebugger/assets/128912129/57077fd6-187c-463b-b7c9-4116dea418fb)
