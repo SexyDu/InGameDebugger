@@ -34,7 +34,7 @@ namespace SexyDu.InGameDebugger
         }
         #endregion
 
-        #region Activation
+        #region Activation (Debugger)
         /// <summary>
         /// 디버거 로컬 활성화 상태 설정
         /// </summary>
@@ -47,6 +47,16 @@ namespace SexyDu.InGameDebugger
             }
             else
                 PlayerPrefs.SetString(ActiveDebuggerKey, string.Empty);
+        }
+        #endregion
+
+        #region Activation (Console)
+        /// <summary>
+        /// 콘솔 활성화 관리 오브젝트 반환
+        /// </summary>
+        public IConsoleActivator GetActivator()
+        {
+            return activationInfo.GetActivator();
         }
         #endregion
 

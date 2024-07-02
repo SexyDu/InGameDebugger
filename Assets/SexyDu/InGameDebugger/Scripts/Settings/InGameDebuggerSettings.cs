@@ -1,4 +1,7 @@
-using System;
+#if UNITY_EDITOR
+#define ONLY_EDITOR
+#endif
+
 using UnityEngine;
 using TMPro;
 #if UNITY_EDITOR
@@ -97,6 +100,11 @@ namespace SexyDu.InGameDebugger
         #region DebuggerType
         [Header("Debugger")]
         [SerializeField] private DebuggerType debuggerType;
+        #endregion
+
+        #region Console Activation
+        [Header("Console Activation")]
+        [SerializeField] private ActivatorByMultipleTouchOnSettings activationInfo;
         #endregion
 
         #region Item Console

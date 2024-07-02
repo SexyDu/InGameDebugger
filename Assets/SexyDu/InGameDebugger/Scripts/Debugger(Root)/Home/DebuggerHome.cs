@@ -15,7 +15,7 @@ namespace SexyDu.InGameDebugger
             }
 
             // 터치 인터페이스로 콘솔 활성화 기능 설정 및 디버거 연결
-            activator = new ActivatorByMultipleTouch();
+            activator = InGameDebuggerConfig.Ins.Settings.GetActivator();
             debugger.ConnectToConsoleActivator(activator);
             activator.SetEnableActivation(true);
 
