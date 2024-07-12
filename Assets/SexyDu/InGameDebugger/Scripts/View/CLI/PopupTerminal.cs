@@ -31,6 +31,10 @@ namespace SexyDu.InGameDebugger.View
             // 자동완성 초기 설정
             autoComplete.Initialize(OnWordCompletionSelected);
 
+            // CLI가 비활성화 되어 있는 경우 활성화 오브젝트 
+            if (!InGameDebuggerConfig.Ins.Settings.UseCLI)
+                SetActivatorActive(true);
+
             return this;
         }
 
@@ -165,6 +169,30 @@ namespace SexyDu.InGameDebugger.View
             text = word;
 
             SelectInputField();
+        }
+        #endregion
+
+        #region Activation
+        [Header("Activation")]
+        // CLI 활성화 오브젝트
+        [SerializeField] private GameObject activator;
+
+        /// <summary>
+        /// CLI 활성화 오브젝트 활성화 설정
+        /// </summary>
+        private void SetActivatorActive(bool active)
+        {
+            activator.SetActive(active);
+        }
+
+        /// <summary>
+        /// CLI 활성화 버튼 클릭
+        /// </summary>
+        public void OnClickActivateCLI()
+        {
+            InGameDebuggerConfig.Ins.Settings.SetCommandEnable(true);
+
+            SetActivatorActive(false);
         }
         #endregion
     }
