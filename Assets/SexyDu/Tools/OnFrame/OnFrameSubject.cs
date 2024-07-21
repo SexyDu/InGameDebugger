@@ -29,7 +29,8 @@ namespace SexyDu.Tool
             {
                 targets.Add(target);
 
-                Run();
+                if (!IsRunning)
+                    coroutine = MonoHelper.StartCoroutine(UpdateFrame());
             }
         }
 
@@ -86,7 +87,6 @@ namespace SexyDu.Tool
         /// </summary>
         private void Stop()
         {
-            Debug.LogFormat("Stop");
             if (IsRunning)
             {
                 coroutine.Dispose();

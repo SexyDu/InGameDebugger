@@ -1,6 +1,7 @@
 #define TESTING_SAMPLE
 
 using UnityEngine;
+using SexyDu.ContainerSystem;
 
 namespace SexyDu.InGameDebugger.Sample
 {
@@ -22,6 +23,8 @@ namespace SexyDu.InGameDebugger.Sample
 
         private void Awake()
         {
+            ContainerDocker.Initialize();
+
 #if TESTING_SAMPLE
             if (onAwakeClearPlayerPrefs)
                 PlayerPrefs.DeleteAll();
