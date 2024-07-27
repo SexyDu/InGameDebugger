@@ -75,6 +75,9 @@ namespace SexyDu.InGameDebugger
         /// </summary>
         public void Range()
         {
+            if (current < 0)
+                return;
+
             // 현재 인덱스
             int index = current;
 
@@ -87,6 +90,7 @@ namespace SexyDu.InGameDebugger
             {
                 // 현재 아이템 위치값 설정
                 items[index].anchoredPosition = anchoredPosition;
+
                 // 위치값 증가
                 anchoredPosition.y += itemHeight;
 
@@ -95,7 +99,7 @@ namespace SexyDu.InGameDebugger
 
                 // 이전 인덱스 설정
                 index = GetPreviousIndex(index);
-                
+
             } while (!index.Equals(current) && items[index].Activated); // 인덱스와 현재와 같아지지 않고 현재 인덱스 아이템이 활성화 되어있는 경우 반복
 
 #if USE_SLIDER
