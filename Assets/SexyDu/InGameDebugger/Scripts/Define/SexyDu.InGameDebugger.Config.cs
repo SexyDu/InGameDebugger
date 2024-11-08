@@ -79,6 +79,20 @@ namespace SexyDu.InGameDebugger
 
             return debugger;
         }
+
+        /// <summary>
+        /// 디버거 제거
+        /// </summary>
+        public void DestroyDebugger()
+        {
+            if (debugger != null)
+            {
+                debugger.Destroy();
+                debugger = null;
+            }
+            else
+                Debug.LogWarning("생성된 디버거가 없어 제거할 수 없습니다.");
+        }
         #endregion
 
         #region CLI

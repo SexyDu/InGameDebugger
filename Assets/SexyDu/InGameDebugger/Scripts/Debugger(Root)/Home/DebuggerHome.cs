@@ -31,6 +31,9 @@ namespace SexyDu.InGameDebugger
             {
                 inHomeContents[i].Clear();
             }
+
+            activator.Release();
+            activator = null;
         }
 
         public IConsoleActivationObserver ConsoleActivationObserver => this;

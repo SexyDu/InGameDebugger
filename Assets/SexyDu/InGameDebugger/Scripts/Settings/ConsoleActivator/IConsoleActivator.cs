@@ -3,7 +3,7 @@ namespace SexyDu.InGameDebugger
     /// <summary>
     /// 콘솔 활성화 기능 인터페이스
     /// </summary>
-    public interface IConsoleActivator
+    public interface IConsoleActivator : IReleasable
     {
         /// <summary>
         /// 활성화 대상 성정

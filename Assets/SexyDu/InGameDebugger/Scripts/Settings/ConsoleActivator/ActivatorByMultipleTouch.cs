@@ -67,6 +67,14 @@ namespace SexyDu.InGameDebugger
         }
 
         /// <summary>
+        /// 클래스 해제
+        /// </summary>
+        public void Release()
+        {
+            SetEnableActivation(false);
+        }
+
+        /// <summary>
         /// 활성화 기능 활성화 상태 설정
         /// </summary>
         public void SetEnableActivation(bool enable)

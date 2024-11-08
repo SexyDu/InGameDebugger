@@ -44,5 +44,19 @@ namespace SexyDu.InGameDebugger.Sample
         {
             throw new Exception(logInputField.text);
         }
+
+        public void OnClickToggleDebugger()
+        {
+            InGameDebuggerConfig.Ins.Settings.SetActive(!InGameDebuggerConfig.Ins.Settings.ActiveDebugger);
+
+            if (InGameDebuggerConfig.Ins.Settings.ActiveDebugger)
+            {
+                InGameDebuggerConfig.Ins.CreateDebugger();
+            }
+            else
+            {
+                InGameDebuggerConfig.Ins.DestroyDebugger();
+            }
+        }
     }
 }

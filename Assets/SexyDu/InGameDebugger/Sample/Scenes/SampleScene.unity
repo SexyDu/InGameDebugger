@@ -2053,7 +2053,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 931610068}
         m_TargetAssemblyTypeName: SexyDu.InGameDebugger.Sample.TestLogging, Assembly-CSharp
-        m_MethodName: OnClickException
+        m_MethodName: OnClickToggleDebugger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
