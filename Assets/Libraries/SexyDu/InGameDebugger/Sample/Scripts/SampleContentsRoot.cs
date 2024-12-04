@@ -17,16 +17,32 @@ namespace SexyDu.InGameDebugger.Sample
 
             logging.LogPromised();
 
-            framerate = new FramerateSubject();
-            framerate.Run(this, 0.5f);
+            framerate = new FramerateSubject(0.5f);
+            framerate.Subscribe(this);
         }
 
         public void Clear()
         {
             command.Unbind();
 
-            framerate.Stop();
+            framerate.Unsubscribe(this);
             framerate = null;
+        }
+
+        private void OnEnable()
+        {
+            if (InGameDebuggerConfig.Ins.Debugger != null)
+            {
+                InGameDebuggerConfig.Ins.Debugger.FramerateSubject.Subscribe(this);
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (InGameDebuggerConfig.Ins.Debugger != null)
+            {
+                InGameDebuggerConfig.Ins.Debugger.FramerateSubject.Unsubscribe(this);
+            }
         }
 
         #region Framerate
@@ -34,7 +50,7 @@ namespace SexyDu.InGameDebugger.Sample
         [SerializeField] private TMP_Text textMeshFramerate;
         public void OnReceivedFrameRate(float framerate)
         {
-            textMeshFramerate.SetText(framerate.ToString());
+            textMeshFramerate.SetText(framerate.ToString("F2"));
         }
         #endregion
     }
