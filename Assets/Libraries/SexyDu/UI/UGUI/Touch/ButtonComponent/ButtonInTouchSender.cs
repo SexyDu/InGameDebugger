@@ -117,7 +117,7 @@ namespace SexyDu.UI.UGUI
         {
             Vector2 initial = GetTouchPosition(FingerId);
 
-            if (Config.ValidateTouchPosition(initial))
+            if (!Config.ValidateTouchPosition(initial))
                 ClearTouch();
 
             // 터치 이동 비교 대상
@@ -131,7 +131,7 @@ namespace SexyDu.UI.UGUI
 
                 Vector2 current = GetTouchPosition(FingerId);
 
-                if (Config.ValidateTouchPosition(current))
+                if (!Config.ValidateTouchPosition(current))
                 {
                     ClearTouch();
                 }
