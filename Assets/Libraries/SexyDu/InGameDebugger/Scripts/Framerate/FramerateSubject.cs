@@ -15,6 +15,8 @@ namespace SexyDu.InGameDebugger
                 coroutine.Dispose();
                 coroutine = null;
             }
+
+            observers.Clear();
         }
 
         public FramerateSubject(float delay = 0)

@@ -33,8 +33,6 @@ namespace SexyDu.InGameDebugger
                 // 홈 초기 설정과 동시에 콘솔 활성화 상태 옵저버 등록
                 consoleHandler.Subscribe(home.Initialize(this).ConsoleActivationObserver);
 
-                framerateSubject = new FramerateSubject(0.5f);
-
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -52,9 +50,6 @@ namespace SexyDu.InGameDebugger
         {
             home.Clear();
             consoleHandler.Clear();
-
-            framerateSubject?.Dispose();
-            framerateSubject = null;
         }
 
         /// <summary>
@@ -107,12 +102,6 @@ namespace SexyDu.InGameDebugger
         [Header("ObjectCache")]
         [SerializeField] private Transform transformCache;
         public Transform TransformCache => transformCache;
-        #endregion
-
-        #region FramerateSubject
-        [Header("FramerateSubject")]
-        private FramerateSubject framerateSubject = null;
-        public IFramerateSubject FramerateSubject => framerateSubject;
         #endregion
     }
 }

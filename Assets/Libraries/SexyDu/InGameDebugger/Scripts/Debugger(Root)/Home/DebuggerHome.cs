@@ -1,8 +1,9 @@
 using UnityEngine;
+using TMPro;
 
 namespace SexyDu.InGameDebugger
 {
-    public class DebuggerHome : MonoBehaviour, IDebuggerHome, IConsoleActivationObserver, IActivationConfigurable, IClearable
+    public class DebuggerHome : MonoBehaviour, IDebuggerHome, IConsoleActivationObserver, IActivationConfigurable, IClearable, IFramerateObserver
     {
         /// <summary>
         /// 초기 설정
@@ -19,6 +20,10 @@ namespace SexyDu.InGameDebugger
             debugger.ConnectToConsoleActivator(activator);
             activator.SetEnableActivation(true);
 
+            // 프레임 레이트 서브젝트 생성 및 옵저버 등록
+            framerateSubject = new FramerateSubject(0.5f);
+            framerateSubject.Subscribe(this);
+
             return this;
         }
 
@@ -34,6 +39,9 @@ namespace SexyDu.InGameDebugger
 
             activator.Release();
             activator = null;
+
+            framerateSubject?.Dispose();
+            framerateSubject = null;
         }
 
         public IConsoleActivationObserver ConsoleActivationObserver => this;
@@ -60,6 +68,17 @@ namespace SexyDu.InGameDebugger
 
         #region MonoInDebuggerHome
         [SerializeField] private MonoInDebuggerHome[] inHomeContents;
+        #endregion
+
+        #region Framerate
+        [Header("Framerate")]
+        [SerializeField] private TMP_Text framerateText;
+        private IFramerateSubject framerateSubject = null;
+        
+        public void OnReceivedFrameRate(float framerate)
+        {
+            framerateText.text = framerate.ToString("F2");
+        }
         #endregion
 
         #region ObjectCache
