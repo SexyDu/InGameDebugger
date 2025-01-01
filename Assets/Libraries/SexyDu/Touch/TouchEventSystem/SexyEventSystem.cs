@@ -1,5 +1,5 @@
 #if UNITY_EDITOR || !(UNITY_ANDROID || UNITY_IOS)
-#define CONSIDER_MOUSE
+#define CONSIDER_DESKTOP
 #endif
 
 using System;
@@ -96,24 +96,24 @@ namespace SexyDu.Touch
             {
                 yield return null;
 
-#if CONSIDER_MOUSE
+#if CONSIDER_DESKTOP
                 bool hasBeginTouch = false;
 #endif
                 for (int i = 0; i < Input.touchCount; i++)
                 {
                     // 터치 시작 상태이고 캔버스 영역이 아니면
-                    if (Input.touches[i].phase.Equals(TouchPhase.Began) && !IsCanvasTouch(Input.touches[i]))
+                    if (Input.touches[i].phase.Equals(TouchPhase.Began))
                     {
                         SendTouch(Input.touches[i]);
-#if CONSIDER_MOUSE
+#if CONSIDER_DESKTOP
                         hasBeginTouch = true;
 #endif
                     }
                 }
 
-#if CONSIDER_MOUSE
-                // 터치 시작 이벤트가 없거나 마우스가 캔버스 영역이 아니면
-                if (!hasBeginTouch || !IsCanvasMouse())
+#if CONSIDER_DESKTOP
+                // 터치 시작 이벤트가 없고 마우스가 캔버스 영역이 아니면
+                if (!hasBeginTouch)
                 {
                     if (Input.GetMouseButtonDown(0))
                         SendMouse(TouchConfig.MouseIdLeft, Input.mousePosition);
@@ -124,26 +124,5 @@ namespace SexyDu.Touch
             } while (true);
         }
         #endregion
-
-        #region Canvas Check
-        /// <summary>
-        /// 해당 터치가 캔버스 영역(UGUI)에 있는지 반환
-        /// </summary>
-        private bool IsCanvasTouch(UnityEngine.Touch touch)
-        {
-            return EventSystem.current is null ? false : EventSystem.current.IsPointerOverGameObject(touch.fingerId);
-        }
-
-#if CONSIDER_MOUSE
-        /// <summary>
-        /// 마우스가 캔버스 영역(UGUI)에 있는지 반환
-        /// </summary>
-        private bool IsCanvasMouse()
-        {
-            return EventSystem.current is null ? false : EventSystem.current.IsPointerOverGameObject();
-        }
-#endif
-        #endregion
-
     }
 }

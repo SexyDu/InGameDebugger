@@ -1,3 +1,7 @@
+#if UNITY_EDITOR || !(UNITY_ANDROID || UNITY_IOS)
+#define CONSIDER_DESKTOP
+#endif
+
 using UnityEngine;
 using SexyDu.ContainerSystem;
 using SexyDu.Tool;
@@ -37,12 +41,12 @@ namespace SexyDu.InGameDebugger
 
         private bool TouchStateForActivation =>
             Input.touchCount.Equals(fingerCount) // 현재 터치 입력수가 활성화 터치 입력 수와 동일한 경우
-#if UNITY_EDITOR
+#if CONSIDER_DESKTOP
             || Input.GetKey(keyCode)
 #endif
             ;
 
-#if UNITY_EDITOR
+#if CONSIDER_DESKTOP
         // [Only Editor] 활성화 키
         private KeyCode keyCode = KeyCode.BackQuote;
         /// <summary>
