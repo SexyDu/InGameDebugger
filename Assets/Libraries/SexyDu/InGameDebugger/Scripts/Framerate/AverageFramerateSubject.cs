@@ -6,7 +6,7 @@ using SexyDu.Tool;
 
 namespace SexyDu.InGameDebugger
 {
-    public class FramerateSubject : IFramerateSubject
+    public class AverageFramerateSubject : IFramerateSubject
     {
         public void Dispose()
         {
@@ -19,10 +19,9 @@ namespace SexyDu.InGameDebugger
             observers.Clear();
         }
 
-        public FramerateSubject(float delay = 0)
+        public AverageFramerateSubject(float delay = 0)
         {
-            if (delay > 0)
-                wait = new WaitForSeconds(delay);
+            this.delay = delay;
         }
 
         private readonly List<IFramerateObserver> observers = new();
@@ -53,7 +52,7 @@ namespace SexyDu.InGameDebugger
 
         private IDisposable coroutine = null;
         private bool IsRunning => coroutine != null;
-        private WaitForSeconds wait = null;
+        private float delay = 0;
 
         private void Run()
         {
@@ -73,11 +72,23 @@ namespace SexyDu.InGameDebugger
 
         private IEnumerator CoFramerate()
         {
+            float pass = 0;
+            int count = 0;
+            
             do
             {
-                yield return wait;
+                yield return null;
 
-                Distribute(1f / Time.deltaTime);
+                pass += Time.deltaTime;
+                count++;
+
+                if (pass > delay)
+                {
+                    Distribute(1f / (pass / (float)count));
+
+                    pass = 0;
+                    count = 0;
+                }
             } while (true);
         }
     }

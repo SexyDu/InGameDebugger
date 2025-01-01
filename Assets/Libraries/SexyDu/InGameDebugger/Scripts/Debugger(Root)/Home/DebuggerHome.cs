@@ -21,7 +21,7 @@ namespace SexyDu.InGameDebugger
             activator.SetEnableActivation(true);
 
             // 프레임 레이트 서브젝트 생성 및 옵저버 등록
-            framerateSubject = new FramerateSubject(0.5f);
+            framerateSubject = new AverageFramerateSubject(0.5f);
             framerateSubject.Subscribe(this);
 
             return this;
